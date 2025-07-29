@@ -1,0 +1,44 @@
+<!-- Language Switch -->
+<div class="lang-switch">
+    <span class="active" data-lang="zh">中文</span>
+    <span data-lang="en">EN</span>
+</div>
+
+<!-- Navigation -->
+<nav class="fixed top-0 w-full bg-white bg-opacity-90 backdrop-blur-sm z-50 px-8 py-6 border-b border-gray-200">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <div class="text-2xl font-light tracking-wider">
+            <span class="font-normal">WITH</span>WIND
+        </div>
+        <div class="hidden md:flex space-x-8">
+            <a href="index.html#home" class="nav-link text-sm uppercase tracking-wider" data-lang-key="nav-home">首页</a>
+            <a href="index.html#about" class="nav-link text-sm uppercase tracking-wider" data-lang-key="nav-about">关于</a>
+            <a href="index.html#tags" class="nav-link text-sm uppercase tracking-wider" data-lang-key="nav-tags">标签</a>
+            <a href="experience.html" class="nav-link text-sm uppercase tracking-wider" data-lang-key="nav-experience">经历</a>
+            <a href="index.html#contact" class="nav-link text-sm uppercase tracking-wider" data-lang-key="nav-contact">联系</a>
+        </div>
+        <!-- 移动端右侧按钮组 -->
+        <div class="md:hidden flex items-center space-x-3">
+            <!-- 语言切换按钮 -->
+            <div class="lang-switch-mobile">
+                <span class="active" data-lang="zh">中文</span>
+                <span data-lang="en">EN</span>
+            </div>
+            <!-- 菜单按钮 -->
+            <button id="menuToggle">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="mobileMenu" class="fixed inset-0 bg-white bg-opacity-95 z-40 hidden">
+    <div class="flex flex-col items-center justify-center h-full space-y-8">
+        <a href="index.html#home" class="text-2xl nav-link mobile-nav-link" data-lang-key="nav-home">首页</a>
+        <a href="index.html#about" class="text-2xl nav-link mobile-nav-link" data-lang-key="nav-about">关于</a>
+        <a href="index.html#tags" class="text-2xl nav-link mobile-nav-link" data-lang-key="nav-tags">标签</a>
+        <a href="experience.html" class="text-2xl nav-link mobile-nav-link" data-lang-key="nav-experience">经历</a>
+        <a href="index.html#contact" class="text-2xl nav-link mobile-nav-link" data-lang-key="nav-contact">联系</a>
+    </div>
+</div>

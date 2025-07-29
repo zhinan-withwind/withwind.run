@@ -154,16 +154,51 @@ body {
     font-weight: 500;
 }
 
+/* 移动端语言切换按钮 */
+.lang-switch-mobile {
+    display: flex;
+    gap: 5px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 3px;
+    border-radius: 15px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.lang-switch-mobile span {
+    padding: 3px 8px;
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+
+.lang-switch-mobile span:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.lang-switch-mobile span.active {
+    background-color: #000;
+    color: #fff;
+    font-weight: 500;
+}
+
 /* 移动端适配 */
 @media (max-width: 768px) {
+    /* 隐藏桌面版语言切换按钮 */
     .lang-switch {
-        top: 15px;
-        right: 15px;
+        display: none;
     }
     
-    .lang-switch span {
-        padding: 4px 10px;
-        font-size: 12px;
+    /* 显示移动端语言切换按钮 */
+    .lang-switch-mobile {
+        display: flex;
+    }
+}
+
+@media (min-width: 769px) {
+    /* 桌面版隐藏移动端语言切换按钮 */
+    .lang-switch-mobile {
+        display: none;
     }
 }
 
