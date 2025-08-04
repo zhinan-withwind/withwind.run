@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>教练风格深度分析报告</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #1a202c;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .overall-score {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: conic-gradient(#667eea 0deg 306deg, #e2e8f0 306deg 360deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .score-inner {
+            width: 150px;
+            height: 150px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .score-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .score-label {
+            font-size: 1rem;
+            color: #718096;
+            margin-top: 0.5rem;
+        }
+
+        .prototype-match {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+        }
+
+        .prototype-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .layers-analysis {
+            display: grid;
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .layer-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            border-top: 5px solid var(--accent-color);
+        }
+
+        .layer-card.layer-1 { --accent-color: #667eea; }
+        .layer-card.layer-2 { --accent-color: #f093fb; }
+        .layer-card.layer-3 { --accent-color: #4facfe; }
+        .layer-card.layer-4 { --accent-color: #43e97b; }
+
+        .layer-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .layer-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            background: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            margin-right: 1.5rem;
+        }
+
+        .layer-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2d3748;
+        }
+
+        .layer-score {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-left: auto;
+        }
+
+        .dimensions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .dimension-card {
+            background: #f7fafc;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .dimension-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+
+        .dimension-score {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .score-bar {
+            width: 100px;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .score-fill {
+            height: 100%;
+            background: var(--accent-color);
+            border-radius: 4px;
+            transition: width 0.8s ease;
+        }
+
+        .dimension-analysis {
+            font-size: 0.9rem;
+            color: #4a5568;
+            line-height: 1.5;
+        }
+
+        .strengths-improvements {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .strength-card, .improvement-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        }
+
+        .strength-card {
+            border-top: 5px solid #43e97b;
+        }
+
+        .improvement-card {
+            border-top: 5px solid #f093fb;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .card-icon {
+            margin-right: 0.5rem;
+            font-size: 1.8rem;
+        }
+
+        .strength-list, .improvement-list {
+            list-style: none;
+        }
+
+        .strength-list li, .improvement-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #e2e8f0;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .strength-list li::before {
+            content: '✨';
+            position: absolute;
+            left: 0;
+            top: 0.8rem;
+        }
+
+        .improvement-list li::before {
+            content: '🎯';
+            position: absolute;
+            left: 0;
+            top: 0.8rem;
+        }
+
+        .radar-section {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 2rem;
+        }
+
+        .development-plan {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+        }
+
+        .plan-step {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: 700;
+            margin-right: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .strengths-improvements {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 1rem;
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .highlight-quote {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-left: 5px solid #667eea;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            font-style: italic;
+            color: #4a5568;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header fade-in">
+            <h1>🌟 教练风格深度分析报告</h1>
+            <p>基于ICF核心能力框架的全维度专业评估</p>
+        </header>
+
+        <div class="overall-score fade-in">
+            <div class="score-circle">
+                <div class="score-inner">
+                    <div class="score-number">85</div>
+                    <div class="score-label">总体得分</div>
+                </div>
+            </div>
+            
+            <div class="prototype-match">
+                <div class="prototype-title">🌟 匹配原型：深度觉醒型教练</div>
+                <p>通过精湛的隐喻技术和深度倾听，引导客户实现内在觉醒与转化，展现出卓越的催化能力</p>
+            </div>
+        </div>
+
+        <div class="highlight-quote fade-in">
+            <strong>核心亮点：</strong>"当那颗植物剪掉了那些枝丫，只剩下那一颗枝的时候，你觉得那个时候的他是怎么看待他自己的？" 
+            - 这一刻的提问展现了教练深层的隐喻整合能力，成为整场对话的关键转折点。
+        </div>
+
+        <div class="layers-analysis">
+            <div class="layer-card layer-1 fade-in">
+                <div class="layer-header">
+                    <div class="layer-icon">🎯</div>
+                    <div class="layer-title">第一层：基础互动模式</div>
+                    <div class="layer-score">82分</div>
+                </div>
+                
+                <div class="dimensions-grid">
+                    <div class="dimension-card">
+                        <div class="dimension-name">关系建立策略</div>
+                        <div class="dimension-score">
+                            <span>90分</span>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: 90%;"></div>
+                            </div>
+                        </div>
+                        <div class="dimension-analysis">
+                            表现出色的信任建立能力，通过温暖接纳和专业引导快速建立安全的对话空间。在客户表达脆弱时展现高度共情。
+                        </div>
+                    </div>
+
+                    <div class="dimension-card">
+                        <div class="dimension-name">目标设定与合约管理</div>
+                        <div class="dimension-score">
+                            <span>75分</span>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: 75%;"></div>
+                            </div>
+                        </div>
+                        <div class="dimension-analysis">
+                            采用有机合约方式，灵活调整对话方向。"你觉得在我们今天对话结束的那一刻，你想收获到的是什么？"体现了动态目标管理。
+                        </div>
+                    </div>
+
+                    <div class="dimension-card">
+                        <div class="dimension-name">时间与节奏管理</div>
+                        <div class="dimension-score">
+                            <span>85分</span>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                        <div class="dimension-analysis">
+                            节奏把控精准，善用适度停顿和沉默，给客户充分的内在探索空间。37分钟进度检查体现时间意识。
+                        </div>
+                    </div>
+
+                    <div class="dimension-card">
+                        <div class="dimension-name">注意力分配</div>
+                        <div class="dimension-score">
+                            <span>88分</span>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: 88%;"></div>
+                            </div>
+                        </div>
+                        <div class="dimension-analysis">
+                            高度聚焦在客户的核心议题上，敏锐捕捉到植物隐喻的深层含义并巧妙运用，注意力分配精准有效。
+                        </div>
+                    </div>
+
+                    <div class="dimension-card">
+                        <div class="dimension-name">语言风格</div>
+                        <div class="dimension-score">
+                            <span>80分</span>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: 80%;"></div>
+                            </div>
+                        </div>
+                        <div class="dimension-analysis">
+                            语言简洁而富有深度，善用客户的语言模式，"你害怕的是什么？"等直接而有力的提问展现专业功底。
+                        </div>
+                    </div>
+
+                    <div class="dimension-card">
+                        <div class="dimension-name">情感表达</div>
+                        <div class="dimension-score">
+                            <span>85分</span>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                        <div class="dimension-analysis">
+                            情感表达真诚适度，"感受到你对他满满的欣赏"等表达体现了教练的情感敏感度和表达能力。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layer-card layer-2 fade-in">
+                <div class="layer-header">
+                    <div class="layer-icon">🎨</div>
+                    <div class="layer-title">第二层：对话技术</div>
+                    <div class="layer-score">88分</div>
+                </div>
+                
+                <div class="dimensions-grid">
+                    <div class="dimension-card">
+                        <div class="dimension-name">提问策略</div>
+                        <div class="dimension-score">
+                            <span>92分</span>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: 92%;"></div>
+                            </div>
+                        </div>
+                        <div class="dimension-analysis">
+                            问题设计精妙，层次递进清晰。从表层的"你要减掉的是什么？"到深层的"你为什么要为你这个生命创造这样的局面？"展现卓越技巧。
+                        </div>
+                    </div>
+
+                    <div class="dimension-card">
+                        <div class="dimension-name">倾听行为</div>
+                        <div class="dimension-score">
+                            <span>90分</span>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: 90%;"></div>
+                            </div>
+                        </div>
+                        <div class="dimension-analysis">
+                            展现了全身心的倾听，准确捕捉客户的关键信息和情感变化，"感受到你这一刻的情绪再一次涌动"体现深度倾听。
+                        </div>
+                    </div>
+
+                    <div class="dimension-card">
+                        <div class="dimension-name">观察与觉察</div>
+                        <div class="dimension-score">
+                            <span>88分</span>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: 88%;"></div>
+                            </div>
+                        </div>
+                        <div class="dimension-analysis">
+                            对客户状态变化的觉察敏锐，"感受到你的能量状态有了一些变化"等观察精准到位，体现专业敏感度。
+                        </div>
+                    </div>
+
+                    <div class="dimension-card">
+                        <div class="dimension-name">反馈给予</div>
+                        <div class="dimension-score">
+                            <span>85分</span>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                        <div class="dimension-analysis">
+                            反馈及时且有针对性，"我感受到你向前跨了一步"等反馈有效强化客户的积极变化。
+                        </div>
+                    </div>
+
+                    <div class="dimension-card">
+                        <div class="dimension-name">挑战与支持</div>
+                        <div class="dimension-score">
+                            <span>87分</span>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: 87%;"></div>
+                            </div>
+                        </div>
+                        <div class="dimension-analysis">
+                            挑战与支持平衡得当，"你能想到的最最坏的结果已经发生了，你怎么办？"展现了温和而有力的挑战技巧。
+                        </div>
+                    </div>
+
+                    <div class="dimension-card">
+                        <div class="dimension-name">沉默与留白处理</div>
+                        <div class="dimension-score">
+                            <span>83分</span>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: 83%;"></div>
+                            </div>
+                        </div>
+                        <div class="dimension-analysis">
+                            适度运用沉默，给客户内在探索的时间。在关键转折点能够耐心等待客户的内在涌现。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layer-card layer-3 fade-in">
+                <div class="layer-header">
+                    <div class="layer-icon">🧠</div>
+                    <div class="layer-title">第三层：认知与思维</div>
+                    <div class="layer-score">87分</div>
+                </div>
+                
+                <div class="dimensions-grid">
+                    <div class="dimension-card">
+                        <div class="dimension-name">思维模式偏好</div>
+                        <div class="dimension-score">
+                            <span>90分</span>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: 90%;"></div>
+                            </div>
+                        </div>
+                        <div class="dimension-analysis">
+                            擅长隐喻思维和整体性思考，能够将客户的植物隐喻转化为深刻的自我认知工具，思维灵活富有创意。
+                        </div>
+                    </div>
+
+                    <div class="dimension-card">
+                        <div class="dimension-name">问题解决取向</div>
+                        <div class="dimension-score">
+                            <span>85分</span>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                        <div class="dimension-analysis">
+                            不急于给出解决方案，而是引导客户深入探索问题根源，帮助客户找到内在的答案和资源。
+                        </div>
+                    </div>
+
+                    <div class="dimension-card">
+                        <div class="dimension-name">学习与成长观念</div>
+                        <div class="dimension-score">
+                            <span>88分</span>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: 88%;"></div>
+                            </div>
+                        </div>
+                        <div class="dimension-analysis">
+                            深信人具有内在成长智慧，通过植物隐喻帮助客户发现自己的生命力和成长潜能，体现成长型思维。
+                        </div>
+                    </div>
+
+                    <div class="dimension-card">
+                        <div class="dimension-name">价值观与意义建构</div>
+                        <div class="dimension-score">
+                            <span>85分</span>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                        <div class="dimension-analysis">
+                            引导客户从更深层的生命意义角度看待挫折和成长，帮助重构对自我和人生的理解。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layer-card layer-4 fade-in">
+                <div class="layer-header">
+                    <div class="layer-icon">⚡</div>
+                    <div class="layer-title">第四层：能量与影响</div>
+                    <div class="layer-score">86分</div>
+                </div>
+                
+                <div class="dimensions-grid">
+                    <div class="dimension-card">
+                        <div class="dimension-name">能量状态管理</div>
+                        <div class="dimension-score">
+                            <span>85分</span>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                        <div class="dimension-analysis">
+                            全程保持稳定而有力的能量状态，能够敏锐感知客户能量变化并及时回应，营造安全有力的能量场。
+                        </div>
+                    </div>
+
+                    <div class="dimension-card">
+                        <div class="dimension-name">影响力施展</div>
+                        <div class="dimension-score">
+                            <span>88分</span>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: 88%;"></div>
+                            </div>
+                        </div>
+                        <div class="dimension-analysis">
+                            通过深度提问和精准反映施展积极影响，不强加观点但能巧妙引导客户走向觉醒和转化。
+                        </div>
+                    </div>
+
+                    <div class="dimension-card">
+                        <div class="dimension-name">转化催化</div>
+                        <div class="dimension-score">
+                            <span>85分</span>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                        <div class="dimension-analysis">
+                            成功催化了客户的深层转化，从恐惧到接纳，从分裂到整合，展现了卓越的转化催化能力。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="radar-section fade-in">
+            <h2 class="section-title">教练风格雷达图</h2>
+            <svg width="400" height="400" viewBox="0 0 400 400" style="max-width: 100%; height: auto;">
+                <defs>
+                    <filter id="glow">
+                        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                        <feMerge> 
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+                
+                <g transform="translate(200,200)">
+                    <!-- 同心圆 -->
+                    <circle r="150" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+                    <circle r="120" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+                    <circle r="90" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+                    <circle r="60" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+                    <circle r="30" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+                    
+                    <!-- 轴线 -->
+                    <line x1="0" y1="-150" x2="0" y2="150" stroke="#cbd5e0" stroke-width="1"/>
+                    <line x1="-150" y1="0" x2="150" y2="0" stroke="#cbd5e0" stroke-width="1"/>
+                    <line x1="-106" y1="-106" x2="106" y2="106" stroke="#cbd5e0" stroke-width="1"/>
+                    <line x1="106" y1="-106" x2="-106" y2="106" stroke="#cbd5e0" stroke-width="1"/>
+                    
+                    <!-- 标签 -->
+                    <text x="0" y="-160" text-anchor="middle" fill="#4a5568" font-size="12" font-weight="600">基础互动(82)</text>
+                    <text x="160" y="5" text-anchor="middle" fill="#4a5568" font-size="12" font-weight="600">对话技术(88)</text>
+                    <text x="0" y="175" text-anchor="middle" fill="#4a5568" font-size="12" font-weight="600">认知思维(87)</text>
+                    <text x="-160" y="5" text-anchor="middle" fill="#4a5568" font-size="12" font-weight="600">能量影响(86)</text>
+                    
+                    <!-- 实际得分多边形 -->
+                    <polygon points="0,-123 132,0 0,130.5 -129,0" 
+                            fill="rgba(102, 126, 234, 0.3)" 
+                            stroke="#667eea" 
+                            stroke-width="3"
+                            filter="url(#glow)"/>
+                    
+                    <!-- 数据点 -->
+                    <circle cx="0" cy="-123" r="6" fill="#667eea"/>
+                    <circle cx="132" cy="0" r="6" fill="#667eea"/>
+                    <circle cx="0" cy="130.5" r="6" fill="#667eea"/>
+                    <circle cx="-129" cy="0" r="6" fill="#667eea"/>
+                </g>
+            </svg>
+            <p style="color: #718096; margin-top: 1rem;">该教练展现出均衡发展的专业能力，对话技术尤为突出</p>
+        </div>
+
+        <div class="strengths-improvements fade-in">
+            <div class="strength-card">
+                <h3 class="card-title">
+                    <span class="card-icon">🌟</span>
+                    核心优势
+                </h3>
+                <ul class="strength-list">
+                    <li><strong>隐喻整合大师：</strong>卓越地运用客户的植物隐喻，将其转化为深刻的自我觉察工具</li>
+                    <li><strong>深度倾听能力：</strong>能够听到言语背后的深层需求，敏锐捕捉能量变化</li>
+                    <li><strong>精妙提问技巧：</strong>问题设计层次递进，从表层到深层逐步引导客户探索</li>

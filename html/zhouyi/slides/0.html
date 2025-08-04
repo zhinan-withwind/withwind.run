@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>无极太极</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Georgia', sans-serif;
+            background: #fff;
+            color: #000;
+            overflow: hidden;
+            cursor: none;
+        }
+
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #000;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transition: all 0.1s ease;
+            mix-blend-mode: difference;
+        }
+
+        .slides-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            padding: 80px;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-content {
+            max-width: 1000px;
+            text-align: center;
+            position: relative;
+        }
+
+        .slide h1 {
+            font-size: 4rem;
+            font-weight: 100;
+            letter-spacing: 0.2em;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .slide h2 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+
+        .slide p {
+            font-size: 1.2rem;
+            line-height: 2;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+            text-align: left;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .slide blockquote {
+            font-size: 1.4rem;
+            font-style: italic;
+            border-left: 2px solid #000;
+            padding-left: 2rem;
+            margin: 3rem 0;
+            opacity: 0.9;
+            text-align: left;
+        }
+
+        .slide .author {
+            font-size: 1rem;
+            opacity: 0.6;
+            margin-top: 1rem;
+            text-align: right;
+        }
+
+        .image-container {
+            margin: 3rem 0;
+            position: relative;
+        }
+
+        .taiji-symbol {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            position: relative;
+            animation: rotate 20s linear infinite;
+        }
+
+        .taiji-symbol svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .chaos-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background: radial-gradient(circle at 30% 30%, #000 1px, transparent 1px),
+                        radial-gradient(circle at 70% 70%, #000 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: float 15s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border: 1px solid #000;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0.5;
+        }
+
+        .nav-dot.active {
+            background: #000;
+            opacity: 1;
+        }
+
+        .controls {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            z-index: 1000;
+            font-size: 0.9rem;
+            opacity: 0.6;
+        }
+
+        .lang-toggle {
+            position: fixed;
+            top: 40px;
+            left: 40px;
+            z-index: 1000;
+            background: transparent;
+            border: 1px solid #000;
+            color: #000;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            opacity: 0.7;
+        }
+
+        .lang-toggle:hover {
+            opacity: 1;
+            background: #000;
+            color: #fff;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .title-slide {
+            text-align: center;
+        }
+
+        .title-slide h1 {
+            font-size: 5rem;
+            font-weight: 100;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .title-slide .subtitle {
+            font-size: 1.5rem;
+            opacity: 0.7;
+            letter-spacing: 0.1em;
+            margin-bottom: 3rem;
+        }
+
+        .title-slide .author-info {
+            font-size: 1rem;
+            opacity: 0.5;
+            margin-top: 4rem;
+        }
+
+        .bagua {
+            width: 150px;
+            height: 150px;
+            margin: 2rem auto;
+            border: 1px solid #000;
+            border-radius: 50%;
+            position: relative;
+            opacity: 0.3;
+        }
+
+        .bagua::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 80%;
+            border: 1px solid #000;
+            border-radius: 50%;
+        }
+
+        .movie-frame {
+            width: 300px;
+            height: 180px;
+            border: 2px solid #000;
+            margin: 2rem auto;
+            position: relative;
+            opacity: 0.7;
+        }
+
+        .movie-frame::before {
+            content: '无极';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor"></div>
+    
+    <button class="lang-toggle" onclick="toggleLanguage()">EN</button>
+    
+    <div class="slides-container">
+        <!-- 标题页 -->
+        <div class="slide active title-slide">
+            <div class="slide-content">
+                <h1 class="zh">无极太极</h1>
+                <h1 class="en hidden">Wuji & Taiji</h1>
+                <div class="subtitle zh">随风学易</div>
+                <div class="subtitle en hidden">Learning I Ching with the Wind</div>
+                <div class="image-container">
+                    <div class="taiji-symbol">
+                        <svg viewBox="0 0 200 200">
+                            <circle cx="100" cy="100" r="100" fill="white"/>
+                            <path d="M 100 0 A 50 50 0 0 1 100 100 A 50 50 0 0 0 100 200 A 100 100 0 0 1 100 0" fill="black"/>
+                            <circle cx="100" cy="50" r="15" fill="black"/>
+                            <circle cx="100" cy="150" r="15" fill="white"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="author-info zh">
+                    苏州知南信息科技有限公司 CTO<br>
+                    收录于 · 随风学易
+                </div>
+                <div class="author-info en hidden">
+                    CTO, Suzhou Zhinan Information Technology Co., Ltd.<br>
+                    Collected in · Learning I Ching with the Wind
+                </div>
+            </div>
+        </div>
+
+        <!-- 引言 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="zh">学易之源</h2>
+                <h2 class="en hidden">The Origin of I Ching</h2>
+                <p class="zh">既然要学易经，当然要从头学起，而易经的源头在哪里呢？那就不得不聊一聊『无极』了。</p>
+                <p class="en hidden">Since we want to learn the I Ching, we should start from the beginning. Where is the source of the I Ching? We must talk about 'Wuji' (The Ultimate of Non-being).</p>
+                <div class="image-container">
+                    <div class="bagua"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 电影无极 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="zh">一部电影</h2>
+                <h2 class="en hidden">A Movie</h2>
+                <div class="image-container">
+                    <img src="../../images/WUJI.PNG" alt="无极" style="max-width: 300px; height: auto;">
+                </div>
+                <p class="zh">每次说起『无极』这个词，我脑子里最先浮现出来的永远不是什么高深的哲学概念，而是陈凯歌导演在2005年拍的一部电影。</p>
+                <p class="en hidden">Whenever I mention the word 'Wuji', what first comes to mind is never some profound philosophical concept, but a movie directed by Chen Kaige in 2005.</p>
+                <p class="zh">时隔近二十年，再次观看时发现，除了夸张的色彩和搞笑的台词以外，这部片子想传达的东西还是有些内涵的——那种无始无终，周而复始的状态。</p>
+                <p class="en hidden">Nearly twenty years later, watching it again, I found that aside from the exaggerated colors and funny lines, the film still has some depth in what it wants to convey - that state of endless cycles, without beginning or end.</p>
+            </div>
+        </div>
+
+        <!-- 老子的无极 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="zh">道德经中的无极</h2>
+                <h2 class="en hidden">Wuji in Tao Te Ching</h2>
+                <blockquote class="zh">
+                    知其白，守其黑，为天下式。<br>
+                    为天下式，常德不忒，复归于无极。
+                    <div class="author">—— 老子《道德经》</div>
+                </blockquote>
+                <blockquote class="en hidden">
+                    Know the white, keep to the black,<br>
+                    be a pattern for the world.<br>
+                    Being a pattern for the world,<br>
+                    eternal virtue will not depart,<br>
+                    return to the state of Wuji.
+                    <div class="author">—— Laozi, Tao Te Ching</div>
+                </blockquote>
+                <p class="zh">老子所说的无极，是一个状态，当知其白，守其黑，就可以回到无极的状态。</p>
+                <p class="en hidden">The Wuji that Laozi speaks of is a state. When one knows the white and keeps to the black, one can return to the state of Wuji.</p>
+            </div>
+        </div>
+
+        <!-- 庄子的无极 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="zh">逍遥游中的无极</h2>
+                <h2 class="en hidden">Wuji in Zhuangzi's Free and Easy Wandering</h2>
+                <blockquote class="zh">
+                    无极之外，复无极也。
+                    <div class="author">—— 庄子《逍遥游》</div>
+                </blockquote>
+                <blockquote class="en hidden">
+                    Beyond Wuji, there is still Wuji.
+                    <div class="author">—— Zhuangzi, Free and Easy Wandering</div>
+                </blockquote>
+                <p class="zh">庄子说：无极之外，还是无极，说明无极是没有边界的。</p>
+                <p class="en hidden">Zhuangzi said: Beyond Wuji, there is still Wuji, indicating that Wuji has no boundaries. </p>
+                <p class="zh">这让人想起宇宙 —— 其大无外，其小无内。</p>
+                <p class="en hidden">This reminds us of the universe - so great that nothing exists beyond it, so small that nothing exists within it.</p>                
+                <div class="chaos-bg"></div>
+            </div>
+        </div>
+
+        <!-- 太极图说 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="zh">太极图说</h2>
+                <h2 class="en hidden">Explanation of the Diagram of the Supreme Ultimate</h2>
+                <blockquote class="zh">
+                    无极而太极。太极动而生阳，动极而静，静而生阴，静极复动。<br>
+                    一动一静，互为其根。分阴分阳，两仪立焉。
+                    <div class="author">—— 周敦颐《太极图说》</div>
+                </blockquote>
+                <blockquote class="en hidden">
+                    Wuji and yet Taiji. Taiji moves and generates yang;<br>
+                    when its activity reaches its limit, it becomes tranquil.<br>
+                    Through tranquility Taiji generates yin.<br>
+                    When tranquility reaches its limit, activity begins again.<br>
+                    <div class="author">—— Zhou Dunyi, Explanation of the Diagram of the Supreme Ultimate</div>
+                </blockquote>
+                <div class="image-container">
+                    <div class="taiji-symbol">
+                        <svg viewBox="0 0 200 200">
+                            <circle cx="100" cy="100" r="100" fill="white"/>
+                            <path d="M 100 0 A 50 50 0 0 1 100 100 A 50 50 0 0 0 100 200 A 100 100 0 0 1 100 0" fill="black"/>
+                            <circle cx="100" cy="50" r="15" fill="black"/>
+                            <circle cx="100" cy="150" r="15" fill="white"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 无极而太极 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="zh">无极而太极</h2>
+                <h2 class="en hidden">Wuji and yet Taiji</h2>
+                <p class="zh">无极：从字面理解，就是没有极点，没有道理。</p>
+                <p class="en hidden">Wuji: Literally understood, it means no ultimate point, no principle.</p>
+                <p class="zh">太极：从字面理解，就是至高的极点，至高无上的道理。</p>
+                <p class="en hidden">Taiji: Literally understood, it means the supreme ultimate point, the supreme principle.</p>
+                <p class="zh">《太极图说》里用的是：『无极而太极』，并不是『无极生太极』，这告诉我们太极不是无极演化来的，无极和太极是一不是二，是同一个东西的不同状态。</p>
+                <p class="en hidden">The Explanation uses 'Wuji and yet Taiji', not 'Wuji generates Taiji'. This tells us that Taiji is not evolved from Wuji; Wuji and Taiji are one, not two - they are different states of the same thing.</p>
+            </div>
+        </div>
+
+        <!-- 动静之别 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="zh">一动一静</h2>
+                <h2 class="en hidden">One Movement, One Stillness</h2>
+                <p class="zh">静的时候就是无极，什么也没有；动的时候就是太极，呈现出至高无上的道理。</p>
+                <p class="en hidden">When still, it is Wuji, with nothing there; when moving, it is Taiji, manifesting the supreme principle.</p>
+                <p class="zh">无极是不动的，稳定的，恒定的；而太极是运动的，转化的，流转的。</p>
+                <p class="en hidden">Wuji is motionless, stable, and constant; while Taiji is moving, transforming, and flowing.</p>
+                <p class="zh">就像盘古的传说——当盘古睡着，就是无极；等盘古醒了，就是太极。</p>
+                <p class="en hidden">Like the legend of Pangu - when Pangu sleeps, it is Wuji; when Pangu awakens, it is Taiji.</p>
+                <div class="image-container">
+                    <img src="../../images/PANGU.PNG" alt="盘古开天辟地" style="max-width: 450px; height: auto;">
+                </div>
+            </div>
+        </div>
+
+        <!-- 混沌与鸿蒙 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="zh">混沌与鸿蒙</h2>
+                <h2 class="en hidden">Chaos and Primordial Vastness</h2>
+                <p class="zh">传说中天地未判，阴阳未分时，大神盘古居住在一个蛋里，这个蛋就是混沌。盘古用巨斧劈开鸿蒙，才有了阴阳，清者为天，浊者为地。</p>
+                <p class="en hidden">Legend says that before heaven and earth were separated, before yin and yang were divided, the great god Pangu lived in an egg - this egg was chaos. Pangu split the primordial vastness with a giant axe, creating yin and yang: the clear became heaven, the turbid became earth.</p>
+                <p class="zh">鸿蒙更多是指那个时代，混沌更多是指那个状态，而这就是无极。</p>
+                <p class="en hidden">Primordial vastness refers more to that era, chaos refers more to that state - and this is Wuji.</p>
+                <div class="chaos-bg"></div>
+            </div>
+        </div>
+
+        <!-- 结语 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="zh">无极的本质</h2>
+                <h2 class="en hidden">The Essence of Wuji</h2>
+                <p class="zh">无极是宇宙和世界最初始的状态，它啥也不是，却是所有一切最原始的起点。</p>
+                <p class="en hidden">Wuji is the most primordial state of the universe and world. It is nothing, yet it is the most original starting point of everything.</p>
+                <p class="zh">它是宇宙大爆炸前的奇点，是空，什么也没有，却包含了万物；没有任何道理，却孕育着天下最至高的公理。</p>
+                <p class="en hidden">It is the singularity before the Big Bang, the void that contains nothing yet encompasses all things; it has no principle yet nurtures the most supreme axiom under heaven.</p>
+                <p class="zh">这就是无极——只可名，不可道。</p>
+                <p class="en hidden">This is Wuji - it can only be named, but cannot be spoken.</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content">
+                <h2>一动一静</h2>
+                <p>静的时候就是无极，什么也没有；动的时候就是太极，呈现出至高无上的道理。</p>
+                <p>无极是不动的，稳定的，恒定的；而太极是运动的，转化的，流转的。</p>
+                <p>就像盘古的传说——当盘古睡着，就是无极；等盘古醒了，就是太极。</p>
+                <div class="image-container">
+                    <div class="taiji-symbol">
+                        <svg viewBox="0 0 200 200">
+                            <circle cx="100" cy="100" r="100" fill="white"/>
+                            <path d="M 100 0 A 50 50 0 0 1 100 100 A 50 50 0 0 0 100 200 A 100 100 0 0 1 100 0" fill="black"/>
+                            <circle cx="100" cy="50" r="15" fill="black"/>
+                            <circle cx="100" cy="150" r="15" fill="white"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 混沌与鸿蒙 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>混沌与鸿蒙</h2>
+                <p>传说中天地未判，阴阳未分时，大神盘古居住在一个蛋里，这个蛋就是混沌。盘古用巨斧劈开鸿蒙，才有了阴阳，清者为天，浊者为地。</p>
+                <p>鸿蒙更多是指那个时代，混沌更多是指那个状态，而这就是无极。</p>
+                <div class="chaos-bg"></div>
+            </div>
+        </div>
+
+        <!-- 结语 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>无极的本质</h2>
+                <p>无极是宇宙和世界最初始的状态，它啥也不是，却是所有一切最原始的起点。</p>
+                <p>它是宇宙大爆炸前的奇点，是空，什么也没有，却包含了万物；没有任何道理，却孕育着天下最至高的公理。</p>
+                <p>这就是无极——只可名，不可道。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <div class="nav-dot active" data-slide="0"></div>
+        <div class="nav-dot" data-slide="1"></div>
+        <div class="nav-dot" data-slide="2"></div>
+        <div class="nav-dot" data-slide="3"></div>
+        <div class="nav-dot" data-slide="4"></div>
+        <div class="nav-dot" data-slide="5"></div>
+        <div class="nav-dot" data-slide="6"></div>
+        <div class="nav-dot" data-slide="7"></div>
+        <div class="nav-dot" data-slide="8"></div>
+        <div class="nav-dot" data-slide="9"></div>
+    </div>
+
+    <div class="controls">
+        ← → 切换幻灯片 | Space 播放/暂停
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const navDots = document.querySelectorAll('.nav-dot');
+        const totalSlides = slides.length;
+        let isAutoPlay = false;
+        let autoPlayInterval;
+
+        // 自定义光标
+        const cursor = document.querySelector('.cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            navDots[currentSlide].classList.remove('active');
+            
+            currentSlide = (n + totalSlides) % totalSlides;
+            
+            slides[currentSlide].classList.add('active');
+            navDots[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        function startAutoPlay() {
+            isAutoPlay = true;
+            autoPlayInterval = setInterval(nextSlide, 5000);
+        }
+
+        function stopAutoPlay() {
+            isAutoPlay = false;
+            clearInterval(autoPlayInterval);
+        }
+
+        // 键盘控制
+        document.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case 'ArrowLeft':
+                    stopAutoPlay();
+                    prevSlide();
+                    break;
+                case 'ArrowRight':
+                    stopAutoPlay();
+                    nextSlide();
+                    break;
+                case ' ':
+                    e.preventDefault();
+                    if (isAutoPlay) {
+                        stopAutoPlay();
+                    } else {
+                        startAutoPlay();
+                    }
+                    break;
+            }
+        });
+
+        // 导航点击
+        navDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                stopAutoPlay();
+                showSlide(index);
+            });
+        });
+
+        // 鼠标滚轮控制
+        document.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            stopAutoPlay();
+            if (e.deltaY > 0) {
+                nextSlide();
+            } else {
+                prevSlide();
+            }
+        }, { passive: false });
+
+        // 触摸控制
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > 50) {
+                stopAutoPlay();
+                if (diff > 0) {
+                    nextSlide();
+                } else {
+                    prevSlide();
+                }
+            }
+        });
+
+        // 语言切换功能
+        let isEnglish = false;
+        
+        function toggleLanguage() {
+            isEnglish = !isEnglish;
+            const langButton = document.querySelector('.lang-toggle');
+            const zhElements = document.querySelectorAll('.zh');
+            const enElements = document.querySelectorAll('.en');
+            
+            if (isEnglish) {
+                langButton.textContent = '中';
+                zhElements.forEach(el => el.classList.add('hidden'));
+                enElements.forEach(el => el.classList.remove('hidden'));
+            } else {
+                langButton.textContent = 'EN';
+                zhElements.forEach(el => el.classList.remove('hidden'));
+                enElements.forEach(el => el.classList.add('hidden'));
+            }
+        }
+    </script>
+</body>
+</html>

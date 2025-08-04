@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>阴阳两仪</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f5f5f5;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* 容器 */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        /* 标题 */
+        .main-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 300;
+            letter-spacing: 0.3em;
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        .main-title::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: #000;
+        }
+
+        /* 目录样式 */
+        .title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 0.2em;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #666;
+            letter-spacing: 0.1em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .toc {
+            max-width: 800px;
+            margin: 0 auto 80px;
+            padding: 40px;
+            border: 1px solid #e0e0e0;
+            position: relative;
+        }
+
+        .toc-title {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            letter-spacing: 0.2em;
+        }
+
+        .toc-list {
+            list-style: none;
+            counter-reset: toc-counter;
+        }
+
+        .toc-item {
+            margin-bottom: 20px;
+            padding-left: 40px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toc-item::before {
+            counter-increment: toc-counter;
+            content: counter(toc-counter);
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            border: 1px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .toc-item:hover::before {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .toc-item:hover {
+            transform: translateX(10px);
+        }
+
+        /* 章节样式 */
+        .chapter {
+            margin-bottom: 100px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .chapter:nth-child(1) { animation-delay: 0.1s; }
+        .chapter:nth-child(2) { animation-delay: 0.2s; }
+        .chapter:nth-child(3) { animation-delay: 0.3s; }
+        .chapter:nth-child(4) { animation-delay: 0.4s; }
+        .chapter:nth-child(5) { animation-delay: 0.5s; }
+        .chapter:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chapter-title {
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+            letter-spacing: 0.1em;
+            display: flex;
+            align-items: center;
+        }
+
+        .chapter-number {
+            font-size: 1.2rem;
+            margin-right: 20px;
+            opacity: 0.6;
+        }
+
+        .chapter-content {
+            font-size: 1.1rem;
+            line-height: 2;
+            color: #333;
+        }
+
+        /* 关键词高亮 */
+        .keyword {
+            font-weight: 500;
+            position: relative;
+            display: inline-block;
+        }
+
+        .keyword::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #000;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .keyword:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* 引用样式 */
+        .quote-container {
+            margin: 40px 0;
+            padding: 40px;
+            background-color: #f8f8f8;
+            border-left: 4px solid #000;
+            position: relative;
+        }
+
+        .quote-text {
+            font-size: 1.3rem;
+            font-style: italic;
+            line-height: 2;
+            margin-bottom: 20px;
+        }
+
+        .quote-author {
+            text-align: right;
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .quote-container::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 4rem;
+            opacity: 0.2;
+            font-family: Georgia, serif;
+        }
+
+        /* 鸡蛋问题视觉化 */
+        .chicken-egg {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 60px 0;
+            gap: 80px;
+            flex-wrap: wrap;
+        }
+
+        .chicken, .egg {
+            width: 150px;
+            height: 150px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .chicken:hover, .egg:hover {
+            transform: scale(1.1);
+        }
+
+        .chicken-figure {
+            width: 100%;
+            height: 100%;
+            background: #f0f0f0;
+            border-radius: 50% 50% 40% 40%;
+            position: relative;
+            border: 2px solid #000;
+        }
+
+        .chicken-figure::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            background: #f0f0f0;
+            border: 2px solid #000;
+            border-radius: 50%;
+        }
+
+        .chicken-figure::after {
+            content: '鸡';
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5rem;
+            font-weight: 300;
+        }
+
+        .egg-figure {
+            width: 100%;
+            height: 100%;
+            background: #f0f0f0;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: relative;
+            border: 2px solid #000;
+        }
+
+        .egg-figure::after {
+            content: '蛋';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            font-weight: 300;
+        }
+
+        .vs {
+            font-size: 2rem;
+            font-weight: 100;
+            opacity: 0.5;
+        }
+
+        /* 太极图 */
+        .taiji-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 60px 0;
+        }
+
+        .taiji {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: conic-gradient(
+                from 0deg,
+                #000 0deg 180deg,
+                #fff 180deg 360deg
+            );
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: rotate 20s linear infinite;
+        }
+
+        .taiji::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100px;
+            height: 100px;
+            background: #fff;
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+
+        .taiji::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: #000;
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+
+        .taiji-dot-white {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            width: 20px;
+            height: 20px;
+            background: #000;
+            border-radius: 50%;
+        }
+
+        .taiji-dot-black {
+            position: absolute;
+            bottom: 50px;
+            right: 50px;
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            border-radius: 50%;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* 河图洛书 - 更新为真实图形 */
+        .heluoshu {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin: 60px 0;
+            flex-wrap: wrap;
+        }
+
+        .hetu, .luoshu {
+            width: 280px;
+            height: 280px;
+            background: #ffffff;
+            border: 2px solid #000;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: all 0.3s ease;
+            padding: 20px;
+        }
+
+        .hetu:hover, .luoshu:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .symbol-title {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            letter-spacing: 0.1em;
+        }
+
+        /* 阴阳调和图 */
+        .yin-yang-harmony {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 60px 0;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .harmony-circle {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            border-radius: 50%;
+            background: linear-gradient(90deg, #000 0%, #fff 100%);
+            overflow: hidden;
+        }
+
+        .harmony-circle::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: conic-gradient(
+                from 0deg,
+                #000 0deg 180deg,
+                #fff 180deg 360deg
+            );
+            animation: rotate 15s linear infinite;
+        }
+
+        .harmony-text {
+            text-align: center;
+            max-width: 300px;
+        }
+
+        .harmony-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .harmony-desc {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* 阴阳本质部分 - 黑色背景 */
+        .yin-yang-essence {
+            background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+            color: #fff;
+            padding: 80px;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            margin: 80px 0;
+            border-radius: 10px;
+        }
+
+        .yin-yang-essence::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+            animation: rotate 60s linear infinite;
+        }
+
+        .essence-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 100;
+            letter-spacing: 0.3em;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .essence-content {
+            font-size: 1.3rem;
+            line-height: 2.5;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .highlight {
+            color: #ffd700;
+            font-weight: 500;
+        }
+
+        /* 加载动画 */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-circle {
+            width: 60px;
+            height: 60px;
+            border: 2px solid #000;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2rem;
+            }
+
+            .chapter-title {
+                font-size: 1.5rem;
+            }
+
+            .chicken-egg {
+                gap: 40px;
+            }
+
+            .harmony-circle {
+                width: 250px;
+                height: 250px;
+            }
+
+            .harmony-circle::before {
+                width: 200px;
+                height: 200px;
+            }
+
+            .yin-yang-essence {
+                padding: 40px;
+            }
+
+            .essence-title {
+                font-size: 1.8rem;
+            }
+
+            .essence-content {
+                font-size: 1.1rem;
+            }
+
+            .hetu, .luoshu {
+                width: 240px;
+                height: 240px;
+            }
+
+            .hetu-layout, .luoshu-layout {
+                width: 180px;
+                height: 180px;
+            }
+
+            .toc {
+                padding: 30px;
+            }
+
+            .toc-item {
+                padding-left: 40px;
+            }
+
+            .toc-item::before {
+                width: 30px;
+                height: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 加载动画 -->
+    <div class="loader" id="loader">
+        <div class="loader-circle"></div>
+    </div>
+
+    <div class="container">
+        <h1 class="main-title">阴阳两仪</h1>
+
+        <!-- 目录 -->
+        <nav class="toc">
+            <h2 class="toc-title">目录</h2>
+            <ul class="toc-list">
+                <li class="toc-item" onclick="scrollToSection('section1')">
+                    <span class="toc-text">先有鸡还是先有蛋？</span>
+                </li>
+                <li class="toc-item" onclick="scrollToSection('section2')">
+                    <span class="toc-text">什么是阴阳</span>
+                </li>
+                <li class="toc-item" onclick="scrollToSection('section3')">
+                    <span class="toc-text">万物分阴阳</span>
+                </li>
+                <li class="toc-item" onclick="scrollToSection('section4')">
+                    <span class="toc-text">是一不是二</span>
+                </li>
+                <li class="toc-item" onclick="scrollToSection('section5')">
+                    <span class="toc-text">阴阳的本质</span>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- 第一章 -->
+        <div class="chapter" id="section1">
+            <h2 class="chapter-title">
+                <span class="chapter-number">1.</span>
+                先有鸡还是先有蛋？
+            </h2>
+            <div class="chapter-content">
+                <p>我来问一个终极的哲学问题，那就是：到底是先有<span class="keyword">鸡</span>，还是先有<span class="keyword">蛋</span>，你会怎么回答？</p>
+                
+                <p>也许你会说：真无聊啊，这种问题还有什么可争论的，先有<span class="keyword">鸡</span>还是先有<span class="keyword">蛋</span>重要吗？</p>
+                
+                <p>你还别说：宋代大儒<span class="keyword">朱熹</span>和<span class="keyword">陆九渊</span>的无极太极之辩，争的就是这个问题，而且这个辩论影响了各自的弟子，绵延八百年，你说重要不重要？</p>
+                
+                <div class="chicken-egg">
+                    <div class="chicken">
+                        <div class="chicken-figure"></div>
+                    </div>
+                    <div class="vs">VS</div>
+                    <div class="egg">
+                        <div class="egg-figure"></div>
+                    </div>
+                </div>
+                
+                <p>在上一篇文章《无极太极》中，我们已经知道了所谓的<span class="keyword">无极</span>与<span class="keyword">太极</span>，不过是天地未判，阴阳未分的那个状态的两种形态，静的为无极，动的是太极。而静者为阴，动者为阳，无极太极之辩的背后就是一切的开始是从阴开始的，还是从阳开始的，阴生阳，阳生阴这不就是蛋生鸡，鸡生蛋的问题吗？</p>
+                
+                <p>当然，两位大儒争的问题其实是道统问题，是理学和心学之争，是道家与儒家之争，无极是老子的理论，太极是孔子认可的概念，所以是否在太极前面加个无极，这就不是一个简单的问题了，是道家和儒家谁是最初的理论的问题。这个问题，就非得争个你死我活不可了。</p>
+                
+                <p>道家和儒家一直是中华文明的两个主流文化理论，后人们也为了谁是道统争论不休，可回到它们诞生的那个时代，传说孔子还向老子请教，他们可没认为天下的理论谁先谁后，谁高谁低，谁强谁弱。如果把道家与儒家看做是文化的阴阳两面，那孔子与老子的那个时代就是<span class="keyword">无极</span>，无极里不只有后来的儒家和道家，更有墨家，法家，兵家，杂家，阴阳家以及其他的诸子百家，这就是混沌的状态，各家不是相互对立的，而是共同构成了那个时代，是一体的。而到了朱熹和陆九渊的时代，道家和儒家已经你是你，我是我了，这就是阴阳已分的状态。</p>
+            </div>
+        </div>
+
+        <!-- 第二章 -->
+        <div class="chapter" id="section2">
+            <h2 class="chapter-title">
+                <span class="chapter-number">2.</span>
+                什么是阴阳
+            </h2>
+            <div class="chapter-content">
+                <div class="quote-container">
+                    <p class="quote-text">无极而太极。太极动而生阳，动极而静，静而生阴，静极复动。一动一静，互为其根。分阴分阳，两仪立焉。阳变阴合，而生水火木金土。五气顺布，四时行焉。五行一阴阳也，阴阳一太极也，太极本无极也。</p>
+                    <p class="quote-author">—— 周敦颐《太极图说》</p>
+                </div>
+                
+                <div class="taiji-section">
+                    <div class="taiji">
+                        <div class="taiji-dot-white"></div>
+                        <div class="taiji-dot-black"></div>
+                    </div>
+                </div>
+                
+                <p>太极图说里告诉我们阴阳是从太极分化出来的，动而生阳，静而生阴，阴阳就是<span class="keyword">两仪</span>。两仪的仪就是极的意思，所以两仪就是两极，指一个事物的两个极端，比如：最黑的子夜和最亮的正午，最冷的冬至和最热的夏至，最善的良心和最狠的恶念。这些都是两个极端的体现，在太极图里用了黑和白两种颜色也是为了表达这种对立。</p>
+                
+                <p>那么阴阳从哪里讲起呢？我觉得从两个我们熟悉的词开始吧！一个是<span class="keyword">宇宙</span>，一个是<span class="keyword">世界</span>。</p>
+                
+                <p>宇宙这个词我们都很熟悉了，那是一个比我们地球所处的太阳系，太阳系所处的银河系，银河系所属的室女座超星系团还要大很多的概念，包含着我们所有看得见的空间，看不见的空间，看得见星球，看不见的黑洞等等。总之给我们一种无边无际的宏大概念。那这个词到底是什么意思呢？宇是上下四方代表空间属阴，宙是古往今来代表时间属阳，所以所谓宇宙就是古往今来上下四方，泛指所有时间和空间的集合，也是时间与空间交织的阴阳对立统一。</p>
+                
+                <p>同样，世界这个词也是如此：世是时间的流转属阳，过去，现在，未来，是我们熟知的三生三世。界是空间的划分属阴，东西南北中是我们了解的五方大地。所以可以看出所谓世界和宇宙是一个概念，都是时间与空间，阴与阳的统一。</p>
+                
+                <p>千万别小看阴阳这个概念，它大到宇宙世界，小到手心手背，古往今来，无处不在。</p>
+            </div>
+        </div>
+
+        <!-- 第三章 -->
+        <div class="chapter" id="section3">
+            <h2 class="chapter-title">
+                <span class="chapter-number">3.</span>
+                万物分阴阳
+            </h2>
+            <div class="chapter-content">
+                <p>据说，这个世界上最精准的语言是法语，其中重要的一条原因就是：法语对每个词都分阴性和阳性。所以能精准的表达一个事物的一体两面。其实我觉得实在有点过高的评价了法语，什么简洁，精确，优美，浪漫，我还是喜欢中文的抑扬顿挫，优雅动听。中文中其实也是分阴阳的，古文中有很多细腻的地方被现代汉语所忽略了。</p>
+                
+                <div class="heluoshu">
+                    <div class="hetu">
+                        <h3 class="symbol-title">河图</h3>
+                        <img src="../images/HETU.PNG"   alt="河图" style="width: 100%; height: auto; padding: 20px; padding-top: 0; display: block; margin: 0 auto;">
+                    </div>
+                    <div class="luoshu">
+                        <h3 class="symbol-title">洛书</h3>
+                        <img src="../images/LUOSHU.PNG" alt="洛书" style="width: 100%; height: auto; padding: 20px; padding-top: 0; display: block; margin: 0 auto;">
+                    </div>
+                </div>
+                
+                <p>比如『<span class="keyword">朋友</span>』，其实是两个词：同门为朋，同志为友，这是学习的地域相同和精神相同的一对儿阴阳关系。再如『<span class="keyword">池塘</span>』，同样是两个词：圆者为池，方者为塘，方圆也是一对儿相对的阴阳关系。还有『<span class="keyword">图书</span>』，实际上指的是河图与洛书，河出龙马献图，洛出神龟呈书，马属火，而龟属水，水火也是一对儿阴阳关系。古代的汉语非常精微，可是现在的人已经体验不到了，还有谁会去区分朋和友，池和塘？又有谁还理解图和书呢？</p>
+                
+                <p>阴阳是在我们生活中无处不在的，可谓万物皆分阴阳，<span class="keyword">正所谓：天地，日月，昼夜，晨昏，寒暑，春秋，冬夏，雷雨，风雪，男女，君臣，夫妇，奇偶，动静，开合，推拉，向背，无不是阴阳。</span>阴阳是一种二元对立的观念，所以有阳就一定有阴，又阴就一定有阳。</p>
+                
+                <p>世间的万事万物都是分阴阳的，那么怎么分呢？除了山南水北，外阳内阴这类简单明显的原则以外，你可以掌握一条规律就是：阳是无形的精神的，阴是有形的物质的。很多现代概念也可以分阴阳，比如电脑：硬件为阴，软件为阳；比如塑料：它的物质载体为阴，它的作用价值为阳。一些抽象的概念也可以分阴阳，比如：傲慢，傲是高傲，慢是轻慢，所以这是一对儿高矮对立的词汇，一个人有傲气是外显的，一个人有轻慢之心是内化的，这也是一对内外相对的词汇，所以它也是可以分阴阳的，你也可以理解为表达出来的高傲神态是阴，内心的轻慢想法为阳，所以傲为阴，慢为阳，这同样来自于神态是肉身呈现出的有形表现，而想法是思想中的无形意识。同样愤怒也是如此：愤是内心不满产生的情绪，怒是形于外的表达，所以愤为阳，怒是阴。</p>
+            </div>
+        </div>
+
+        <!-- 第四章 -->
+        <div class="chapter" id="section4">
+            <h2 class="chapter-title">
+                <span class="chapter-number">4.</span>
+                是一不是二
+            </h2>
+            <div class="chapter-content">
+                <p>易经里把阴阳成为<span class="keyword">两仪</span>，两仪就是两极，是两个极端，会让我自然联想到南极和北极，确实南北极确实也是一对儿阴阳，感觉两极离的好远。可转念一想，不论南极还是北极，不都在这个地球上么，它们不都是地球的一部分，那他们到底是一还是二？答案是肯定的，是一不是二，就如同手心为阳，手背为阴，但是同是一只手。山南为阳，山北为阴，但同是一座山。</p>
+                
+                <div class="yin-yang-harmony">
+                    <div class="harmony-circle"></div>
+                    <div class="harmony-text">
+                        <h3 class="harmony-title">阴阳调和</h3>
+                        <p class="harmony-desc">最好的状态并非阴阳分明，而是阴阳调和。阴阳相互依存，相互转化，如同太极图中黑白交融，生生不息。</p>
+                    </div>
+                </div>
+                
+                <p>《太极图说》里讲述：无极而太极，太极生两仪，从没有极，到一个至高的极，再到并立的两极，再到分阴分阳，两仪立焉，我们可以看到仍然是原来那个叫无极的东西，它动起来了，变成了太极，越动越快分出了阴阳，可它仍然是原来那个东西，所谓分阴分阳，不是真的分离开了，而是从意念上区分开了。所以一定要明白阴阳不是分立的，而是统一的，而且他们是相互依存，相互转化的。</p>
+                
+                <p>既然他们是一不是二，为什么非要分为彼此呢？我们都知道最好的状态并不是阴阳分明，而是<span class="keyword">阴阳调和</span>。对于我们的日常生活也是如此，对于人生，欲望是阳，克制是阴，没有了欲望，人就失去了进取的动力，而没有了克制，就会刹不住车，被欲望吞没，所以时时刻刻牢记阴阳平衡的道理，才能真正懂得生活的意义。所谓孤阴不长，孤阳不生，这就是我理解的阴阳和合的道理。</p>
+            </div>
+        </div>
+
+        <!-- 阴阳本质部分 -->
+        <div class="chapter" id="section5">
+            <div class="yin-yang-essence">
+                <h2 class="essence-title">阴阳的本质</h2>
+                <p class="essence-content">
+                    阴阳，它<span class="highlight">既是对立又是统一</span>，是宇宙万物运行的根本规律。它<span class="highlight">不是简单的二元划分</span>，而是一种<span class="highlight">动态的平衡</span>，是<span class="highlight">相互依存、相互转化</span>的关系。
+                    <br><br>
+                    阴阳的本质是<span class="highlight">变化的法则</span>，是<span class="highlight">运动的规律</span>，是<span class="highlight">生生不息的循环</span>。它告诉我们：世间万物都在不断的<span class="highlight">此消彼长</span>中达到和谐，在<span class="highlight">对立统一</span>中实现平衡。
+                    <br><br>
+                    阴阳不是<span class="highlight">静止的状态</span>，而是<span class="highlight">流动的过程</span>；不是<span class="highlight">割裂的两端</span>，而是<span class="highlight">连续的整体</span>。这就是阴阳的本质，<span class="highlight">道法自然</span>，<span class="highlight">天人合一</span>。
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 页面加载完成后隐藏加载动画
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 500);
+        });
+
+        // 滚动到指定部分
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const offsetTop = section.offsetTop - 100;
+            
+            window.scrollTo({
+                top: offsetTop,
+                behavior: 'smooth'
+            });
+        }
+
+        // 滚动动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // 观察所有章节
+        document.querySelectorAll('.chapter').forEach(chapter => {
+            observer.observe(chapter);
+        });
+    </script>
+</body>
+</html>

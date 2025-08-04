@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICF教练风格深度分析模型</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #1a202c;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .overview {
+            background: white;
+            margin: -2rem auto 4rem;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            position: relative;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .model-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .layers-section {
+            margin: 4rem 0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #2d3748;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: block;
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        .layers-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .layer-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .layer-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent-color);
+        }
+
+        .layer-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+        }
+
+        .layer-card.layer-1 { --accent-color: linear-gradient(135deg, #667eea, #764ba2); }
+        .layer-card.layer-2 { --accent-color: linear-gradient(135deg, #f093fb, #f5576c); }
+        .layer-card.layer-3 { --accent-color: linear-gradient(135deg, #4facfe, #00f2fe); }
+        .layer-card.layer-4 { --accent-color: linear-gradient(135deg, #43e97b, #38f9d7); }
+
+        .layer-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .layer-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+
+        .layer-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .layer-subtitle {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .dimensions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .dimension-item {
+            background: #f7fafc;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 3px solid;
+            border-left-color: var(--accent-color);
+            transition: all 0.2s ease;
+        }
+
+        .dimension-item:hover {
+            background: #edf2f7;
+            transform: translateX(5px);
+        }
+
+        .dimension-name {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+
+        .dimension-types {
+            font-size: 0.85rem;
+            color: #718096;
+            line-height: 1.4;
+        }
+
+        .assessment-section {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 4rem 0;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .radar-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 2rem auto;
+            text-align: center;
+        }
+
+        .prototype-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .prototype-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .prototype-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--prototype-color), transparent);
+            opacity: 0.05;
+            pointer-events: none;
+        }
+
+        .prototype-card:hover {
+            border-color: var(--prototype-color);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .prototype-card.executive { --prototype-color: #667eea; }
+        .prototype-card.awakening { --prototype-color: #f093fb; }
+        .prototype-card.balanced { --prototype-color: #43e97b; }
+
+        .prototype-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
+
+        .prototype-features {
+            list-style: none;
+        }
+
+        .prototype-features li {
+            padding: 0.5rem 0;
+            color: #4a5568;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .prototype-features li::before {
+            content: '•';
+            color: var(--prototype-color);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .footer {
+            background: #2d3748;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .floating-nav {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            background: white;
+            border-radius: 50px;
+            padding: 1rem 0.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            margin: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: #667eea;
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .overview { margin: -1rem 1rem 2rem; padding: 2rem; }
+            .container { padding: 0 1rem; }
+            .floating-nav { display: none; }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-nav">
+        <div class="nav-dot active" data-section="overview"></div>
+        <div class="nav-dot" data-section="layers"></div>
+        <div class="nav-dot" data-section="assessment"></div>
+        <div class="nav-dot" data-section="prototypes"></div>
+    </div>
+
+    <header class="header">
+        <h1>全维度ICF教练风格深度分析模型</h1>
+        <p>基于对话分析理论、ICF核心能力框架和教练实践研究，建立多层次、全方位的教练风格识别体系</p>
+    </header>
+
+    <div class="container">
+        <section id="overview" class="overview fade-in">
+            <h2 class="section-title">模型概览</h2>
+            
+            <div class="model-stats">
+                <div class="stat-card">
+                    <div class="stat-number">20</div>
+                    <div class="stat-label">核心维度</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">80+</div>
+                    <div class="stat-label">子维度</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">分析层次</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">风格组合</div>
+                </div>
+            </div>
+
+            <p style="text-align: center; color: #4a5568; font-size: 1.1rem; margin-top: 2rem;">
+                通过精细化的多维度分析，深度剖析教练在对话中的行为模式，实现精准的风格画像
+            </p>
+        </section>
+
+        <section id="layers" class="layers-section fade-in">
+            <h2 class="section-title">四层分析框架</h2>
+            
+            <div class="layers-grid">
+                <div class="layer-card layer-1">
+                    <div class="layer-header">
+                        <div class="layer-icon">🎯</div>
+                        <div>
+                            <div class="layer-title">第一层：基础互动模式</div>
+                            <div class="layer-subtitle">7个核心维度</div>
+                        </div>
+                    </div>
+                    <div class="dimensions-grid">
+                        <div class="dimension-item">
+                            <div class="dimension-name">关系建立策略</div>
+                            <div class="dimension-types">连接深度 • 信任建立方式</div>
+                        </div>
+                        <div class="dimension-item">
+                            <div class="dimension-name">目标设定与合约管理</div>
+                            <div class="dimension-types">目标厘清偏好 • 合约执行风格</div>
+                        </div>
+                        <div class="dimension-item">
+                            <div class="dimension-name">时间与节奏管理</div>
+                            <div class="dimension-types">单次教练节奏 • 沉默停顿处理</div>
+                        </div>
+                        <div class="dimension-item">
+                            <div class="dimension-name">注意力分配</div>
+                            <div class="dimension-types">聚焦广度 • 时间投入分布</div>
+                        </div>
+                        <div class="dimension-item">
+                            <div class="dimension-name">语言风格</div>
+                            <div class="dimension-types">表达直接度 • 词汇选择偏好</div>
+                        </div>
+                        <div class="dimension-item">
+                            <div class="dimension-name">情感表达</div>
+                            <div class="dimension-types">情感投入度 • 表达方式</div>
+                        </div>
+                        <div class="dimension-item">
+                            <div class="dimension-name">身体语言与非语言行为</div>
+                            <div class="dimension-types">身体姿态 • 空间距离感</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layer-card layer-2">
+                    <div class="layer-header">
+                        <div class="layer-icon">🎨</div>
+                        <div>
+                            <div class="layer-title">第二层：对话技术</div>
+                            <div class="layer-subtitle">6个核心维度</div>
+                        </div>
+                    </div>
+                    <div class="dimensions-grid">
+                        <div class="dimension-item">
+                            <div class="dimension-name">提问策略</div>
+                            <div class="dimension-types">问题类型偏好 • 问题深度层次</div>
+                        </div>
+                        <div class="dimension-item">
+                            <div class="dimension-name">倾听行为</div>
+                            <div class="dimension-types">倾听层次 • 回应模式</div>
+                        </div>
+                        <div class="dimension-item">
+                            <div class="dimension-name">观察与觉察</div>
+                            <div class="dimension-types">观察焦点 • 觉察敏感度</div>
+                        </div>
+                        <div class="dimension-item">
+                            <div class="dimension-name">反馈给予</div>
+                            <div class="dimension-types">反馈频率 • 反馈方式</div>
+                        </div>
+                        <div class="dimension-item">
+                            <div class="dimension-name">挑战与支持</div>
+                            <div class="dimension-types">挑战强度 • 支持方式</div>
+                        </div>
+                        <div class="dimension-item">
+                            <div class="dimension-name">沉默与留白处理</div>
+                            <div class="dimension-types">沉默态度 • 留白创造</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layer-card layer-3">
+                    <div class="layer-header">
+                        <div class="layer-icon">🧠</div>
+                        <div>
+                            <div class="layer-title">第三层：认知与思维</div>
+                            <div class="layer-subtitle">4个核心维度</div>
+                        </div>
+                    </div>
+                    <div class="dimensions-grid">
+                        <div class="dimension-item">
+                            <div class="dimension-name">思维模式偏好</div>
+                            <div class="dimension-types">认知风格 • 信息处理方式</div>
+                        </div>
+                        <div class="dimension-item">
+                            <div class="dimension-name">问题解决取向</div>
+                            <div class="dimension-types">解决路径偏好 • 复杂性处理</div>
+                        </div>
+                        <div class="dimension-item">
+                            <div class="dimension-name">学习与成长观念</div>
+                            <div class="dimension-types">成长模式信念 • 学习速度期待</div>
+                        </div>
+                        <div class="dimension-item">
+                            <div class="dimension-name">价值观与意义建构</div>
+                            <div class="dimension-types">价值观探索深度 • 意义建构方式</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layer-card layer-4">
+                    <div class="layer-header">
+                        <div class="layer-icon">⚡</div>
+                        <div>
+                            <div class="layer-title">第四层：能量与影响</div>
+                            <div class="layer-subtitle">3个核心维度</div>
+                        </div>
+                    </div>
+                    <div class="dimensions-grid">
+                        <div class="dimension-item">
+                            <div class="dimension-name">能量状态管理</div>
+                            <div class="dimension-types">个人能量管理 • 能量场营造</div>
+                        </div>
+                        <div class="dimension-item">
+                            <div class="dimension-name">影响力施展</div>
+                            <div class="dimension-types">影响策略 • 权威运用</div>
+                        </div>
+                        <div class="dimension-item">
+                            <div class="dimension-name">转化催化</div>
+                            <div class="dimension-types">转化层次 • 催化方式</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="assessment" class="assessment-section fade-in">
+            <h2 class="section-title">评估工具</h2>
+            
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <p style="color: #4a5568; font-size: 1.1rem;">
+                    通过多维度评估，精准识别教练风格特征，指导专业发展方向
+                </p>
+            </div>
+
+            <div class="radar-container">
+                <svg width="400" height="400" viewBox="0 0 400 400" style="max-width: 100%; height: auto;">
+                    <!-- 雷达图背景 -->
+                    <defs>
+                        <pattern id="radarGrid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+                            <circle cx="20" cy="20" r="1" fill="#e2e8f0"/>
+                        </pattern>
+                    </defs>
+                    
+                    <!-- 同心圆 -->
+                    <g transform="translate(200,200)">
+                        <circle r="150" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+                        <circle r="120" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+                        <circle r="90" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+                        <circle r="60" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+                        <circle r="30" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+                        
+                        <!-- 轴线 -->
+                        <line x1="0" y1="-150" x2="0" y2="150" stroke="#cbd5e0" stroke-width="1"/>
+                        <line x1="-150" y1="0" x2="150" y2="0" stroke="#cbd5e0" stroke-width="1"/>
+                        <line x1="-106" y1="-106" x2="106" y2="106" stroke="#cbd5e0" stroke-width="1"/>
+                        <line x1="106" y1="-106" x2="-106" y2="106" stroke="#cbd5e0" stroke-width="1"/>
+                        
+                        <!-- 标签 -->
+                        <text x="0" y="-160" text-anchor="middle" fill="#4a5568" font-size="12" font-weight="600">基础互动</text>
+                        <text x="160" y="5" text-anchor="middle" fill="#4a5568" font-size="12" font-weight="600">对话技术</text>
+                        <text x="0" y="175" text-anchor="middle" fill="#4a5568" font-size="12" font-weight="600">认知思维</text>
+                        <text x="-160" y="5" text-anchor="middle" fill="#4a5568" font-size="12" font-weight="600">能量影响</text>
+                        
+                        <!-- 示例数据点 -->
+                        <polygon points="0,-120 90,90 0,100 -75,-75" 
+                                fill="rgba(102, 126, 234, 0.2)" 
+                                stroke="#667eea" 
+                                stroke-width="2"/>
+                        
+                        <!-- 数据点 -->
+                        <circle cx="0" cy="-120" r="4" fill="#667eea"/>
+                        <circle cx="90" cy="90" r="4" fill="#667eea"/>
+                        <circle cx="0" cy="100" r="4" fill="#667eea"/>
+                        <circle cx="-75" cy="-75" r="4" fill="#667eea"/>
+                    </g>
+                </svg>
+                <p style="color: #718096; font-size: 0.9rem; margin-top: 1rem;">示例：平衡整合型教练风格雷达图</p>
+            </div>
+        </section>
+
+        <section id="prototypes" class="fade-in">
+            <h2 class="section-title">典型风格原型</h2>
+            
+            <div class="prototype-grid">
+                <div class="prototype-card executive">
+                    <div class="prototype-title">🎯 高效执行型教练</div>
+                    <ul class="prototype-features">
+                        <li>表层社交 + 专业权威建立关系</li>
+                        <li>先导合约 + 严格遵守目标管理</li>
+                        <li>事实探索 + 直接反馈对话技术</li>
+                        <li>逻辑理性 + 解决方案导向认知</li>
+                        <li>稳定输出 + 说服劝导影响力</li>
+                    </ul>
+                </div>
+
+                <div class="prototype-card awakening">
+                    <div class="prototype-title">🌟 深度觉醒型教练</div>
+                    <ul class="prototype-features">
+                        <li>灵魂触碰 + 真诚透明建立关系</li>
+                        <li>直觉感知 + 破界突破目标管理</li>
+                        <li>存在意义 + 灵魂倾听对话技术</li>
+                        <li>直觉感性 + 觉醒转化认知模式</li>
+                        <li>深度临在 + 顿悟催化影响力</li>
+                    </ul>
+                </div>
+
+                <div class="prototype-card balanced">
+                    <div class="prototype-title">⚖️ 平衡整合型教练</div>
+                    <ul class="prototype-features">
+                        <li>各维度均衡发展</li>
+                        <li>根据客户需求灵活调整</li>
+                        <li>多风格切换能力强</li>
+                        <li>情境适应性突出</li>
+                        <li>持续学习和发展</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>© 2024 ICF教练风格深度分析模型 | 支持教练专业发展与质量提升</p>
+    </footer>
+
+    <script>
+        // 滚动动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // 导航点击
+        document.querySelectorAll('.nav-dot').forEach(dot => {
+            dot.addEventListener('click', () => {
+                const section = dot.dataset.section;
+                document.getElementById(section).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // 导航状态更新
+        window.addEventListener('scroll', () => {
+            const sections = ['overview', 'layers', 'assessment', 'prototypes'];
+            const navDots = document.querySelectorAll('.nav-dot');
+            
+            let currentSection = '';
+            sections.forEach(section => {
+                const element = document.getElementById(section);
+                if (element) {
+                    const rect = element.getBoundingClientRect();
+                    if (rect.top <= 200 && rect.bottom >= 200) {
+                        currentSection = section;
+                    }
+                }
+            });
+
+            navDots.forEach((dot, index) => {
+                dot.classList.toggle('active', sections[index] === currentSection);
+            });
+        });
+
+        // 添加一些交互效果
+        document.querySelectorAll('.dimension-item').forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                item.style.transform = 'translateX(8px) scale(1.02)';
+            });
+            
+            item.addEventListener('mouseleave', () => {
+                item.style.transform = 'translateX(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

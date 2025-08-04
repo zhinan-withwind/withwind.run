@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>探索中国古代哲学中的终极概念</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .item {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #000;
+            text-decoration: none;
+            color: #000;
+            transition: all 0.3s ease;
+        }
+
+        .item:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        .icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        /* 标题 */
+        .main-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 300;
+            letter-spacing: 0.3em;
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+
+        .title {
+            font-size: 18px;
+        }
+
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f5f5f5;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* 头部样式 */
+        .header {
+            text-align: center;
+            padding: 80px 20px 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0,0,0,0.03) 0%, transparent 70%);
+            animation: rotate 60s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 0.2em;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #666;
+            letter-spacing: 0.1em;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 目录样式 */
+        .toc {
+            max-width: 800px;
+            margin: 0 auto 80px;
+            padding: 40px;
+            border: 1px solid #e0e0e0;
+            position: relative;
+        }
+
+        .toc-title {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            letter-spacing: 0.2em;
+        }
+
+        .toc-list {
+            list-style: none;
+            counter-reset: toc-counter;
+        }
+
+        .toc-item {
+            margin-bottom: 20px;
+            padding-left: 40px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toc-item::before {
+            counter-increment: toc-counter;
+            content: counter(toc-counter);
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            border: 1px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .toc-item:hover::before {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .toc-item:hover {
+            transform: translateX(10px);
+        }
+
+        /* 主内容区域 */
+        .main-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+        }
+
+        .section {
+            margin-bottom: 100px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .section:nth-child(1) { animation-delay: 0.1s; }
+        .section:nth-child(2) { animation-delay: 0.2s; }
+        .section:nth-child(3) { animation-delay: 0.3s; }
+        .section:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes fadeInUp {
+            to {
+        opacity: 1;
+        transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+            letter-spacing: 0.1em;
+        }
+
+        .section-content {
+            font-size: 1.1rem;
+            line-height: 2;
+            color: #333;
+        }
+
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f5f5f5;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* 头部样式 */
+        .header {
+            text-align: center;
+            padding: 80px 20px 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0,0,0,0.03) 0%, transparent 70%);
+            animation: rotate 60s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 0.2em;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #666;
+            letter-spacing: 0.1em;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 目录样式 */
+        .toc {
+            max-width: 800px;
+            margin: 0 auto 80px;
+            padding: 40px;
+            border: 1px solid #e0e0e0;
+            position: relative;
+        }
+
+        .toc-title {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            letter-spacing: 0.2em;
+        }
+
+        .toc-list {
+            list-style: none;
+            counter-reset: toc-counter;
+        }
+
+        .toc-item {
+            margin-bottom: 20px;
+            padding-left: 40px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toc-item::before {
+            counter-increment: toc-counter;
+            content: counter(toc-counter);
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            border: 1px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .toc-item:hover::before {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .toc-item:hover {
+            transform: translateX(10px);
+        }
+
+        /* 主内容区域 */
+        .main-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+        }
+
+        .section {
+            margin-bottom: 100px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .section:nth-child(1) { animation-delay: 0.1s; }
+        .section:nth-child(2) { animation-delay: 0.2s; }
+        .section:nth-child(3) { animation-delay: 0.3s; }
+        .section:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes fadeInUp {
+            to {
+        opacity: 1;
+        transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+            letter-spacing: 0.1em;
+        }
+
+        .section-content {
+            font-size: 1.1rem;
+            line-height: 2;
+            color: #333;
+        }
+
+        /* 电影海报样式 */
+        .movie-poster {
+            width: 100%;
+            max-width: 400px;
+            height: 600px;
+            margin: 40px auto;
+            background: linear-gradient(135deg, #f8f8f8 0%, #e8e8e8 100%);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: all 0.5s ease;
+        }
+
+        .movie-poster:hover {
+            transform: scale(1.02);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+        }
+
+        /* 背景装饰圆环 */
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .bg-circle:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            right: -100px;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .bg-circle:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            bottom: -50px;
+            left: -50px;
+            animation: float 15s ease-in-out infinite reverse;
+        }
+
+        .bg-circle:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            33% { transform: translate(30px, -30px); }
+            66% { transform: translate(-20px, 20px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.1; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.3; transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        /* 太极图元素 */
+        .taiji-element {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: conic-gradient(
+        from 0deg,
+        #000 0deg 180deg,
+        #fff 180deg 360deg
+            );
+            opacity: 0.2;
+            animation: rotate 30s linear infinite;
+        }
+
+        .taiji-element::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 60px;
+            height: 60px;
+            background: #fff;
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+
+        .taiji-element::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 0;
+            width: 60px;
+            height: 60px;
+            background: #000;
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+
+        @keyframes rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* 装饰线条 */
+        .decorative-line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, #000, transparent);
+            opacity: 0.1;
+        }
+
+        .decorative-line:nth-child(5) {
+            width: 100%;
+            height: 1px;
+            top: 30%;
+        }
+
+        .decorative-line:nth-child(6) {
+            width: 100%;
+            height: 1px;
+            bottom: 30%;
+        }
+
+        /* 电影标题 */
+        .movie-title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 5rem;
+            font-weight: 100;
+            letter-spacing: 0.8em;
+            color: #000;
+            opacity: 0.9;
+            z-index: 10;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* 副标题 */
+        .subtitle-text {
+            position: absolute;
+            top: 65%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.9rem;
+            letter-spacing: 0.5em;
+            color: #666;
+            opacity: 0.8;
+            z-index: 10;
+        }
+
+        /* 导演信息 */
+        .director {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            color: #888;
+            z-index: 10;
+        }
+
+        /* 年份 */
+        .year {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            font-size: 1.2rem;
+            letter-spacing: 0.2em;
+            color: #000;
+            opacity: 0.6;
+            z-index: 10;
+        }
+
+        /* 装饰点 */
+        .dot {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #000;
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+
+        .dot:nth-child(11) { top: 20%; left: 20%; }
+        .dot:nth-child(12) { top: 20%; right: 20%; }
+        .dot:nth-child(13) { bottom: 20%; left: 20%; }
+        .dot:nth-child(14) { bottom: 20%; right: 20%; }
+
+        /* 引用样式 */
+        .quote-container {
+            margin: 40px 0;
+            padding: 40px;
+            background-color: #f8f8f8;
+            border-left: 4px solid #000;
+            position: relative;
+        }
+
+        .quote-text {
+            font-size: 1.3rem;
+            font-style: italic;
+            line-height: 2;
+            margin-bottom: 20px;
+        }
+
+        .quote-author {
+            text-align: right;
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .quote-container::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 4rem;
+            opacity: 0.2;
+            font-family: Georgia, serif;
+        }
+
+        /* 太极图容器 */
+        .taiji-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 60px 0;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+
+        .taiji-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: conic-gradient(
+        from 0deg,
+        #000 0deg 180deg,
+        #fff 180deg 360deg
+            );
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: rotate 20s linear infinite;
+        }
+
+        .taiji-image::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 150px;
+            height: 150px;
+            background: #fff;
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+
+        .taiji-image::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 0;
+            width: 150px;
+            height: 150px;
+            background: #000;
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+
+        .taiji-inner-white {
+            position: absolute;
+            top: 75px;
+            left: 75px;
+            width: 30px;
+            height: 30px;
+            background: #000;
+            border-radius: 50%;
+        }
+
+        .taiji-inner-black {
+            position: absolute;
+            bottom: 75px;
+            right: 75px;
+            width: 30px;
+            height: 30px;
+            background: #fff;
+            border-radius: 50%;
+        }
+
+        .bagua-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #f5f5f5 0%, #e0e0e0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .bagua-image::before {
+            content: '六十四卦';
+            font-size: 1.5rem;
+            letter-spacing: 0.2em;
+            opacity: 0.5;
+        }
+
+        /* 概念对比 */
+        .concept-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 60px 0;
+        }
+
+        .concept-box {
+            padding: 40px;
+            border: 1px solid #e0e0e0;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .concept-box:hover {
+            border-color: #000;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .concept-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .concept-desc {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* 盘古开天图 */
+        .pangu-image {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            margin: 60px auto;
+            background: linear-gradient(to bottom, #000 0%, #333 50%, #666 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .pangu-image::before {
+            content: '盘古开天';
+            position: absolute;
+            font-size: 3rem;
+            font-weight: 100;
+            letter-spacing: 0.5em;
+            color: rgba(255,255,255,0.3);
+        }
+
+        .chaos-egg {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        /* 无极本质展示 */
+        .wuji-essence {
+            background: linear-gradient(135deg, #000 0%, #333 100%);
+            color: #fff;
+            padding: 80px;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            margin: 80px 0;
+            border-radius: 10px;
+        }
+
+        .wuji-essence::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 60s linear infinite;
+        }
+
+        .essence-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 100;
+            letter-spacing: 0.3em;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .essence-content {
+            font-size: 1.3rem;
+            line-height: 2.5;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .highlight {
+            color: #ffd700;
+            font-weight: 500;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .title {
+        font-size: 2rem;
+            }
+
+            .section-title {
+        font-size: 1.5rem;
+            }
+
+            .concept-comparison {
+        grid-template-columns: 1fr;
+            }
+
+            .taiji-container {
+        flex-direction: column;
+            }
+
+            .movie-poster {
+        height: 500px;
+            }
+
+            .movie-title {
+        font-size: 3.5rem;
+            }
+        }
+
+        /* 加载动画 */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-circle {
+            width: 60px;
+            height: 60px;
+            border: 2px solid #000;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 关键词高亮 */
+        .keyword {
+            font-weight: 500;
+            position: relative;
+            display: inline-block;
+        }
+
+        .keyword::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #000;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .keyword:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+    </style>
+</head>
+<body>
+    <!-- 加载动画 -->
+    <div class="loader" id="loader">
+        <div class="loader-circle"></div>
+    </div>
+
+    <!-- 头部 -->
+    <header class="header">
+        <h1 class="main-title">无极太极</h1>
+    </header>
+
+    <!-- 目录 -->
+    <nav class="toc">
+        <h2 class="toc-title">目录</h2>
+        <ul class="toc-list">
+            <li class="toc-item" onclick="scrollToSection('section1')">一部电影</li>
+            <li class="toc-item" onclick="scrollToSection('section2')">到底讲了什么？</li>
+            <li class="toc-item" onclick="scrollToSection('section3')">无极而太极</li>
+            <li class="toc-item" onclick="scrollToSection('section4')">混沌与鸿蒙</li>
+            <li class="toc-item" onclick="scrollToSection('section5')">无极的本质</li>
+        </ul>
+    </nav>
+
+    <!-- 主内容 -->
+    <main class="main-content">
+        <!-- 第一部分 -->
+        <section class="section" id="section1">
+            <h2 class="section-title">一、一部电影</h2>
+            <div class="section-content">
+                <p>既然要学<span class="keyword">易经</span>，当然要从头学起，而易经的源头在哪里呢？那就不得不聊一聊<span class="keyword">无极</span>了。</p>
+                
+                <h3 style="margin: 30px 0 20px; font-size: 1.5rem; font-weight: 300;">电影『无极』</h3>
+                
+                <p>每次说起<span class="keyword">无极</span>这个词，我脑子里最先浮现出来的永远不是什么高深的哲学概念，而是陈凯歌导演在2005年拍的一部电影。说实话这部电影我当年真心觉得是一部烂片，倒是由它改编的『一个馒头引发的血案』令我印象深刻。这次为了对<span class="keyword">无极</span>这个概念加深理解，我特意又重看了一遍这部电影，想不到时隔近二十年，再次看的时候，居然发现这部片子没有当初印象里的那么烂了。除了夸张的色彩和搞笑的台词以外，这部片子想传达的东西还是有些内涵的，不过如果一定要说它和<span class="keyword">无极</span>有什么关系的话，那应该就是那种无始无终，周而复始的状态吧。</p>
+                
+                <div class="movie-poster">
+                    <!-- 背景装饰圆环 -->
+                    <div class="bg-circle"></div>
+                    <div class="bg-circle"></div>
+                    <div class="bg-circle"></div>
+                    
+                    <!-- 太极图元素 -->
+                    <div class="taiji-element"></div>
+                    
+                    <!-- 装饰线条 -->
+                    <div class="decorative-line"></div>
+                    <!-- 插入无极电影海报图片 -->
+                    <img src="../images/WUJI.PNG" alt="无极电影海报" style="width: 80%; display: block; margin: 20px auto; margin-top: 185px;">
+                    <div class="decorative-line"></div>
+                    
+                    <!-- 电影标题 -->
+                    <h1 class="movie-title">無極</h1>
+                    
+                    <!-- 副标题 -->
+                    <p class="subtitle-text">THE PROMISE</p>
+                    
+                    <!-- 导演信息 -->
+                    <p class="director">陈凯歌 导演作品</p>
+                    
+                    <!-- 年份 -->
+                    <p class="year">2005</p>
+                    
+                    <!-- 装饰点 -->
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第二部分 -->
+        <section class="section" id="section2">
+            <h2 class="section-title">二、到底讲了什么？</h2>
+            <div class="section-content">
+                <p>好啦！不聊电影，还是说回正题吧，到底什么是<span class="keyword">无极</span>吧。我觉得<span class="keyword">无极</span>就是<span class="keyword">哈姆雷特</span>，因为一千个人心里就有一千个哈姆雷特，那么一千个人理解中，也会有一千个<span class="keyword">无极</span>吧。今天我想说的，只是我的理解，不代表正确的理解。</p>
+                
+                <p><span class="keyword">无极</span>这个词最早出现在老子的道德经里：</p>
+                
+                <div class="quote-container">
+                    <p class="quote-text">知其白，守其黑，为天下式。为天下式，常德不忒，复归于无极</p>
+                    <p class="quote-author">—— 老子《道德经》</p>
+                </div>
+                
+                <p>其实老子所说的<span class="keyword">无极</span>，是一个状态，当知其白，守其黑，就可以回到<span class="keyword">无极</span>的状态。</p>
+                
+                <p>在老子之后，庄子也在逍遥游里提到了<span class="keyword">无极</span>：</p>
+                
+                <div class="quote-container">
+                    <p class="quote-text">无极之外，复无极也。</p>
+                    <p class="quote-author">—— 庄子《逍遥游》</p>
+                </div>
+                
+                <p>庄子说：<span class="keyword">无极</span>之外，还是<span class="keyword">无极</span>，说明<span class="keyword">无极</span>是没有边界的，这让你想起了什么？我想起的是宇宙，从很小的时候我就在想，宇宙的外面是什么呢？我父亲告诉我，还是宇宙，这个答案让我很不能接受，如果宇宙的外面还是宇宙，那怎么叫外面呢？明明还在宇宙里面嘛。不过长大了我开始明白了这个道理，有的东西是没有外面的，所谓其大无外，其小无内，就说的是这类东西，比如：宇宙，再如：<span class="keyword">无极</span>。</p>
+                
+                <p>关于<span class="keyword">无极</span>最清晰的阐述，应该还是周敦颐的《太极图说》了。</p>
+                
+                <div class="quote-container">
+                    <p class="quote-text">无极而太极。太极动而生阳，动极而静，静而生阴，静极复动。一动一静，互为其根。分阴分阳，两仪立焉。阳变阴合，而生水火木金土。五气顺布，四时行焉。五行一阴阳也，阴阳一太极也，太极本无极也。</p>
+                    <p class="quote-author">—— 周敦颐《太极图说》</p>
+                </div>
+                
+                <p><span class="keyword">无极</span>而<span class="keyword">太极</span>，<span class="keyword">太极</span>生两仪，这就告诉我们<span class="keyword">无极</span>是易学之始，所以我理解<span class="keyword">无极</span>是易学的源头，是一切的开始，世界万物，宇宙洪荒，都是从<span class="keyword">无极</span>衍生出来的。</p>
+                
+                <p>在《易经》里说：<span class="keyword">太极</span>生两仪，两仪生四象。孔子作《易传》里说：易有<span class="keyword">太极</span>，<span class="keyword">太极</span>生两仪，两仪生四象。所以易经和孔子是没有提到<span class="keyword">无极</span>的，把<span class="keyword">无极</span>和<span class="keyword">太极</span>联系起来是从《太极图说》开始的，为了有没有<span class="keyword">无极</span>这个概念，宋代的大儒朱熹和陆九渊还发生过深刻的争执，以朱熹为代表的理学派认为应该有<span class="keyword">无极</span>，而以陆九渊为代表的心学派则认为，<span class="keyword">无极</span>是道家的观点，孔子他老人家都没提，完全不需要有。那么到底应不应该有<span class="keyword">无极</span>这个概念呢？</p>
+            </div>
+        </section>
+
+        <!-- 第三部分 -->
+        <section class="section" id="section3">
+            <h2 class="section-title">三、无极而太极</h2>
+            <div class="section-content">
+                <div class="concept-comparison">
+                    <div class="concept-box">
+                        <h3 class="concept-title">无极</h3>
+                        <p class="concept-desc">从字面理解，就是没有极点，引申一步可以理解为：没有道理。</p>
+                    </div>
+                    <div class="concept-box">
+                        <h3 class="concept-title">太极</h3>
+                        <p class="concept-desc">从字面理解，就是至高的极点，引申可以理解为：至高无上的道理。</p>
+                    </div>
+                </div>
+                
+                <p>那<span class="keyword">无极</span>和<span class="keyword">太极</span>到底是什么关系？他们是一回事吗？</p>
+                
+                <p>《太极图说》里用的是：<span class="keyword">无极</span>而<span class="keyword">太极</span>，并不是<span class="keyword">无极</span>生<span class="keyword">太极</span>，这就告诉我们太极不是无极演化来的，我理解，<span class="keyword">无极</span>和<span class="keyword">太极</span>是一不是二，也就是说他们是同一个东西。记得《功夫熊猫》里有一个情节，师父向乌龟大师请教御敌的办法，乌龟让他看面前的水池，水面上荡涤着层层的波纹，师父说：什么也看不到，乌龟大师伸杖一点，水面变得平静了，再望进去，就看到了倒映出的《神龙秘籍》。这个隐喻很好的诠释了一个事物的不同状态，静的时候就是<span class="keyword">无极</span>，什么也没有，而动的时候就是<span class="keyword">太极</span>，呈现出至高无上的道理。再回看老子在道德经中所说的<span class="keyword">无极</span>，其实就是他所讲的道，他在道德经的开篇说：道可道也，非常道也，道是难以描述的，<span class="keyword">无极</span>也同样如此。</p>
+            </div>
+        </section>
+
+        <!-- 第四部分 -->
+        <section class="section" id="section4">
+            <h2 class="section-title">四、混沌与鸿蒙</h2>
+            <div class="section-content">
+                <p>现在说起<span class="keyword">混沌</span>，我总会想起善友教授的混沌大学，而说起<span class="keyword">鸿蒙</span>，让人首先想到的是华为手机的鸿蒙操作系统。其实这两个词，都是易经相关的词汇，而且都和<span class="keyword">无极</span>有着莫大的关系。</p>
+                
+                <p>传说中天地未判，阴阳未分，大神盘古居住在一个蛋里，这个蛋就是<span class="keyword">混沌</span>，而盘古有天醒来，用巨斧劈开<span class="keyword">鸿蒙</span>，才有了阴阳，清者为天，浊者为地，慢慢演化为世界。所以<span class="keyword">混沌</span>和<span class="keyword">鸿蒙</span>，都是值天地未分，阴阳和合的时候的那个时代和状态，<span class="keyword">鸿蒙</span>更多是指那个时代，<span class="keyword">混沌</span>更多是指那个状态，而这就是<span class="keyword">无极</span>。</p>
+                
+                <div class="pangu-image">
+                    <img src="../images/PANGU.PNG" alt="盘古开天辟地" class="pangu-img" width="100%">
+                    <div class="chaos-egg"></div>
+                </div>
+                
+                <p><span class="keyword">无极</span>是宇宙和世界最初始的状态，<span class="keyword">太极</span>是<span class="keyword">无极</span>的另一个状态，我们都见过太极的阴阳鱼图，太极里已经有阴阳了，但是还没分开。所以我这么理解，<span class="keyword">无极</span>是不动的，稳定的，恒定的，而<span class="keyword">太极</span>是运动的，转化的，流转的。就像《太极图说》里讲的：<span class="keyword">太极</span>动而生阳，动极生静，静而生阴，太极的内部是动的，是阴和阳不断在转化的，在太极内部阴阳是一体的，只不过一动一静。<span class="keyword">无极</span>与<span class="keyword">太极</span>也是一体的，也是一动一静，<span class="keyword">无极</span>和<span class="keyword">太极</span>也能转化，当盘古睡着，就是<span class="keyword">无极</span>，等盘古醒了，就是<span class="keyword">太极</span>，如果他又睡着了，那就又回到了<span class="keyword">无极</span>。</p>                
+
+                <p>在『无极』这部电影开始的时候，它描述了一个时代，那个时代里<span class="keyword">人</span>和<span class="keyword">神</span>居住在一起，也许那个时代就是<span class="keyword">鸿蒙</span>，他们共同居住的地方就是<span class="keyword">洪荒</span>，世界的状态就是<span class="keyword">混沌</span>。</p>
+                
+                <p>也许现在<span class="keyword">神</span>在人们身边，但人们看不到他们了，因为像阴阳分离一样，人和神被分在了<span class="keyword">同的维度</span>里。</p>
+            </div>
+        </section>
+
+        <!-- 第五部分 -->
+        <section class="section" id="section5">
+            <!-- 无极本质 -->
+            <div class="wuji-essence">
+                <h2 class="essence-title">无极的本质</h2>
+                <p class="essence-content">
+                    它<span class="highlight">啥也不是</span>，他就是所有一切最原始的起点，最初的状态，是<span class="highlight">宇宙大爆炸前的奇点</span>，是<span class="highlight">空</span>，它什么也没有，却<span class="highlight">包含了万物</span>，它没有任何道理，却<span class="highlight">孕育着天下最至高的公理</span>，这就是我想象中的无极，<span class="highlight">只可名，不可道</span>。
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // 页面加载完成后隐藏加载动画
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 500);
+        });
+
+        // 滚动到指定部分
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const offsetTop = section.offsetTop - 100;
+            
+            window.scrollTo({
+                top: offsetTop,
+                behavior: 'smooth'
+            });
+        }
+
+        // 滚动动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // 观察所有section
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // 电影海报点击效果
+        document.querySelector('.movie-poster').addEventListener('click', function(e) {
+            const ripple = document.createElement('div');
+            ripple.className = 'ripple';
+            ripple.style.cssText = `
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(0,0,0,0.1);
+                transform: scale(0);
+                animation: ripple-animation 0.6s ease-out;
+                pointer-events: none;
+            `;
+            
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            
+            this.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+
+        // 添加波纹动画
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple-animation {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

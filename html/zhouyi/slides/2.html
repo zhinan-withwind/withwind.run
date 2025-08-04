@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>阴阳两仪</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Georgia', sans-serif;
+            background: #fff;
+            color: #000;
+            overflow: hidden;
+            cursor: none;
+        }
+
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #000;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transition: all 0.1s ease;
+            mix-blend-mode: difference;
+        }
+
+        .slides-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            padding: 80px;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-content {
+            max-width: 1000px;
+            text-align: center;
+            position: relative;
+        }
+
+        .slide h1 {
+            font-size: 4rem;
+            font-weight: 100;
+            letter-spacing: 0.2em;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .slide h2 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+
+        .slide p {
+            font-size: 1.2rem;
+            line-height: 2;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+            text-align: left;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .slide blockquote {
+            font-size: 1.4rem;
+            font-style: italic;
+            border-left: 2px solid #000;
+            padding-left: 2rem;
+            margin: 3rem 0;
+            opacity: 0.9;
+            text-align: left;
+        }
+
+        .slide .author {
+            font-size: 1rem;
+            opacity: 0.6;
+            margin-top: 1rem;
+            text-align: right;
+        }
+
+        .image-container {
+            margin: 3rem 0;
+            position: relative;
+        }
+
+        .taiji-symbol {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            position: relative;
+            animation: rotate 20s linear infinite;
+        }
+
+        .taiji-symbol svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .yinyang-diagram {
+            width: 250px;
+            height: 250px;
+            margin: 2rem auto;
+            position: relative;
+        }
+
+        .yinyang-diagram svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .chicken-egg {
+            width: 180px;
+            height: 180px;
+            margin: 2rem auto;
+            border: 2px solid #000;
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            opacity: 0.7;
+        }
+
+        .chicken-egg::before {
+            content: '🐣';
+            position: absolute;
+            left: 25%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .chicken-egg::after {
+            content: '🥚';
+            position: absolute;
+            right: 25%;
+            top: 50%;
+            transform: translate(50%, -50%);
+        }
+
+        .universe-diagram {
+            width: 300px;
+            height: 200px;
+            margin: 2rem auto;
+            border: 1px solid #000;
+            position: relative;
+            opacity: 0.6;
+        }
+
+        .universe-diagram::before {
+            content: '宇 (空间)';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1rem;
+        }
+
+        .universe-diagram::after {
+            content: '宙 (时间)';
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1rem;
+        }
+
+        .polar-diagram {
+            width: 200px;
+            height: 200px;
+            margin: 2rem auto;
+            border: 1px solid #000;
+            border-radius: 50%;
+            position: relative;
+            opacity: 0.7;
+        }
+
+        .polar-diagram::before {
+            content: '北极';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .polar-diagram::after {
+            content: '南极';
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .hetu-luoshu {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin: 2rem 0;
+        }
+
+        .diagram-square {
+            width: 120px;
+            height: 120px;
+            border: 2px solid #000;
+            position: relative;
+            opacity: 0.6;
+        }
+
+        .diagram-square.circle {
+            border-radius: 50%;
+        }
+
+        .diagram-square::before {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .hetu::before { content: '河图'; }
+        .luoshu::before { content: '洛书'; }
+
+        .navigation {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border: 1px solid #000;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0.5;
+        }
+
+        .nav-dot.active {
+            background: #000;
+            opacity: 1;
+        }
+
+        .controls {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            z-index: 1000;
+            font-size: 0.9rem;
+            opacity: 0.6;
+        }
+
+        .lang-toggle {
+            position: fixed;
+            top: 40px;
+            left: 40px;
+            z-index: 1000;
+            background: transparent;
+            border: 1px solid #000;
+            color: #000;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            opacity: 0.7;
+        }
+
+        .lang-toggle:hover {
+            opacity: 1;
+            background: #000;
+            color: #fff;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .title-slide {
+            text-align: center;
+        }
+
+        .title-slide h1 {
+            font-size: 5rem;
+            font-weight: 100;
+            margin-bottom: 2rem;
+        }
+
+        .title-slide .subtitle {
+            font-size: 1.5rem;
+            opacity: 0.7;
+            letter-spacing: 0.1em;
+            margin-bottom: 3rem;
+        }
+
+        .title-slide .author-info {
+            font-size: 1rem;
+            opacity: 0.5;
+            margin-top: 4rem;
+        }
+
+        .balance-animation {
+            width: 200px;
+            height: 100px;
+            margin: 2rem auto;
+            position: relative;
+        }
+
+        .balance-bar {
+            width: 180px;
+            height: 4px;
+            background: #000;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: balance 4s ease-in-out infinite;
+        }
+
+        .balance-bar::before {
+            content: '阴';
+            position: absolute;
+            left: 0;
+            top: -30px;
+            font-size: 1.2rem;
+        }
+
+        .balance-bar::after {
+            content: '阳';
+            position: absolute;
+            right: 0;
+            top: -30px;
+            font-size: 1.2rem;
+        }
+
+        @keyframes balance {
+            0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+            50% { transform: translate(-50%, -50%) rotate(5deg); }
+        }
+
+        .concept-pairs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        .concept-pairs .left {
+            text-align: right;
+            border-right: 1px solid #000;
+            padding-right: 1rem;
+        }
+
+        .concept-pairs .right {
+            text-align: left;
+            padding-left: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor"></div>
+    
+    <button class="lang-toggle" onclick="toggleLanguage()">EN</button>
+    
+    <div class="slides-container">
+        <!-- 标题页 -->
+        <div class="slide active title-slide">
+            <div class="slide-content">
+                <h1 class="zh">阴阳两仪</h1>
+                <h1 class="en hidden">Yin Yang & Two Symbols</h1>
+                <div class="subtitle zh">随风学易</div>
+                <div class="subtitle en hidden">Learning I Ching with the Wind</div>
+                <div class="image-container">
+                    <div class="yinyang-diagram">
+                        <svg viewBox="0 0 200 200">
+                            <circle cx="100" cy="100" r="100" fill="white" stroke="black" stroke-width="2"/>
+                            <path d="M 100 0 A 50 50 0 0 1 100 100 A 50 50 0 0 0 100 200 A 100 100 0 0 1 100 0" fill="black"/>
+                            <circle cx="100" cy="50" r="20" fill="black"/>
+                            <circle cx="100" cy="150" r="20" fill="white"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="author-info zh">
+                    苏州知南信息科技有限公司 CTO<br>
+                    收录于 · 随风学易
+                </div>
+                <div class="author-info en hidden">
+                    CTO, Suzhou Zhinan Information Technology Co., Ltd.<br>
+                    Collected in · Learning I Ching with the Wind
+                </div>
+            </div>
+        </div>
+
+        <!-- 鸡蛋问题 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="zh">先有鸡还是先有蛋？</h2>
+                <h2 class="en hidden">Which Came First: Chicken or Egg?</h2>
+                <div class="image-container">
+                    <div class="chicken-egg"></div>
+                </div>
+                <p class="zh">我来问一个终极的哲学问题，那就是：到底是先有鸡，还是先有蛋？</p>
+                <p class="en hidden">Let me ask an ultimate philosophical question: Which came first, the chicken or the egg?</p>
+                <p class="zh">宋代大儒朱熹和陆九渊的无极太极之辩，争的就是这个问题，而且这个辩论影响了各自的弟子，绵延八百年。</p>
+                <p class="en hidden">The debate between Song dynasty scholars Zhu Xi and Lu Jiuyuan about Wuji and Taiji was essentially about this question, and this debate influenced their disciples for eight hundred years.</p>
+            </div>
+        </div>
+
+        <!-- 阴阳之始 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="zh">阴阳之始</h2>
+                <h2 class="en hidden">The Beginning of Yin Yang</h2>
+                <p class="zh">无极太极之辩的背后就是一切的开始是从阴开始的，还是从阳开始的。静者为阴，动者为阳。</p>
+                <p class="en hidden">Behind the Wuji-Taiji debate is whether everything begins with yin or yang. The still is yin, the moving is yang.</p>
+                <p class="zh">如果把道家与儒家看做是文化的阴阳两面，那孔子与老子的时代就是无极，各家不是相互对立的，而是共同构成了那个时代。</p>
+                <p class="en hidden">If we see Taoism and Confucianism as two sides of cultural yin-yang, then the era of Confucius and Laozi was Wuji, where different schools were not opposing each other but together constituted that era.</p>
+                <div class="image-container">
+                    <div class="taiji-symbol">
+                        <svg viewBox="0 0 200 200">
+                            <circle cx="100" cy="100" r="100" fill="white" stroke="black" stroke-width="2"/>
+                            <path d="M 100 0 A 50 50 0 0 1 100 100 A 50 50 0 0 0 100 200 A 100 100 0 0 1 100 0" fill="black"/>
+                            <circle cx="100" cy="50" r="15" fill="black"/>
+                            <circle cx="100" cy="150" r="15" fill="white"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 太极图说 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="zh">太极生两仪</h2>
+                <h2 class="en hidden">Taiji Generates Two Symbols</h2>
+                <blockquote class="zh">
+                    无极而太极。太极动而生阳，动极而静，静而生阴，静极复动。<br>
+                    一动一静，互为其根。分阴分阳，两仪立焉。
+                    <div class="author">—— 周敦颐《太极图说》</div>
+                </blockquote>
+                <blockquote class="en hidden">
+                    Wuji and yet Taiji. Taiji moves and generates yang;<br>
+                    when movement reaches its extreme, it becomes still.<br>
+                    Through stillness, Taiji generates yin.<br>
+                    One movement, one stillness, each being the root of the other.<br>
+                    Yin and yang are divided, and the Two Symbols are established.
+                    <div class="author">—— Zhou Dunyi, Explanation of the Diagram of the Supreme Ultimate</div>
+                </blockquote>
+                <p class="zh">太极图说告诉我们阴阳是从太极分化出来的，动而生阳，静而生阴，阴阳就是两仪。</p>
+                <p class="en hidden">The Taiji Diagram tells us that yin and yang are differentiated from Taiji - movement generates yang, stillness generates yin, and yin-yang are the Two Symbols.</p>
+            </div>
+        </div>
+
+        <!-- 宇宙世界 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="zh">宇宙与世界</h2>
+                <h2 class="en hidden">Universe and World</h2>
+                <div class="image-container">
+                    <div class="universe-diagram">
+                        <img src="../../images/YUZHOU.PNG" alt="宇宙" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                </div>
+                <p class="zh">宇是上下四方代表空间属阴，宙是古往今来代表时间属阳。所谓宇宙就是古往今来上下四方，是时间与空间交织的阴阳对立统一。</p>
+                <p class="en hidden">Yu (宇) represents space in all directions, belonging to yin; Zhou (宙) represents time from past to future, belonging to yang. The universe is the unity of time and space, the dialectical unity of yin and yang.</p>
+                <p class="zh">世界同样如此：世是时间的流转属阳，界是空间的划分属阴。世界和宇宙都是时间与空间，阴与阳的统一。</p>
+                <p class="en hidden">The same applies to the world: Shi (世) is the flow of time belonging to yang, Jie (界) is the division of space belonging to yin. Both world and universe are the unity of time and space, yin and yang.</p>
+            </div>
+        </div>
+
+        <!-- 河图洛书 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="zh">河图洛书</h2>
+                <h2 class="en hidden">River Chart and Luo Writing</h2>
+                <div class="image-container">
+                    <div class="hetu-luoshu">
+                        <div class="diagram-square circle hetu">
+                            <img src="../../images/HETU.PNG" alt="河图" style="width: 80%; height: 80%; object-fit: contain; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                        </div>
+                        <div class="diagram-square luoshu">
+                            <img src="../../images/LUOSHU.PNG" alt="洛书" style="width: 80%; height: 80%; object-fit: contain; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                        </div>
+                    </div>
+                </div>
+                <p class="zh">比如『图书』，实际上指的是河图与洛书，河出龙马献图，洛出神龟呈书，马属火，而龟属水，水火也是一对儿阴阳关系。</p>
+                <p class="en hidden">For example, 'books and diagrams' actually refers to the River Chart and Luo Writing. The river produced a dragon horse presenting the chart, the Luo produced a divine turtle presenting the writing. Horse belongs to fire, turtle belongs to water - water and fire are also a pair of yin-yang relationships.</p>
+                <p class="zh">古代的汉语非常精微，朋友：同门为朋，同志为友；池塘：圆者为池，方者为塘。这些都体现了阴阳关系。</p>
+                <p class="en hidden">Ancient Chinese was very subtle: friends - those from the same school are 'peng', those with the same aspirations are 'you'; ponds - round ones are 'chi', square ones are 'tang'. These all embody yin-yang relationships.</p>
+            </div>
+        </div>
+
+        <!-- 万物分阴阳 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="zh">万物分阴阳</h2>
+                <h2 class="en hidden">All Things Divide into Yin Yang</h2>
+                <div class="concept-pairs zh">
+                    <div class="left">天地</div><div class="right">日月</div>
+                    <div class="left">昼夜</div><div class="right">晨昏</div>
+                    <div class="left">寒暑</div><div class="right">春秋</div>
+                    <div class="left">冬夏</div><div class="right">雷雨</div>
+                    <div class="left">风雪</div><div class="right">男女</div>
+                    <div class="left">动静</div><div class="right">开合</div>
+                </div>
+                <div class="en hidden concept-pairs">
+                    <div class="left">Heaven-Earth</div><div class="right">Sun-Moon</div>
+                    <div class="left">Day-Night</div><div class="right">Dawn-Dusk</div>
+                    <div class="left">Cold-Heat</div><div class="right">Spring-Autumn</div>
+                    <div class="left">Winter-Summer</div><div class="right">Thunder-Rain</div>
+                    <div class="left">Wind-Snow</div><div class="right">Male-Female</div>
+                    <div class="left">Movement-Stillness</div><div class="right">Open-Close</div>
+                </div>
+                <p class="zh">阴阳是在我们生活中无处不在的，可谓万物皆分阴阳。阳是无形的精神的，阴是有形的物质的。</p>
+                <p class="en hidden">Yin and yang are everywhere in our lives - all things can be divided into yin and yang. Yang is intangible and spiritual, yin is tangible and material.</p>
+            </div>
+        </div>
+
+        <!-- 南北极的例子 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="zh">是一不是二</h2>
+                <h2 class="en hidden">One, Not Two</h2>
+                <div class="image-container">
+                    <div class="polar-diagram"></div>
+                </div>
+                <p class="zh">易经里把阴阳称为两仪，两仪就是两极，是两个极端，会让人自然联想到南极和北极。</p>
+                <p class="en hidden">The I Ching calls yin and yang the Two Symbols, meaning two poles, two extremes, naturally reminding us of the South and North Poles.</p>
+                <p class="zh">可转念一想，不论南极还是北极，不都在这个地球上么？它们是一不是二，就如同手心为阳，手背为阴，但同是一只手。</p>
+                <p class="en hidden">But thinking about it, whether South Pole or North Pole, aren't they both on this Earth? They are one, not two - just like the palm is yang and the back of the hand is yin, but they are the same hand.</p>
+            </div>
+        </div>
+
+        <!-- 阴阳调和 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="zh">阴阳调和</h2>
+                <h2 class="en hidden">Harmony of Yin Yang</h2>
+                <div class="image-container">
+                    <div class="balance-animation">
+                        <div class="balance-bar"></div>
+                    </div>
+                </div>
+                <p class="zh">阴阳不是分立的，而是统一的，而且他们是相互依存，相互转化的。最好的状态并不是阴阳分明，而是阴阳调和。</p>
+                <p class="en hidden">Yin and yang are not separate but unified, and they are interdependent and mutually transforming. The best state is not clear separation of yin and yang, but their harmony.</p>
+                <p class="zh">对于人生，欲望是阳，克制是阴。没有了欲望，人就失去了进取的动力；而没有了克制，就会被欲望吞没。</p>
+                <p class="en hidden">In life, desire is yang, restraint is yin. Without desire, people lose the motivation to strive; without restraint, they will be swallowed by desire.</p>
+                <p class="zh">所谓孤阴不长，孤阳不生，这就是阴阳和合的道理。</p>
+                <p class="en hidden">As the saying goes: "Solitary yin does not grow, solitary yang does not generate" - this is the principle of yin-yang harmony.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <div class="nav-dot active" data-slide="0"></div>
+        <div class="nav-dot" data-slide="1"></div>
+        <div class="nav-dot" data-slide="2"></div>
+        <div class="nav-dot" data-slide="3"></div>
+        <div class="nav-dot" data-slide="4"></div>
+        <div class="nav-dot" data-slide="5"></div>
+        <div class="nav-dot" data-slide="6"></div>
+        <div class="nav-dot" data-slide="7"></div>
+        <div class="nav-dot" data-slide="8"></div>
+    </div>
+
+    <div class="controls">
+        ← → 切换幻灯片 | Space 播放/暂停
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const navDots = document.querySelectorAll('.nav-dot');
+        const totalSlides = slides.length;
+        let isAutoPlay = false;
+        let autoPlayInterval;
+
+        // 自定义光标
+        const cursor = document.querySelector('.cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            navDots[currentSlide].classList.remove('active');
+            
+            currentSlide = (n + totalSlides) % totalSlides;
+            
+            slides[currentSlide].classList.add('active');
+            navDots[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        function startAutoPlay() {
+            isAutoPlay = true;
+            autoPlayInterval = setInterval(nextSlide, 5000);
+        }
+
+        function stopAutoPlay() {
+            isAutoPlay = false;
+            clearInterval(autoPlayInterval);
+        }
+
+        // 键盘控制
+        document.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case 'ArrowLeft':
+                    stopAutoPlay();
+                    prevSlide();
+                    break;
+                case 'ArrowRight':
+                    stopAutoPlay();
+                    nextSlide();
+                    break;
+                case ' ':
+                    e.preventDefault();
+                    if (isAutoPlay) {
+                        stopAutoPlay();
+                    } else {
+                        startAutoPlay();
+                    }
+                    break;
+            }
+        });
+
+        // 导航点击
+        navDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                stopAutoPlay();
+                showSlide(index);
+            });
+        });
+
+        // 鼠标滚轮控制
+        document.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            stopAutoPlay();
+            if (e.deltaY > 0) {
+                nextSlide();
+            } else {
+                prevSlide();
+            }
+        }, { passive: false });
+
+        // 触摸控制
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > 50) {
+                stopAutoPlay();
+                if (diff > 0) {
+                    nextSlide();
+                } else {
+                    prevSlide();
+                }
+            }
+        });
+
+        // 语言切换功能
+        let isEnglish = false;
+        
+        function toggleLanguage() {
+            isEnglish = !isEnglish;
+            const langButton = document.querySelector('.lang-toggle');
+            const zhElements = document.querySelectorAll('.zh');
+            const enElements = document.querySelectorAll('.en');
+            
+            if (isEnglish) {
+                langButton.textContent = '中';
+                zhElements.forEach(el => el.classList.add('hidden'));
+                enElements.forEach(el => el.classList.remove('hidden'));
+            } else {
+                langButton.textContent = 'EN';
+                zhElements.forEach(el => el.classList.remove('hidden'));
+                enElements.forEach(el => el.classList.add('hidden'));
+            }
+        }
+    </script>
+</body>
+</html>

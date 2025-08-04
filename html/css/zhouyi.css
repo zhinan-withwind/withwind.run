@@ -1,0 +1,875 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background-color: #ffffff;
+    color: #000000;
+    line-height: 1.8;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-weight: 300;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.item {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #000;
+    text-decoration: none;
+    color: #000;
+    transition: all 0.3s ease;
+}
+
+.item:hover {
+    background: #000;
+    color: #fff;
+}
+
+.icon {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.title {
+    font-size: 18px;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* 头部样式 */
+.header {
+    text-align: center;
+    padding: 80px 20px 60px;
+    position: relative;
+    overflow: hidden;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0,0,0,0.03) 0%, transparent 70%);
+    animation: rotate 60s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.subtitle {
+    font-size: 1rem;
+    color: #666;
+    letter-spacing: 0.1em;
+    position: relative;
+    z-index: 1;
+}
+
+/* 目录样式 */
+.toc {
+    max-width: 800px;
+    margin: 0 auto 80px;
+    padding: 40px;
+    border: 1px solid #e0e0e0;
+    position: relative;
+}
+
+.toc-title {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    text-align: center;
+    letter-spacing: 0.2em;
+}
+
+.toc-list {
+    list-style: none;
+    counter-reset: toc-counter;
+}
+
+.toc-item {
+    margin-bottom: 20px;
+    padding-left: 40px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.toc-item::before {
+    counter-increment: toc-counter;
+    content: counter(toc-counter);
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    border: 1px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.toc-item:hover::before {
+    background-color: #000;
+    color: #fff;
+}
+
+.toc-item:hover {
+    transform: translateX(10px);
+}
+
+/* 主内容区域 */
+.main-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px 100px;
+}
+
+.section {
+    margin-bottom: 100px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+.section:nth-child(1) { animation-delay: 0.1s; }
+.section:nth-child(2) { animation-delay: 0.2s; }
+.section:nth-child(3) { animation-delay: 0.3s; }
+.section:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes fadeInUp {
+    to {
+opacity: 1;
+transform: translateY(0);
+    }
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 300;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+    letter-spacing: 0.1em;
+}
+
+.section-content {
+    font-size: 1.1rem;
+    line-height: 2;
+    color: #333;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* 头部样式 */
+.header {
+    text-align: center;
+    padding: 80px 20px 60px;
+    position: relative;
+    overflow: hidden;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0,0,0,0.03) 0%, transparent 70%);
+    animation: rotate 60s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.subtitle {
+    font-size: 1rem;
+    color: #666;
+    letter-spacing: 0.1em;
+    position: relative;
+    z-index: 1;
+}
+
+/* 目录样式 */
+.toc {
+    max-width: 800px;
+    margin: 0 auto 80px;
+    padding: 40px;
+    border: 1px solid #e0e0e0;
+    position: relative;
+}
+
+.toc-title {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    text-align: center;
+    letter-spacing: 0.2em;
+}
+
+.toc-list {
+    list-style: none;
+    counter-reset: toc-counter;
+}
+
+.toc-item {
+    margin-bottom: 20px;
+    padding-left: 40px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.toc-item::before {
+    counter-increment: toc-counter;
+    content: counter(toc-counter);
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    border: 1px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.toc-item:hover::before {
+    background-color: #000;
+    color: #fff;
+}
+
+.toc-item:hover {
+    transform: translateX(10px);
+}
+
+/* 主内容区域 */
+.main-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px 100px;
+}
+
+.section {
+    margin-bottom: 100px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+.section:nth-child(1) { animation-delay: 0.1s; }
+.section:nth-child(2) { animation-delay: 0.2s; }
+.section:nth-child(3) { animation-delay: 0.3s; }
+.section:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes fadeInUp {
+    to {
+opacity: 1;
+transform: translateY(0);
+    }
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 300;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+    letter-spacing: 0.1em;
+}
+
+.section-content {
+    font-size: 1.1rem;
+    line-height: 2;
+    color: #333;
+}
+
+/* 电影海报样式 */
+.movie-poster {
+    width: 100%;
+    max-width: 400px;
+    height: 600px;
+    margin: 40px auto;
+    background: linear-gradient(135deg, #f8f8f8 0%, #e8e8e8 100%);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.movie-poster:hover {
+    transform: scale(1.02);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+}
+
+/* 背景装饰圆环 */
+.bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.bg-circle:nth-child(1) {
+    width: 300px;
+    height: 300px;
+    top: -100px;
+    right: -100px;
+    animation: float 20s ease-in-out infinite;
+}
+
+.bg-circle:nth-child(2) {
+    width: 200px;
+    height: 200px;
+    bottom: -50px;
+    left: -50px;
+    animation: float 15s ease-in-out infinite reverse;
+}
+
+.bg-circle:nth-child(3) {
+    width: 150px;
+    height: 150px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0); }
+    33% { transform: translate(30px, -30px); }
+    66% { transform: translate(-20px, 20px); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.1; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 0.3; transform: translate(-50%, -50%) scale(1.1); }
+}
+
+/* 太极图元素 */
+.taiji-element {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: conic-gradient(
+from 0deg,
+#000 0deg 180deg,
+#fff 180deg 360deg
+    );
+    opacity: 0.2;
+    animation: rotate 30s linear infinite;
+}
+
+.taiji-element::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 60px;
+    height: 60px;
+    background: #fff;
+    border-radius: 50%;
+    transform: translateY(-50%);
+}
+
+.taiji-element::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 60px;
+    height: 60px;
+    background: #000;
+    border-radius: 50%;
+    transform: translateY(-50%);
+}
+
+@keyframes rotate {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* 装饰线条 */
+.decorative-line {
+    position: absolute;
+    background: linear-gradient(90deg, transparent, #000, transparent);
+    opacity: 0.1;
+}
+
+.decorative-line:nth-child(5) {
+    width: 100%;
+    height: 1px;
+    top: 30%;
+}
+
+.decorative-line:nth-child(6) {
+    width: 100%;
+    height: 1px;
+    bottom: 30%;
+}
+
+/* 电影标题 */
+.movie-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 5rem;
+    font-weight: 100;
+    letter-spacing: 0.8em;
+    color: #000;
+    opacity: 0.9;
+    z-index: 10;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+/* 副标题 */
+.subtitle-text {
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.9rem;
+    letter-spacing: 0.5em;
+    color: #666;
+    opacity: 0.8;
+    z-index: 10;
+}
+
+/* 导演信息 */
+.director {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    color: #888;
+    z-index: 10;
+}
+
+/* 年份 */
+.year {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    font-size: 1.2rem;
+    letter-spacing: 0.2em;
+    color: #000;
+    opacity: 0.6;
+    z-index: 10;
+}
+
+/* 装饰点 */
+.dot {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #000;
+    border-radius: 50%;
+    opacity: 0.3;
+}
+
+.dot:nth-child(11) { top: 20%; left: 20%; }
+.dot:nth-child(12) { top: 20%; right: 20%; }
+.dot:nth-child(13) { bottom: 20%; left: 20%; }
+.dot:nth-child(14) { bottom: 20%; right: 20%; }
+
+/* 引用样式 */
+.quote-container {
+    margin: 40px 0;
+    padding: 40px;
+    background-color: #f8f8f8;
+    border-left: 4px solid #000;
+    position: relative;
+}
+
+.quote-text {
+    font-size: 1.3rem;
+    font-style: italic;
+    line-height: 2;
+    margin-bottom: 20px;
+}
+
+.quote-author {
+    text-align: right;
+    font-size: 1rem;
+    color: #666;
+}
+
+.quote-container::before {
+    content: '"';
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    font-size: 4rem;
+    opacity: 0.2;
+    font-family: Georgia, serif;
+}
+
+/* 太极图容器 */
+.taiji-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 60px 0;
+    gap: 60px;
+    flex-wrap: wrap;
+}
+
+.taiji-image {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: conic-gradient(
+from 0deg,
+#000 0deg 180deg,
+#fff 180deg 360deg
+    );
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    animation: rotate 20s linear infinite;
+}
+
+.taiji-image::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 150px;
+    height: 150px;
+    background: #fff;
+    border-radius: 50%;
+    transform: translateY(-50%);
+}
+
+.taiji-image::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 150px;
+    height: 150px;
+    background: #000;
+    border-radius: 50%;
+    transform: translateY(-50%);
+}
+
+.taiji-inner-white {
+    position: absolute;
+    top: 75px;
+    left: 75px;
+    width: 30px;
+    height: 30px;
+    background: #000;
+    border-radius: 50%;
+}
+
+.taiji-inner-black {
+    position: absolute;
+    bottom: 75px;
+    right: 75px;
+    width: 30px;
+    height: 30px;
+    background: #fff;
+    border-radius: 50%;
+}
+
+.bagua-image {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #f5f5f5 0%, #e0e0e0 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.bagua-image::before {
+    content: '六十四卦';
+    font-size: 1.5rem;
+    letter-spacing: 0.2em;
+    opacity: 0.5;
+}
+
+/* 概念对比 */
+.concept-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin: 60px 0;
+}
+
+.concept-box {
+    padding: 40px;
+    border: 1px solid #e0e0e0;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.concept-box:hover {
+    border-color: #000;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.concept-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    font-weight: 300;
+}
+
+.concept-desc {
+    color: #666;
+    line-height: 1.8;
+}
+
+/* 盘古开天图 */
+.pangu-image {
+    width: 100%;
+    max-width: 600px;
+    height: 400px;
+    margin: 60px auto;
+    background: linear-gradient(to bottom, #000 0%, #333 50%, #666 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.pangu-image::before {
+    content: '盘古开天';
+    position: absolute;
+    font-size: 3rem;
+    font-weight: 100;
+    letter-spacing: 0.5em;
+    color: rgba(255,255,255,0.3);
+}
+
+.chaos-egg {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: pulse 4s ease-in-out infinite;
+}
+
+/* 无极本质展示 */
+.wuji-essence {
+    background: linear-gradient(135deg, #000 0%, #333 100%);
+    color: #fff;
+    padding: 80px;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    margin: 80px 0;
+    border-radius: 10px;
+}
+
+.wuji-essence::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: rotate 60s linear infinite;
+}
+
+.essence-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 100;
+    letter-spacing: 0.3em;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+}
+
+.essence-content {
+    font-size: 1.3rem;
+    line-height: 2.5;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.highlight {
+    color: #ffd700;
+    font-weight: 500;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .title {
+font-size: 2rem;
+    }
+
+    .section-title {
+font-size: 1.5rem;
+    }
+
+    .concept-comparison {
+grid-template-columns: 1fr;
+    }
+
+    .taiji-container {
+flex-direction: column;
+    }
+
+    .movie-poster {
+height: 500px;
+    }
+
+    .movie-title {
+font-size: 3.5rem;
+    }
+}
+
+/* 加载动画 */
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease;
+}
+
+.loader.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loader-circle {
+    width: 60px;
+    height: 60px;
+    border: 2px solid #000;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* 关键词高亮 */
+.keyword {
+    font-weight: 500;
+    position: relative;
+    display: inline-block;
+}
+
+.keyword::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #000;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+.keyword:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
