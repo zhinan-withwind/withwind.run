@@ -3,394 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>易经知识体系</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-            background-color: #ffffff;
-            color: #000000;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* 滚动条样式 */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #f5f5f5;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-
-        /* 容器 */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 80px 20px;
-            opacity: 0;
-            animation: fadeIn 1s ease forwards;
-        }
-
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* 标题 */
-        h1 {
-            text-align: center;
-            font-size: 3rem;
-            font-weight: 300;
-            letter-spacing: 0.3em;
-            margin-bottom: 80px;
-            position: relative;
-        }
-
-        h1::after {
-            content: '';
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 2px;
-            background: #000;
-        }
-
-        /* 网格布局 */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-top: 60px;
-        }
-
-        /* 知识点卡片 */
-        .item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: #000;
-            padding: 40px 30px;
-            border: 1px solid #e0e0e0;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            background: #fff;
-        }
-
-        .item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            transform: translateY(100%);
-            transition: transform 0.4s ease;
-            z-index: 0;
-        }
-
-        .item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-
-        .item:hover::before {
-            transform: translateY(0);
-        }
-
-        .item:hover .icon {
-            color: #fff;
-            border-color: #fff;
-        }
-
-        .item:hover .title {
-            color: #fff;
-        }
-
-        /* 图标 */
-        .icon {
-            font-size: 3rem;
-            font-weight: 100;
-            width: 100px;
-            height: 100px;
-            border: 2px solid #000;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            transition: all 0.4s ease;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* 标题 */
-        .title {
-            font-size: 1.2rem;
-            letter-spacing: 0.1em;
-            transition: color 0.4s ease;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* 特殊图标样式 */
-        .item:nth-child(1) .icon {
-            font-size: 4rem;
-        }
-
-        .item:nth-child(8) .icon {
-            font-size: 2.5rem;
-        }
-
-        .item:nth-child(9) .icon {
-            font-size: 2.5rem;
-        }
-
-        .item:nth-child(10) .icon {
-            font-size: 2.5rem;
-        }
-
-        /* 背景装饰 */
-        .bg-decoration {
-            position: fixed;
-            border-radius: 50%;
-            border: 1px solid rgba(0,0,0,0.05);
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .bg-decoration:nth-child(1) {
-            width: 300px;
-            height: 300px;
-            top: -100px;
-            right: -100px;
-            animation: float 20s ease-in-out infinite;
-        }
-
-        .bg-decoration:nth-child(2) {
-            width: 200px;
-            height: 200px;
-            bottom: -50px;
-            left: -50px;
-            animation: float 15s ease-in-out infinite reverse;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0); }
-            33% { transform: translate(30px, -30px); }
-            66% { transform: translate(-20px, 20px); }
-        }
-
-        /* 加载动画 */
-        .loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease;
-        }
-
-        .loader.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .loader-circle {
-            width: 60px;
-            height: 60px;
-            border: 2px solid #000;
-            border-top-color: transparent;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* 响应式设计 */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-
-            .grid {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-                gap: 20px;
-            }
-
-            .item {
-                padding: 30px 20px;
-            }
-
-            .icon {
-                width: 80px;
-                height: 80px;
-                font-size: 2.5rem;
-            }
-
-            .item:nth-child(1) .icon {
-                font-size: 3rem;
-            }
-        }
-
-        /* 卡片动画延迟 */
-        .item {
-            opacity: 0;
-            transform: translateY(30px);
-            animation: slideUp 0.6s ease forwards;
-        }
-
-        .item:nth-child(1) { animation-delay: 0.1s; }
-        .item:nth-child(2) { animation-delay: 0.2s; }
-        .item:nth-child(3) { animation-delay: 0.3s; }
-        .item:nth-child(4) { animation-delay: 0.4s; }
-        .item:nth-child(5) { animation-delay: 0.5s; }
-        .item:nth-child(6) { animation-delay: 0.6s; }
-        .item:nth-child(7) { animation-delay: 0.7s; }
-        .item:nth-child(8) { animation-delay: 0.8s; }
-        .item:nth-child(9) { animation-delay: 0.9s; }
-        .item:nth-child(10) { animation-delay: 1.0s; }
-
-        @keyframes slideUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    </style>
+    <title>易经智慧 | 探索古老东方哲学的无限奥秘</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- 加载动画 -->
-    <div class="loader" id="loader">
-        <div class="loader-circle"></div>
-    </div>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <a href="index.html">易经智慧</a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="#about">关于</a></li>
+                <li><a href="#contact">联系</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
 
-    <!-- 背景装饰 -->
-    <div class="bg-decoration"></div>
-    <div class="bg-decoration"></div>
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>易经智慧</h1>
+                <p class="hero-subtitle">探索古老东方哲学的无限奥秘</p>
+            </div>
+        </section>
 
-    <div class="container">
-        <h1>易经知识体系</h1>
-        <div class="grid">
-            <a href="0.html" class="item">
-                <div class="icon">○</div>
-                <div class="title">无极</div>
-            </a>
-            <a href="1.html" class="item">
-                <div class="icon">一</div>
-                <div class="title">太极</div>
-            </a>
-            <a href="2.html" class="item">
-                <div class="icon">二</div>
-                <div class="title">两仪</div>
-            </a>
-            <a href="3.html" class="item">
-                <div class="icon">三</div>
-                <div class="title">三才</div>
-            </a>            
-            <a href="4.html" class="item">
-                <div class="icon">四</div>
-                <div class="title">四象</div>
-            </a>
-            <a href="5.html" class="item">
-                <div class="icon">五</div>
-                <div class="title">五行</div>
-            </a>
-            <a href="8.html" class="item">
-                <div class="icon">八</div>
-                <div class="title">八卦</div>
-            </a>
-            <a href="10.html" class="item">
-                <div class="icon">干</div>
-                <div class="title">天干</div>
-            </a>
-            <a href="12.html" class="item">
-                <div class="icon">支</div>
-                <div class="title">地支</div>
-            </a>
-            <a href="64.html" class="item">
-                <div class="icon">卦</div>
-                <div class="title">六十四卦</div>
-            </a>
+        <section class="container">
+            <div class="knowledge-grid">
+                <a href="pages/0.html" class="knowledge-card">
+                    <div class="knowledge-number">00</div>
+                    <h2 class="knowledge-title">无极</h2>
+                    <p class="knowledge-description">宇宙的本源，万物之始，超越一切对立的终极状态</p>
+                </a>
+
+                <a href="pages/1.html" class="knowledge-card">
+                    <div class="knowledge-number">01</div>
+                    <h2 class="knowledge-title">太极</h2>
+                    <p class="knowledge-description">阴阳两仪的统一体，宇宙万物运行的根本规律</p>
+                </a>
+
+                <a href="pages/2.html" class="knowledge-card">
+                    <div class="knowledge-number">02</div>
+                    <h2 class="knowledge-title">两仪</h2>
+                    <p class="knowledge-description">阴阳二气，天地万物的基本对立统一关系</p>
+                </a>
+
+                <a href="pages/3.html" class="knowledge-card">
+                    <div class="knowledge-number">03</div>
+                    <h2 class="knowledge-title">三才</h2>
+                    <p class="knowledge-description">天地人三才，宇宙结构的基本层次</p>
+                </a>
+
+                <a href="pages/4.html" class="knowledge-card">
+                    <div class="knowledge-number">04</div>
+                    <h2 class="knowledge-title">四象</h2>
+                    <p class="knowledge-description">太阳、少阳、太阴、少阴，阴阳的四种组合状态</p>
+                </a>
+
+                <a href="pages/5.html" class="knowledge-card">
+                    <div class="knowledge-number">05</div>
+                    <h2 class="knowledge-title">五行</h2>
+                    <p class="knowledge-description">金木水火土，构成世界的基本元素及其生克关系</p>
+                </a>
+
+                <a href="pages/6.html" class="knowledge-card">
+                    <div class="knowledge-number">06</div>
+                    <h2 class="knowledge-title">六亲</h2>
+                    <p class="knowledge-description">父母、官鬼、兄弟、妻财、子孙，社会关系的象征</p>
+                </a>
+
+                <a href="pages/7.html" class="knowledge-card">
+                    <div class="knowledge-number">07</div>
+                    <h2 class="knowledge-title">七政</h2>
+                    <p class="knowledge-description">日月和金木水火土七星，天体运行的重要标志</p>
+                </a>
+
+                <a href="pages/8.html" class="knowledge-card">
+                    <div class="knowledge-number">08</div>
+                    <h2 class="knowledge-title">八门</h2>
+                    <p class="knowledge-description">休、生、伤、杜、景、死、惊、开，奇门遁甲的核心</p>
+                </a>
+
+                <a href="pages/9.html" class="knowledge-card">
+                    <div class="knowledge-number">09</div>
+                    <h2 class="knowledge-title">九星</h2>
+                    <p class="knowledge-description">天蓬、天任、天冲、天辅、天英、天芮、天柱、天心、天禽</p>
+                </a>
+
+                <a href="pages/10.html" class="knowledge-card">
+                    <div class="knowledge-number">10</div>
+                    <h2 class="knowledge-title">十天干</h2>
+                    <p class="knowledge-description">甲乙丙丁戊己庚辛壬癸，时间循环的基本单位</p>
+                </a>
+
+                <a href="pages/12.html" class="knowledge-card">
+                    <div class="knowledge-number">12</div>
+                    <h2 class="knowledge-title">十二地支</h2>
+                    <p class="knowledge-description">子丑寅卯辰巳午未申酉戌亥，空间方位的表示</p>
+                </a>
+
+                <a href="pages/64.html" class="knowledge-card">
+                    <div class="knowledge-number">64</div>
+                    <h2 class="knowledge-title">六十四卦</h2>
+                    <p class="knowledge-description">易经的核心符号体系，宇宙万象的完整映射</p>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p class="footer-text">© 2024 易经智慧 · 传承古老智慧，启迪现代人生</p>
         </div>
-    </div>
+    </footer>
 
-    <script>
-        // 页面加载完成后隐藏加载动画
-        window.addEventListener('load', function() {
-            setTimeout(() => {
-                document.getElementById('loader').classList.add('hidden');
-            }, 500);
-        });
-
-        // 为每个卡片添加点击波纹效果
-        document.querySelectorAll('.item').forEach(item => {
-            item.addEventListener('click', function(e) {
-                const ripple = document.createElement('div');
-                ripple.style.cssText = `
-                    position: absolute;
-                    border-radius: 50%;
-                    background: rgba(255,255,255,0.5);
-                    transform: scale(0);
-                    animation: ripple-animation 0.6s ease-out;
-                    pointer-events: none;
-                `;
-                
-                const rect = this.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height);
-                const x = e.clientX - rect.left - size / 2;
-                const y = e.clientY - rect.top - size / 2;
-                
-                ripple.style.width = ripple.style.height = size + 'px';
-                ripple.style.left = x + 'px';
-                ripple.style.top = y + 'px';
-                
-                this.appendChild(ripple);
-                
-                setTimeout(() => {
-                    ripple.remove();
-                }, 600);
-            });
-        });
-
-        // 添加波纹动画
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes ripple-animation {
-                to {
-                    transform: scale(4);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
+    <script src="scripts/main.js"></script>
 </body>
 </html>
