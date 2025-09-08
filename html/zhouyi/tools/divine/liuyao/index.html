@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>六爻起卦界面</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/zh.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .container {
+            max-width: 420px;
+        }
+        .picker-select {
+            @apply w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+
+    <div class="container mx-auto p-6 bg-white rounded-2xl shadow-xl space-y-8">
+        <!-- 标题 -->
+        <div class="text-center">
+            <h1 class="text-2xl font-bold text-gray-800">六爻起卦</h1>
+        </div>
+
+        <!-- 起卦时间 -->
+        <div class="space-y-4">
+            <div class="flex items-center justify-between text-lg font-medium text-gray-700">
+                <span class="mr-2">起卦时间 (公历)</span>
+                <label for="datetimePicker"></label><input type="text" id="datetimePicker" class="picker-select w-44 text-right">
+            </div>
+        </div>
+
+        <!-- 卦象选择 -->
+        <div class="space-y-4">
+            <h2 class="text-lg font-medium text-gray-700">摇卦</h2>
+            <div id="hexagrams-list" class="space-y-3">
+                <!-- 卦爻将通过 JavaScript 动态生成 -->
+            </div>
+        </div>
+
+        <!-- 起卦按钮 -->
+        <div class="pt-4">
+            <button id="startDivination" class="w-full py-3 bg-indigo-600 text-white font-bold rounded-xl shadow-lg hover:bg-indigo-700 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-indigo-500/50">
+                起卦
+            </button>
+        </div>
+    </div>
+
+    <!-- 弹窗（用于提示信息） -->
+    <div id="messageBox" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden items-center justify-center transition-opacity duration-300">
+        <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm mx-auto text-center">
+            <p id="messageText" class="text-lg font-semibold text-gray-800 mb-4"></p>
+            <button id="closeButton" class="bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600">确定</button>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const GUA_YAO_OPTIONS = [
+                { value: "0", text: "请选择" },
+                { value: "6", text: "没有花 ㊙️ ㊙️ ㊙️" },
+                { value: "7", text: "一个花 🌸 ㊙️ ㊙️" },
+                { value: "8", text: "两个花 🌸 🌸 ㊙️" },
+                { value: "9", text: "三个花 🌸 🌸 🌸" }
+            ];
+
+            const hexagramsList = document.getElementById('hexagrams-list');
+            const messageBox    = document.getElementById('messageBox');
+            const messageText   = document.getElementById('messageText');
+            const closeButton   = document.getElementById('closeButton');
+            
+            // 存储卦象选择结果
+            let hexagramSelections = {};
+
+            // 动态生成六爻选择界面
+            const yaos = ['第一次摇卦', '第二次摇卦', '第三次摇卦', '第四次摇卦', '第五次摇卦', '第六次摇卦'];
+            yaos.forEach((yaoName, index) => {
+                const yaoDiv = document.createElement('div');
+                yaoDiv.className = 'flex items-center justify-between';
+                yaoDiv.innerHTML = `
+                    <label class="text-gray-600">${yaoName}</label>
+                    <div class="relative w-44">
+                        <select id="yao-${index}" class="picker-select appearance-none cursor-pointer text-gray-500">
+                            ${GUA_YAO_OPTIONS.map(option => `<option value="${option.value}">${option.text}</option>`).join('')}
+                        </select>
+                    </div>
+                `;
+                hexagramsList.appendChild(yaoDiv);
+
+                // 监听选择变化并更新状态
+                const selectElement = yaoDiv.querySelector('select');
+                selectElement.addEventListener('change', (e) => {
+                    hexagramSelections[yaoName] = e.target.value;
+                });
+            });
+
+            // 初始化 flatpickr 日期时间选择器
+            const flatpickrInstance = flatpickr("#datetimePicker", {
+                enableTime: true,
+                dateFormat: "Y-m-d H:i",
+                defaultDate: new Date(),
+                locale: 'zh'
+            });
+
+            // 起卦按钮点击事件
+            document.getElementById('startDivination').addEventListener('click', () => {
+                const time = flatpickrInstance.selectedDates[0];
+                const selections = Array.from(document.querySelectorAll('#hexagrams-list select')).map(select => ({
+                    yao: select.closest('.flex').querySelector('label').textContent,
+                    value: select.value
+                }));
+
+                // 验证所有卦爻是否都已选择
+                const isComplete = selections.every(sel => sel.value !== '0');
+                if (!isComplete) {
+                    showMessage('请完整选择所有六个卦爻。');
+                    return;
+                }
+                
+                // 将数据组合成一个对象
+                const divinationData = {
+                    divineTime: flatpickr.formatDate(time, "Y-m-d\\TH:i"),
+                    data: selections.map(option => option.value).join('')
+                };
+
+                console.log("起卦数据:", divinationData);
+                showMessage('起卦成功！\n' + JSON.stringify(divinationData, null, 2));
+            });
+
+            // 显示消息弹窗
+            function showMessage(msg) {
+                messageText.textContent = msg;
+                messageBox.classList.remove('hidden');
+                messageBox.classList.add('flex');
+            }
+
+            // 关闭弹窗
+            closeButton.addEventListener('click', () => {
+                messageBox.classList.add('hidden');
+                messageBox.classList.remove('flex');
+            });
+        });
+    </script>
+</body>
+</html>

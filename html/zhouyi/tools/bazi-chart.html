@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>八字排盘结果 | Bazi Chart Result</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="bazi.css">
+</head>
+<body>
+    <div class="bazi-container">
+        <!-- 返回按钮 -->
+        <div class="mb-6">
+            <button onclick="window.location.href='bazi-input.html'" 
+                    class="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200">
+                <i class="fas fa-arrow-left mr-2"></i>
+                重新输入
+            </button>
+        </div>
+
+        <!-- 基本信息显示 -->
+        <div id="basicInfo" class="info-grid">
+            <div class="info-item">
+                <h4><i class="fas fa-user mr-2"></i>姓名</h4>
+                <p id="displayName">-</p>
+            </div>
+            <div class="info-item">
+                <h4><i class="fas fa-venus-mars mr-2"></i>性别</h4>
+                <p id="displayGender">-</p>
+            </div>
+            <div class="info-item">
+                <h4><i class="fas fa-map-marker-alt mr-2"></i>出生地</h4>
+                <p id="displayBirthplace">-</p>
+            </div>
+            <div class="info-item">
+                <h4><i class="fas fa-calendar-alt mr-2"></i>出生时间</h4>
+                <p id="displayBirthdate">-</p>
+            </div>
+        </div>
+
+        <!-- 四柱信息 -->
+        <div id="sizhuSection" class="bazi-chart">
+            <div class="chart-section">
+                <h3 class="section-title">
+                    <i class="fas fa-table mr-2"></i>四柱信息
+                </h3>
+                <div class="sizhu-headers">
+                    <div class="sizhu-header-row">
+                        <div class="sizhu-header-cell">年柱</div>
+                        <div class="sizhu-header-cell">月柱</div>
+                        <div class="sizhu-header-cell">日柱</div>
+                        <div class="sizhu-header-cell">时柱</div>
+                    </div>
+                </div>
+                <div class="sizhu-grid" id="sizhuGrid">
+                    <!-- 四柱信息将通过JavaScript动态生成 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 大运信息 -->
+        <div id="dayunSection" class="bazi-chart">
+            <div class="chart-section">
+                <h3 class="section-title">
+                    <i class="fas fa-route mr-2"></i>大运信息
+                </h3>
+                <div class="dayun-headers">
+                    <div class="dayun-header-row">
+                        <div class="dayun-header-cell">8岁</div>
+                        <div class="dayun-header-cell">18岁</div>
+                        <div class="dayun-header-cell">28岁</div>
+                        <div class="dayun-header-cell">38岁</div>
+                        <div class="dayun-header-cell">48岁</div>
+                        <div class="dayun-header-cell">58岁</div>
+                        <div class="dayun-header-cell">68岁</div>
+                        <div class="dayun-header-cell">78岁</div>
+                        <div class="dayun-header-cell">88岁</div>
+                        <div class="dayun-header-cell">98岁</div>
+                    </div>
+                </div>
+                <div class="dayun-grid" id="dayunGrid">
+                    <!-- 大运信息将通过JavaScript动态生成 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 流年信息 -->
+        <div id="liunianSection" class="bazi-chart">
+            <div class="chart-section">
+                <h3 class="section-title">
+                    <i class="fas fa-calendar mr-2"></i>流年信息
+                </h3>
+                <div class="liunian-headers">
+                    <div class="liunian-header-row">
+                        <div class="liunian-header-cell">今年</div>
+                        <div class="liunian-header-cell">明年</div>
+                        <div class="liunian-header-cell">后年</div>
+                        <div class="liunian-header-cell">3年后</div>
+                        <div class="liunian-header-cell">4年后</div>
+                        <div class="liunian-header-cell">5年后</div>
+                        <div class="liunian-header-cell">6年后</div>
+                        <div class="liunian-header-cell">7年后</div>
+                        <div class="liunian-header-cell">8年后</div>
+                        <div class="liunian-header-cell">9年后</div>
+                    </div>
+                </div>
+                <div class="liunian-grid" id="liunianGrid">
+                    <!-- 流年信息将通过JavaScript动态生成 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 导出按钮 -->
+        <div class="text-center mt-8">
+            <button onclick="exportBazi()" class="btn-primary">
+                <i class="fas fa-download mr-2"></i>导出八字排盘
+            </button>
+        </div>
+    </div>
+
+    <script src="bazi-chart.js"></script>
+    <script>
+        // 页面加载时处理数据
+        document.addEventListener('DOMContentLoaded', function() {
+            // 从localStorage获取数据
+            const baziData = localStorage.getItem('baziData');
+            
+            if (!baziData) {
+                // 如果没有数据，跳转回输入页面
+                window.location.href = 'bazi-input.html';
+                return;
+            }
+            
+            try {
+                const data = JSON.parse(baziData);
+                
+                // 显示基本信息
+                displayBasicInfo(data);
+                
+                // 计算八字
+                const calculator = new BaziCalculator(data.birthdate);
+                const sizhu = calculator.calculateSizhu();
+                const dayun = calculator.calculateDayun();
+                const liunian = calculator.calculateLiunian();
+                
+                // 获取主要五行
+                const mainElement = calculator.getMainElement(sizhu);
+                
+                // 显示结果
+                displaySizhu(sizhu);
+                displayDayun(dayun);
+                displayLiunian(liunian);
+                
+                // 应用五行样式
+                applyElementStyle(mainElement);
+                
+                // 添加动画效果
+                addResultAnimations();
+                
+                // 清理localStorage（可选）
+                // localStorage.removeItem('baziData');
+                
+            } catch (error) {
+                console.error('数据解析错误:', error);
+                alert('数据加载失败，请重新输入');
+                window.location.href = 'bazi-input.html';
+            }
+        });
+
+        // 显示基本信息
+        function displayBasicInfo(data) {
+            document.getElementById('displayName').textContent = data.name;
+            document.getElementById('displayGender').textContent = data.gender;
+            document.getElementById('displayBirthplace').textContent = data.birthplace;
+            document.getElementById('displayBirthdate').textContent = new Date(data.birthdate).toLocaleString('zh-CN');
+        }
+
+        // 导出功能
+        function exportBazi() {
+            const basicInfo = {
+                name: document.getElementById('displayName').textContent,
+                gender: document.getElementById('displayGender').textContent,
+                birthplace: document.getElementById('displayBirthplace').textContent,
+                birthdate: document.getElementById('displayBirthdate').textContent
+            };
+            
+            const exportData = {
+                基本信息: basicInfo,
+                生成时间: new Date().toLocaleString('zh-CN'),
+                导出说明: '本排盘结果仅供娱乐参考，不作为专业指导'
+            };
+            
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = `八字排盘_${basicInfo.name}_${new Date().toISOString().slice(0, 10)}.json`;
+            link.click();
+        }
+
+        // 添加键盘快捷键
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                exportBazi();
+            }
+            
+            if (e.key === 'Escape') {
+                window.location.href = 'bazi-input.html';
+            }
+        });
+
+        // 显示快捷键提示
+        setTimeout(() => {
+            const hint = document.createElement('div');
+            hint.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: rgba(0, 0, 0, 0.8);
+                color: white;
+                padding: 0.5rem 1rem;
+                border-radius: 6px;
+                font-size: 0.8rem;
+                z-index: 1000;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            `;
+            hint.innerHTML = '<i class="fas fa-keyboard mr-2"></i>快捷键: Ctrl+S 导出, ESC 返回';
+            document.body.appendChild(hint);
+            
+            setTimeout(() => hint.style.opacity = '1', 100);
+            setTimeout(() => {
+                hint.style.opacity = '0';
+                setTimeout(() => hint.remove(), 300);
+            }, 5000);
+        }, 2000);
+    </script>
+</body>
+</html>
