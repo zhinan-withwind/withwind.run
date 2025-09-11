@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蛊卦 - 第十八卦 | 周易六十四卦</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background-color: #ffffff;
+            color: #000000;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid #000000;
+            padding-bottom: 40px;
+        }
+        
+        .hexagram-number {
+            font-size: 14px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        
+        .hexagram-title {
+            font-size: 48px;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+        
+        .hexagram-symbol {
+            font-size: 72px;
+            margin: 30px 0;
+            letter-spacing: 8px;
+        }
+        
+        .hexagram-line {
+            width: 200px;
+            height: 6px;
+            background-color: #000000;
+            margin: 8px auto;
+        }
+        
+        .hexagram-line.broken {
+            width: 90px;
+            background-color: #000000;
+            position: relative;
+        }
+        
+        .hexagram-line.broken::after {
+            content: '';
+            position: absolute;
+            width: 90px;
+            height: 6px;
+            background-color: #000000;
+            right: 0;
+            margin-left: 110px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #cccccc;
+        }
+        
+        .original-text {
+            font-size: 18px;
+            margin-bottom: 15px;
+            line-height: 2;
+        }
+        
+        .explanation {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #333333;
+        }
+        
+        .yaos {
+            margin-top: 30px;
+        }
+        
+        .yao {
+            margin-bottom: 25px;
+            padding-left: 20px;
+            border-left: 2px solid #000000;
+        }
+        
+        .yao-position {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .yao-text {
+            margin-bottom: 8px;
+        }
+        
+        .yao-explanation {
+            font-size: 14px;
+            color: #555555;
+        }
+        
+        .navigation {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid #cccccc;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .nav-link {
+            color: #000000;
+            text-decoration: none;
+            font-size: 14px;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        
+        .nav-link:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="hexagram-number">第十八卦</div>
+        <h1 class="hexagram-title">蛊卦</h1>
+        <div class="hexagram-symbol">
+            <div class="hexagram-line"></div>
+            <div class="hexagram-line broken"></div>
+            <div class="hexagram-line broken"></div>
+            <div class="hexagram-line broken"></div>
+            <div class="hexagram-line broken"></div>
+            <div class="hexagram-line broken"></div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">卦辞</h2>
+        <div class="original-text">元亨，利涉大川。先甲三日，后甲三日。</div>
+        <div class="explanation">
+            蛊卦象征腐败、弊端与革新。卦辞意为：大亨通，有利于涉越大河。先甲三日，后甲三日。蛊卦教导我们要整顿弊端，革除腐败，但要选择合适的时机。
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">彖传</h2>
+        <div class="original-text">蛊，刚上而柔下，巽而止，蛊。蛊，元亨而天下治也。利涉大川，往有事也。先甲三日，后甲三日，终则有始，天行也。</div>
+        <div class="explanation">
+            彖传说：蛊，刚健在上而柔顺在下，谦逊而停止，就是蛊。蛊，大亨通而天下得到治理。有利于涉越大河，是前往有事做。先甲三日，后甲三日，终而复始，是天的运行。
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">象传</h2>
+        <div class="original-text">山下有风，蛊。君子以振民育德。</div>
+        <div class="explanation">
+            象传说：山下有风，就是蛊卦。君子应当效法这种精神，振奋民众，培育德行。风在山下，象征需要整顿弊端，君子要教化民众。
+        </div>
+    </div>
+
+    <div class="section yaos">
+        <h2 class="section-title">爻辞</h2>
+        
+        <div class="yao">
+            <div class="yao-position">初六：干父之蛊，有子，考无咎，厉终吉</div>
+            <div class="yao-text">纠正父亲的弊端，有儿子，父亲没有灾害，危险最终吉祥。</div>
+            <div class="yao-explanation">
+                初六爻位于最下方，纠正父辈的错误。儿子能够纠正父亲的弊病，父亲不会有灾害，虽然过程危险但最终吉祥。
+            </div>
+        </div>
+
+        <div class="yao">
+            <div class="yao-position">九二：干母之蛊，不可贞</div>
+            <div class="yao-text">纠正母亲的弊端，不可坚守正道。</div>
+            <div class="yao-explanation">
+                九二爻得中得正，处理母辈问题。纠正母亲的弊病需要温和，不可过于刚直，要讲究方式方法。
+            </div>
+        </div>
+
+        <div class="yao">
+            <div class="yao-position">九三：干父之蛊，小有悔，无大咎</div>
+            <div class="yao-text">纠正父亲的弊端，小的悔恨，没有大的灾害。</div>
+            <div class="yao-explanation">
+                九三爻位置得当，纠正父辈错误。纠正父亲的弊病时会有小的悔恨，但不会有大的灾害，总体是好的。
+            </div>
+        </div>
+
+        <div class="yao">
+            <div class="yao-position">六四：裕父之蛊，往见吝</div>
+            <div class="yao-text">宽容父亲的弊端，前往见到困难。</div>
+            <div class="yao-explanation">
+                六四爻接近君位，过于宽容。对父亲的弊病过于宽容，不去纠正，这样下去会遇到困难。
+            </div>
+        </div>
+
+        <div class="yao">
+            <div class="yao-position">六五：干父之蛊，用誉</div>
+            <div class="yao-text">纠正父亲的弊端，获得声誉。</div>
+            <div class="yao-explanation">
+                六五爻居中尊位，成功纠正。能够纠正父亲的弊病，并且获得声誉，表示革新的成功。
+            </div>
+        </div>
+
+        <div class="yao">
+            <div class="yao-position">上九：不事王侯，高尚其事</div>
+            <div class="yao-text">不侍奉王侯，高尚其事业。</div>
+            <div class="yao-explanation">
+                上九爻位于极点，超然物外。不参与世俗事务，保持高尚的品德和事业，表示另一种处世方式。
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <a href="17.html" class="nav-link">← 第十七卦</a>
+        <a href="19.html" class="nav-link">第十九卦 →</a>
+    </div>
+</body>
+</html>

@@ -15,17 +15,11 @@
             font-family: 'Inter', sans-serif;
             background-color: #f3f4f6;
         }
-        .container {
-            max-width: 420px;
-        }
-        .picker-select {
-            @apply w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300;
-        }
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
 
-    <div class="container mx-auto p-6 bg-white rounded-2xl shadow-xl space-y-8">
+    <div class="max-w-md-640 p-6 bg-white rounded-2xl shadow-xl space-y-8">
         <!-- 标题 -->
         <div class="text-center">
             <h1 class="text-2xl font-bold text-gray-800">六爻起卦</h1>
@@ -35,7 +29,7 @@
         <div class="space-y-4">
             <div class="flex items-center justify-between text-lg font-medium text-gray-700">
                 <span class="mr-2">起卦时间 (公历)</span>
-                <label for="datetimePicker"></label><input type="text" id="datetimePicker" class="picker-select w-44 text-right">
+                <label for="datetimePicker"></label><input type="text" id="datetimePicker" class="picker-select w-40 text-right">
             </div>
         </div>
 
@@ -65,11 +59,11 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const GUA_YAO_OPTIONS = [
-                { value: "0", text: "请选择" },
-                { value: "6", text: "没有花 ㊙️ ㊙️ ㊙️" },
-                { value: "7", text: "一个花 🌸 ㊙️ ㊙️" },
-                { value: "8", text: "两个花 🌸 🌸 ㊙️" },
-                { value: "9", text: "三个花 🌸 🌸 🌸" }
+                { value: "0", text: "======= 请选择 ======= " },
+                { value: "6", text: "没有花 【字 字 字】（太阴）" },
+                { value: "7", text: "一个花 【花 字 字】（少阳）" },
+                { value: "8", text: "两个花 【花 花 字】（少阴）" },
+                { value: "9", text: "三个花 【花 花 花】（太阳）" }
             ];
 
             const hexagramsList = document.getElementById('hexagrams-list');
@@ -86,9 +80,9 @@
                 const yaoDiv = document.createElement('div');
                 yaoDiv.className = 'flex items-center justify-between';
                 yaoDiv.innerHTML = `
-                    <label class="text-gray-600">${yaoName}</label>
-                    <div class="relative w-44">
-                        <select id="yao-${index}" class="picker-select appearance-none cursor-pointer text-gray-500">
+                    <label class="text-gray-600 p-4">${yaoName}</label>
+                    <div class="relative w-80 p-4">
+                        <select id="yao-${index}" class="ppearance-none cursor-pointer text-gray-500">
                             ${GUA_YAO_OPTIONS.map(option => `<option value="${option.value}">${option.text}</option>`).join('')}
                         </select>
                     </div>
