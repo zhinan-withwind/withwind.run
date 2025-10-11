@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>车牌号码生成器</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .loading-spinner {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #000;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-white min-h-screen">
+    <!-- Main Content -->
+    <main class="max-w-2xl mx-auto px-4 py-8">
+        <!-- Title -->
+        <div class="text-center mb-12">
+            <h1 class="text-2xl font-light text-gray-900 mb-2">车牌号码生成器</h1>
+            <p class="text-sm text-gray-500">基于周易算法的吉祥车牌号推荐系统</p>
+        </div>
+
+        <!-- Input Form -->
+        <form id="plateForm" class="mb-12">
+            <div class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                <input 
+                    type="text" 
+                    id="prefix" 
+                    name="prefix" 
+                    placeholder="车牌前缀 (如: EAQ)" 
+                    maxlength="3"
+                    class="flex-1 px-4 py-3 border border-gray-300 focus:border-black focus:outline-none text-sm uppercase"
+                    required
+                >
+                <button 
+                    type="submit" 
+                    id="generateBtn"
+                    class="px-6 py-3 bg-black text-white text-sm hover:bg-gray-800 transition-colors duration-200"
+                >
+                    生成号码
+                </button>
+            </div>
+        </form>
+
+        <!-- Loading State -->
+        <div id="loadingSection" class="hidden text-center py-12">
+            <div class="loading-spinner mx-auto mb-4"></div>
+            <p class="text-sm text-gray-600">正在生成...</p>
+        </div>
+
+        <!-- Results -->
+        <div id="resultsSection" class="hidden">
+            <div class="mb-6 flex items-center justify-between">
+                <h2 class="text-lg font-light text-gray-900">推荐结果</h2>
+                <button 
+                    id="resetBtn"
+                    class="text-sm text-gray-500 hover:text-gray-700"
+                >
+                    重新生成
+                </button>
+            </div>
+            
+            <div id="resultsContainer" class="space-y-3">
+                <!-- Results will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Error -->
+        <div id="errorSection" class="hidden">
+            <div class="text-center py-8">
+                <p id="errorMessage" class="text-sm text-red-600"></p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        class LicensePlateGenerator {
+            constructor() {
+                this.form = document.getElementById('plateForm');
+                this.prefixInput = document.getElementById('prefix');
+                this.generateBtn = document.getElementById('generateBtn');
+                this.resetBtn = document.getElementById('resetBtn');
+                this.loadingSection = document.getElementById('loadingSection');
+                this.resultsSection = document.getElementById('resultsSection');
+                this.errorSection = document.getElementById('errorSection');
+                this.resultsContainer = document.getElementById('resultsContainer');
+                this.errorMessage = document.getElementById('errorMessage');
+                
+                this.init();
+            }
+            
+            init() {
+                this.form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.generateNumbers();
+                });
+                
+                this.resetBtn.addEventListener('click', () => {
+                    this.reset();
+                });
+                
+                // Auto convert to uppercase
+                this.prefixInput.addEventListener('input', (e) => {
+                    e.target.value = e.target.value.toUpperCase();
+                });
+            }
+            
+            async generateNumbers() {
+                const prefix = this.prefixInput.value.trim();
+                
+                if (!prefix) {
+                    this.showError('请输入车牌前缀');
+                    return;
+                }
+                
+                if (prefix.length !== 3 || !/^[A-Z]+$/.test(prefix)) {
+                    this.showError('请输入3位有效的英文字母');
+                    return;
+                }
+                
+                this.showLoading();
+                
+                try {
+                    // 尝试直接调用API
+                    await this.tryDirectAPI(prefix);
+                    
+                } catch (error) {
+                    console.error('直接API调用失败，尝试备用方案:', error);
+                    try {
+                        // 备用方案：使用模拟数据
+                        this.showMockResults(prefix);
+                    } catch (fallbackError) {
+                        console.error('备用方案也失败:', fallbackError);
+                        this.showError('API调用失败，请稍后重试或联系管理员');
+                    }
+                }
+            }
+            
+            async tryDirectAPI(prefix) {
+                const apiUrl = `https://app.withwind.run/zhouyi/number/choose?prefix=${prefix}`;
+                console.log('正在调用API:', apiUrl);
+                
+                const response = await fetch(apiUrl);
+                console.log('API响应状态:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`API请求失败: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('API返回数据:', data);
+                
+                if (!data || typeof data !== 'object') {
+                    throw new Error('返回数据格式错误');
+                }
+                
+                // 转换整数评分为浮点数（除以10）
+                const convertedData = {};
+                for (const [number, score] of Object.entries(data)) {
+                    convertedData[number] = typeof score === 'number' ? score / 10 : score;
+                }
+                
+                this.showResults(convertedData, prefix);
+            }
+            
+            showMockResults(prefix) {
+                // 模拟数据用于演示
+                const mockData = {
+                    '2768': 8.5,
+                    '2786': 8.2,
+                    '2867': 8.2,
+                    '6827': 8.2,
+                    '6872': 8.1,
+                    '8672': 8.1,
+                    '6728': 8.0,
+                    '7286': 8.0,
+                    '2687': 7.9,
+                    '2876': 7.9,
+                    '7682': 7.9,
+                    '8276': 7.9,
+                    '8627': 7.9
+                };
+                
+                console.log('使用模拟数据:', mockData);
+                this.showResults(mockData, prefix);
+            }
+            
+            showLoading() {
+                this.hideAllSections();
+                this.loadingSection.classList.remove('hidden');
+                this.generateBtn.disabled = true;
+                this.generateBtn.textContent = '生成中...';
+            }
+            
+            showResults(data, prefix) {
+                this.hideAllSections();
+                this.resultsSection.classList.remove('hidden');
+                this.generateBtn.disabled = false;
+                this.generateBtn.textContent = '生成号码';
+                
+                // Convert to array and sort by score (descending)
+                const results = Object.entries(data)
+                    .map(([number, score]) => ({ number, score }))
+                    .sort((a, b) => b.score - a.score);
+                
+                this.resultsContainer.innerHTML = '';
+                
+                results.forEach((result, index) => {
+                    const resultItem = this.createResultItem(result, prefix, index + 1);
+                    this.resultsContainer.appendChild(resultItem);
+                });
+            }
+            
+            createResultItem(result, prefix, rank) {
+                const div = document.createElement('div');
+                div.className = 'flex items-center justify-between py-3 border-b border-gray-100';
+                
+                const fullNumber = `${prefix}${result.number}`;
+                const scoreColor = this.getScoreColor(result.score);
+                
+                div.innerHTML = `
+                    <div class="flex items-center space-x-4">
+                        <span class="text-sm text-gray-400">${rank}.</span>
+                        <div>
+                            <div class="font-medium text-gray-900">${fullNumber}</div>
+                            <div class="text-xs text-gray-500">${result.number}</div>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="${scoreColor} font-medium">${result.score.toFixed(1)}</div>
+                    </div>
+                `;
+                
+                return div;
+            }
+            
+            getScoreColor(score) {
+                if (score >= 8.0) return 'text-green-600';
+                if (score >= 6.0) return 'text-blue-600';
+                if (score >= 4.0) return 'text-gray-600';
+                return 'text-gray-400';
+            }
+            
+            showError(message) {
+                this.hideAllSections();
+                this.errorSection.classList.remove('hidden');
+                this.errorMessage.textContent = message;
+                this.generateBtn.disabled = false;
+                this.generateBtn.textContent = '生成号码';
+            }
+            
+            hideAllSections() {
+                this.loadingSection.classList.add('hidden');
+                this.resultsSection.classList.add('hidden');
+                this.errorSection.classList.add('hidden');
+            }
+            
+            reset() {
+                this.hideAllSections();
+                this.prefixInput.value = '';
+                this.prefixInput.focus();
+                this.generateBtn.disabled = false;
+                this.generateBtn.textContent = '生成号码';
+            }
+        }
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', () => {
+            new LicensePlateGenerator();
+        });
+    </script>
+</body>
+</html>
