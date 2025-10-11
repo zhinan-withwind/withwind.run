@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>API Proxy</title>
+</head>
+<body>
+    <script>
+        // 获取URL参数
+        const urlParams = new URLSearchParams(window.location.search);
+        const prefix = urlParams.get('prefix');
+        const callback = urlParams.get('callback');
+        
+        if (prefix) {
+            fetch(`https://app.withwind.run/zhouyi/number/choose?prefix=${prefix}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (callback && window.parent[callback]) {
+                        window.parent[callback](data);
+                    }
+                })
+                .catch(error => {
+                    console.error('Proxy error:', error);
+                });
+        }
+    </script>
+</body>
+</html>

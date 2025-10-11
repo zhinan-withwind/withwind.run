@@ -131,68 +131,42 @@
                 this.showLoading();
                 
                 try {
-                    // 尝试直接调用API
-                    await this.tryDirectAPI(prefix);
+                    // 使用CORS代理服务
+                    const proxyUrl = `https://cors-anywhere.herokuapp.com/https://app.withwind.run/zhouyi/number/choose?prefix=${prefix}`;
+                    console.log('正在通过代理调用API:', proxyUrl);
+                    
+                    const response = await fetch(proxyUrl);
+                    console.log('API响应状态:', response.status);
+                    
+                    if (!response.ok) {
+                        throw new Error(`API请求失败: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    console.log('API返回数据:', data);
+                    
+                    if (!data || typeof data !== 'object') {
+                        throw new Error('返回数据格式错误');
+                    }
+                    
+                    // 转换整数评分为浮点数（除以10）
+                    const convertedData = {};
+                    for (const [number, score] of Object.entries(data)) {
+                        convertedData[number] = typeof score === 'number' ? score / 10 : score;
+                    }
+                    
+                    this.showResults(convertedData, prefix);
                     
                 } catch (error) {
-                    console.error('直接API调用失败，尝试备用方案:', error);
-                    try {
-                        // 备用方案：使用模拟数据
-                        this.showMockResults(prefix);
-                    } catch (fallbackError) {
-                        console.error('备用方案也失败:', fallbackError);
-                        this.showError('API调用失败，请稍后重试或联系管理员');
+                    console.error('API调用失败:', error);
+                    
+                    // 如果代理失败，尝试直接调用（可能需要在服务器环境或特殊浏览器设置下运行）
+                    if (error.message.includes('cors-anywhere')) {
+                        this.showError('代理服务不可用，请尝试以下方法：<br>1. 访问 https://cors-anywhere.herokuapp.com/corsdemo 点击 Request temporary access<br>2. 然后重新尝试');
+                    } else {
+                        this.showError(`API调用失败: ${error.message}`);
                     }
                 }
-            }
-            
-            async tryDirectAPI(prefix) {
-                const apiUrl = `https://app.withwind.run/zhouyi/number/choose?prefix=${prefix}`;
-                console.log('正在调用API:', apiUrl);
-                
-                const response = await fetch(apiUrl);
-                console.log('API响应状态:', response.status);
-                
-                if (!response.ok) {
-                    throw new Error(`API请求失败: ${response.status}`);
-                }
-                
-                const data = await response.json();
-                console.log('API返回数据:', data);
-                
-                if (!data || typeof data !== 'object') {
-                    throw new Error('返回数据格式错误');
-                }
-                
-                // 转换整数评分为浮点数（除以10）
-                const convertedData = {};
-                for (const [number, score] of Object.entries(data)) {
-                    convertedData[number] = typeof score === 'number' ? score / 10 : score;
-                }
-                
-                this.showResults(convertedData, prefix);
-            }
-            
-            showMockResults(prefix) {
-                // 模拟数据用于演示
-                const mockData = {
-                    '2768': 8.5,
-                    '2786': 8.2,
-                    '2867': 8.2,
-                    '6827': 8.2,
-                    '6872': 8.1,
-                    '8672': 8.1,
-                    '6728': 8.0,
-                    '7286': 8.0,
-                    '2687': 7.9,
-                    '2876': 7.9,
-                    '7682': 7.9,
-                    '8276': 7.9,
-                    '8627': 7.9
-                };
-                
-                console.log('使用模拟数据:', mockData);
-                this.showResults(mockData, prefix);
             }
             
             showLoading() {
