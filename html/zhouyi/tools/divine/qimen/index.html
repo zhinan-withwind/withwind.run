@@ -98,7 +98,7 @@
                     <!-- Basic Info Template -->
                     <div id="basicInfoTemplate" class="hidden bg-white border border-gray-200 rounded-lg p-8 mb-8 fade-in">
                         <h3 class="text-2xl font-light mb-6 text-gray-800">
-                            <span id="personName"></span>（<span id="sex"></span>）奇门遁甲命盘排盘信息：
+                            <span id="personName"></span>（<span id="title"></span>）奇门遁甲命盘排盘信息：
                         </h3>
                         <div class="space-y-4 text-gray-700 leading-relaxed font-light">
                             <div class="text-lg font-light">1、基本信息：</div>
@@ -108,9 +108,9 @@
                             <div class="ml-6">旬首：<span id="xunHead" class="font-light"></span></div>
                             <div class="ml-6">值符：<span id="dutyStar" class="font-light"></span></div>
                             <div class="ml-6">值使：<span id="dutyDoor" class="font-light"></span></div>
-                            <div class="ml-6">局势：<span id="layout" class="font-light"></span><span id="anchorPalace" class="hidden font-medium">寄<span></span></div>
-                            <div class="ml-6">上一个节气：<span id="lastSolarTerm" class="font-light"></span></div>
-                            <div class="ml-6">下一个节气：<span id="nextSolarTerm" class="font-light"></span></div>
+                            <div class="ml-6">局势：<span id="layout" class="font-light">转盘-拆补-寄坤二宫</span></div>
+                            <div class="ml-6">上一个节气：<br/><span id="lastSolarTerm" class="font-light"></span></div>
+                            <div class="ml-6">下一个节气：<br/><span id="nextSolarTerm" class="font-light"></span></div>
                         </div>
                     </div>
                     
@@ -265,7 +265,7 @@
                 
                 // 填充基本信息
                 document.getElementById('personName').textContent = base.personName || '';
-                document.getElementById('sex').textContent = base.sex || '';
+                document.getElementById('title').textContent = base.sex || '';
                 
                 // 填充日期时间信息
                 const datetimeInfo = document.getElementById('datetimeInfo');
@@ -301,17 +301,6 @@
                 document.getElementById('dutyStar').textContent = base.dutyStar || '';
                 document.getElementById('dutyDoor').textContent = base.dutyDoor || '';
                 
-                // 处理局势
-                const layoutElement = document.getElementById('layout');
-                const anchorPalaceElement = document.getElementById('anchorPalace');
-                layoutElement.textContent = data.layout || '';
-                if (data.anchorPalace) {
-                    anchorPalaceElement.classList.remove('hidden');
-                    anchorPalaceElement.querySelector('span').textContent = data.anchorPalace;
-                } else {
-                    anchorPalaceElement.classList.add('hidden');
-                }
-                
                 // 处理节气
                 document.getElementById('lastSolarTerm').textContent = 
                     base.lastSolarTerm ? `${base.lastSolarTerm.name || ''} ${base.lastSolarTerm.dateTime || ''}` : '';
@@ -340,7 +329,7 @@
                         const dGan = palace.ground?.gan?.name || '';
                         const dStat = palace.ground?.statuses || '';
                         
-                        const isKongWang = (palace.isTimeEmpty || palace.isDayEmpty);
+                        const isKongWang = (palace.isTimeEmpty);
                         const isMaXing = palace.isHorse || false;
                         const isRuMu = (palace.ground?.isEnterTomb) || (dStat?.includes('墓'));
                         
