@@ -93,9 +93,36 @@
                 
                 <!-- Analysis Data -->
                 <div id="analysisSection" class="hidden">
-                    <h2 class="text-2xl font-light mb-6 text-center">命盘分析</h2>
-                    <div id="analysisContent" class="bg-white border border-gray-200 rounded-lg p-8 text-gray-700 leading-relaxed">
-                        <!-- Analysis data will be populated here -->
+                    <h2 class="text-4xl md:text-5xl font-light mb-12 text-center text-gray-800">命盘分析</h2>
+                    
+                    <!-- Basic Info Template -->
+                    <div id="basicInfoTemplate" class="hidden bg-white border border-gray-200 rounded-lg p-8 mb-8 fade-in">
+                        <h3 class="text-2xl font-light mb-6 text-gray-800">
+                            <span id="personName"></span>（<span id="sex"></span>）奇门遁甲命盘排盘信息：
+                        </h3>
+                        <div class="space-y-4 text-gray-700 leading-relaxed font-light">
+                            <div class="text-lg font-light">1、基本信息：</div>
+                            <div class="ml-6">生日：<span id="datetimeInfo" class="font-light"></span></div>
+                            <div class="ml-6">干支：<span id="ganZhiInfo" class="font-light"></span></div>
+                            <div class="ml-6">选局：<span id="pattern" class="font-light"></span></div>
+                            <div class="ml-6">旬首：<span id="xunHead" class="font-light"></span></div>
+                            <div class="ml-6">值符：<span id="dutyStar" class="font-light"></span></div>
+                            <div class="ml-6">值使：<span id="dutyDoor" class="font-light"></span></div>
+                            <div class="ml-6">局势：<span id="layout" class="font-light"></span><span id="anchorPalace" class="hidden font-medium">寄<span></span></div>
+                            <div class="ml-6">上一个节气：<span id="lastSolarTerm" class="font-light"></span></div>
+                            <div class="ml-6">下一个节气：<span id="nextSolarTerm" class="font-light"></span></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Palace Info Template -->
+                    <div id="palaceInfoTemplate" class="hidden bg-white border border-gray-200 rounded-lg p-8 fade-in">
+                        <h3 class="text-2xl font-light mb-6 text-gray-800">2、八宫信息：</h3>
+                        <div id="palaceList" class="space-y-3 text-gray-700 leading-relaxed"></div>
+                    </div>
+                    
+                    <!-- No Data Message -->
+                    <div id="noDataMessage" class="hidden bg-white border border-gray-200 rounded-lg p-12 text-center fade-in">
+                        <p class="text-gray-500 text-lg">暂无分析数据，请稍后重试</p>
                     </div>
                 </div>
             </div>
@@ -219,70 +246,86 @@
         
         function displayAnalysisData(data) {
             console.log('🎨 开始解析数据:', data);
-            const content = document.getElementById('analysisContent');
-            let html = '';
+            
+            // Hide all templates first
+            document.getElementById('basicInfoTemplate').classList.add('hidden');
+            document.getElementById('palaceInfoTemplate').classList.add('hidden');
+            document.getElementById('noDataMessage').classList.add('hidden');
             
             // 如果数据为空或无效，显示提示信息
             if (!data || (typeof data !== 'object')) {
                 console.warn('⚠️ 数据为空或格式错误:', data);
-                html = '<p class="text-center text-gray-500 py-8">暂无分析数据，请稍后重试</p>';
-                content.innerHTML = html;
+                document.getElementById('noDataMessage').classList.remove('hidden');
                 return;
             }
             
-            // Basic info
+            // 处理基本信息
             if (data.baseInfo) {
                 const base = data.baseInfo;
-                html += `<div class="mb-8"><h3 class="text-xl font-light mb-4">${base.personName || ''}（${base.sex || ''}）奇门遁甲命盘排盘信息：</h3>`;
                 
-                html += '<div class="space-y-2">';
-                html += `<p><strong>1、基本信息：</strong></p>`;
+                // 填充基本信息
+                document.getElementById('personName').textContent = base.personName || '';
+                document.getElementById('sex').textContent = base.sex || '';
                 
+                // 填充日期时间信息
+                const datetimeInfo = document.getElementById('datetimeInfo');
+                let datetimeHtml = '';
                 if (base.solarBirthday) {
-                    html += `<p>公历 ${base.solarBirthday}`;
+                    datetimeHtml += `<p>公历 ${base.solarBirthday}`;
                     if (base.lunarBirthday) {
-                        html += `<br>农历 ${base.lunarBirthday}`;
+                        datetimeHtml += `<br>农历 ${base.lunarBirthday}`;
                     }
                     if (base.apparentSolarTime) {
-                        html += `<br>真太阳时 ${base.apparentSolarTime}`;
+                        datetimeHtml += `<br>真太阳时 ${base.apparentSolarTime}`;
                     }
-                    html += '</p>';
+                    datetimeHtml += '</p>';
                 }
+                datetimeInfo.innerHTML = datetimeHtml;
                 
+                // 填充干支信息
+                const ganZhiInfo = document.getElementById('ganZhiInfo');
+                let ganZhiHtml = '';
                 if (base.ganZhiBirthday) {
-                    html += '<p>四柱：';
-                    html += `年柱/${base.ganZhiBirthday.ganZhiYear?.name || ''} `;
-                    html += `月柱/${base.ganZhiBirthday.ganZhiMonth?.name || ''} `;
-                    html += `日柱/${base.ganZhiBirthday.ganZhiDay?.name || ''} `;
-                    html += `时柱/${base.ganZhiBirthday.ganZhiTime?.name || ''}`;
-                    html += '</p>';
+                    ganZhiHtml += '<p>四柱：';
+                    ganZhiHtml += `年柱/${base.ganZhiBirthday.ganZhiYear?.name || ''} `;
+                    ganZhiHtml += `月柱/${base.ganZhiBirthday.ganZhiMonth?.name || ''} `;
+                    ganZhiHtml += `日柱/${base.ganZhiBirthday.ganZhiDay?.name || ''} `;
+                    ganZhiHtml += `时柱/${base.ganZhiBirthday.ganZhiTime?.name || ''}`;
+                    ganZhiHtml += '</p>';
+                }
+                ganZhiInfo.innerHTML = ganZhiHtml;
+                
+                // 填充其他信息
+                document.getElementById('pattern').textContent = base.pattern || '';
+                document.getElementById('xunHead').textContent = base.xunHead || '';
+                document.getElementById('dutyStar').textContent = base.dutyStar || '';
+                document.getElementById('dutyDoor').textContent = base.dutyDoor || '';
+                
+                // 处理局势
+                const layoutElement = document.getElementById('layout');
+                const anchorPalaceElement = document.getElementById('anchorPalace');
+                layoutElement.textContent = data.layout || '';
+                if (data.anchorPalace) {
+                    anchorPalaceElement.classList.remove('hidden');
+                    anchorPalaceElement.querySelector('span').textContent = data.anchorPalace;
+                } else {
+                    anchorPalaceElement.classList.add('hidden');
                 }
                 
-                html += `<p>选局：${base.pattern || ''}</p>`;
-                html += `<p>旬首：${base.xunHead || ''}</p>`;
-                html += `<p>值符：${base.dutyStar || ''}</p>`;
-                html += `<p>值使：${base.dutyDoor || ''}</p>`;
+                // 处理节气
+                document.getElementById('lastSolarTerm').textContent = 
+                    base.lastSolarTerm ? `${base.lastSolarTerm.name || ''} ${base.lastSolarTerm.dateTime || ''}` : '';
+                document.getElementById('nextSolarTerm').textContent = 
+                    base.nextSolarTerm ? `${base.nextSolarTerm.name || ''} ${base.nextSolarTerm.dateTime || ''}` : '';
                 
-                if (data.layout || data.anchorPalace) {
-                    html += `<p>局势：${data.layout || ''}`;
-                    if (data.layout && data.anchorPalace) html += '-';
-                    if (data.anchorPalace) html += `寄${data.anchorPalace}`;
-                    html += '</p>';
-                }
-                
-                if (base.lastSolarTerm) {
-                    html += `<p>上一个节气：${base.lastSolarTerm.name || ''} ${base.lastSolarTerm.dateTime || ''}</p>`;
-                }
-                if (base.nextSolarTerm) {
-                    html += `<p>下一个节气：${base.nextSolarTerm.name || ''} ${base.nextSolarTerm.dateTime || ''}</p>`;
-                }
-                
-                html += '</div></div>';
+                // 显示基本信息模板
+                document.getElementById('basicInfoTemplate').classList.remove('hidden');
             }
             
-            // Palace info
+            // 处理八宫信息
             if (data.palaceInfo) {
-                html += '<div><h3 class="text-xl font-light mb-4">2、八宫信息：</h3><div class="space-y-2">';
+                const palaceList = document.getElementById('palaceList');
+                let palaceHtml = '';
                 
                 const orderSeq = ["巽四宫", "离九宫", "坤二宫", "兑七宫", "乾六宫", "坎一宫", "艮八宫", "震三宫"];
                 
@@ -301,29 +344,22 @@
                         const isMaXing = palace.isHorse || false;
                         const isRuMu = (palace.ground?.isEnterTomb) || (dStat?.includes('墓'));
                         
-                        html += `<p><strong>${palaceName}：</strong>${doorName}/${starName}/${deityName} 天${tGan}`;
-                        if (tStat) html += `【${tStat}】`;
-                        html += `/地${dGan}`;
-                        if (dStat) html += `【${dStat}】`;
-                        if (isKongWang) html += ' 空亡';
-                        if (isMaXing) html += ' 马星';
-                        if (isRuMu) html += ' 入墓';
-                        html += '</p>';
+                        palaceHtml += `<p><strong class="font-light">${palaceName}：</strong>${doorName}/${starName}/${deityName} 天${tGan}`;
+                        if (tStat) palaceHtml += `<span class="text-gray-600 font-light">【${tStat}】</span>`;
+                        palaceHtml += `/地${dGan}`;
+                        if (dStat) palaceHtml += `<span class="text-gray-600 font-light">【${dStat}】</span>`;
+                        if (isKongWang) palaceHtml += ' <span class="text-yellow-600 font-medium">空亡</span>';
+                        if (isMaXing) palaceHtml += ' <span class="text-blue-600 font-medium">马星</span>';
+                        if (isRuMu) palaceHtml += ' <span class="text-purple-600 font-medium">入墓</span>';
+                        palaceHtml += '</p>';
                     }
                 });
                 
-                html += '</div></div>';
+                palaceList.innerHTML = palaceHtml;
+                document.getElementById('palaceInfoTemplate').classList.remove('hidden');
             }
             
-            console.log('📝 生成的HTML长度:', html.length);
-            
-            if (html.trim()) {
-                content.innerHTML = html;
-                console.log('✅ 数据解析完成并显示');
-            } else {
-                console.warn('⚠️ 生成的HTML为空');
-                content.innerHTML = '<p class="text-center text-gray-500 py-8">暂无分析数据</p>';
-            }
+            console.log('✅ 数据解析完成并显示');
         }
         
         // Initialize on page load
