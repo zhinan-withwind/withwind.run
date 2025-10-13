@@ -180,11 +180,11 @@
                 
                 if (isLocalDev) {
                     // Use local proxy in development
-                    chartUrl = `/api/zhouyi/qimen/divine/chart?divineTime=${encodeURIComponent(chartTimeFormat)}`;
+                    chartUrl = `/api/zhouyi/qimen/divine/chart?divineTime=${encodeURIComponent(analysisTimeFormat)}&region=${encodeURIComponent(formData.region)}`;
                     analysisUrl = `/api/zhouyi/qimen/analyzeForJiang?name=${encodeURIComponent(formData.name)}&birthday=${encodeURIComponent(analysisTimeFormat)}&region=${encodeURIComponent(formData.region)}&sex=${encodeURIComponent(formData.sex)}`;
                 } else {
                     // Use direct API in production
-                    chartUrl = `https://app.withwind.run/zhouyi/qimen/divine/chart?divineTime=${encodeURIComponent(chartTimeFormat)}`;
+                    chartUrl = `https://app.withwind.run/zhouyi/qimen/divine/chart?divineTime=${encodeURIComponent(analysisTimeFormat)}&region=${encodeURIComponent(formData.region)}`;
                     analysisUrl = `https://app.withwind.run/zhouyi/qimen/analyzeForJiang?name=${encodeURIComponent(formData.name)}&birthday=${encodeURIComponent(analysisTimeFormat)}&region=${encodeURIComponent(formData.region)}&sex=${encodeURIComponent(formData.sex)}`;
                 }
                 
@@ -332,6 +332,7 @@
                         const isKongWang = (palace.isTimeEmpty);
                         const isMaXing = palace.isHorse || false;
                         const isRuMu = (palace.ground?.isEnterTomb) || (dStat?.includes('墓'));
+                        const isNative = palace.isNative || false;
                         
                         palaceHtml += `<p><strong class="font-light">${palaceName}：</strong>${doorName}/${starName}/${deityName} 天${tGan}`;
                         if (tStat) palaceHtml += `<span class="text-gray-600 font-light">【${tStat}】</span>`;
@@ -340,6 +341,7 @@
                         if (isKongWang) palaceHtml += ' <span class="text-yellow-600 font-medium">空亡</span>';
                         if (isMaXing) palaceHtml += ' <span class="text-blue-600 font-medium">马星</span>';
                         if (isRuMu) palaceHtml += ' <span class="text-purple-600 font-medium">入墓</span>';
+                        if (isNative) palaceHtml += ' （<span class="text-green-600 font-medium">本宫</span>）';
                         palaceHtml += '</p>';
                     }
                 });
