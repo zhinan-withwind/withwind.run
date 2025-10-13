@@ -158,7 +158,7 @@
                     analysisUrl = `/api/zhouyi/qimen/analyzeForJiang?name=${encodeURIComponent(formData.name)}&birthday=${encodeURIComponent(analysisTimeFormat)}&region=${encodeURIComponent(formData.region)}&sex=${encodeURIComponent(formData.sex)}`;
                 } else {
                     // Use direct API in production
-                    chartUrl = `https://app.withwind.run/zhouyi//qimen/divine/chart?divineTime=${encodeURIComponent(chartTimeFormat)}`;
+                    chartUrl = `https://app.withwind.run/zhouyi/qimen/divine/chart?divineTime=${encodeURIComponent(chartTimeFormat)}`;
                     analysisUrl = `https://app.withwind.run/zhouyi/qimen/analyzeForJiang?name=${encodeURIComponent(formData.name)}&birthday=${encodeURIComponent(analysisTimeFormat)}&region=${encodeURIComponent(formData.region)}&sex=${encodeURIComponent(formData.sex)}`;
                 }
                 
