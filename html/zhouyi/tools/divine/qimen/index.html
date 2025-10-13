@@ -54,14 +54,49 @@
                         </select>
                     </div>
                     
-                    <!-- Region Input -->
+                    <!-- Region Selection -->
                     <div>
-                        <label for="region" class="block text-sm font-medium text-gray-700 mb-2">
+                        <label for="region-selector" class="block text-sm font-medium text-gray-700 mb-2">
                             地区 <span class="text-gray-400">（选填）</span>
                         </label>
-                        <input type="text" id="region" name="region"
-                               class="w-full px-4 py-2 border border-gray-300 focus:ring-1 focus:ring-black focus:border-black outline-none transition-colors"
-                               placeholder="请输入您的地区，如：北京，上海等等">
+                        <div id="region-selector" class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <!-- Province Select -->
+                                <div>
+                                    <select id="province-select" 
+                                            class="w-full px-4 py-2 border border-gray-300 focus:ring-1 focus:ring-black focus:border-black outline-none transition-colors">
+                                        <option value="">请选择省份</option>
+                                    </select>
+                                </div>
+                                
+                                <!-- City Select -->
+                                <div>
+                                    <select id="city-select" 
+                                            class="w-full px-4 py-2 border border-gray-300 focus:ring-1 focus:ring-black focus:border-black outline-none transition-colors" 
+                                            disabled>
+                                        <option value="">请选择城市</option>
+                                    </select>
+                                </div>
+                                
+                                <!-- District Select -->
+                                <div>
+                                    <select id="district-select" 
+                                            class="w-full px-4 py-2 border border-gray-300 focus:ring-1 focus:ring-black focus:border-black outline-none transition-colors" 
+                                            disabled>
+                                        <option value="">请选择区县</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- Selected Region Display -->
+                            <div id="selected-region" class="hidden">
+                                <span class="text-sm text-gray-600">已选择：</span>
+                                <span id="region-display" class="text-sm font-medium text-gray-800"></span>
+                            </div>
+                        </div>
+                        <!-- Hidden input for form submission -->
+                        <input type="hidden" id="region" name="region">
+                        <input type="hidden" id="region-code" name="regionCode">
                     </div>
                     
                     <!-- Submit Button -->
@@ -131,6 +166,180 @@
 
     
     <script>
+        // Region data and selection functionality
+        let regionData = [];
+        let selectedProvince = null;
+        let selectedCity = null;
+        let selectedDistrict = null;
+        
+        // Load region data from JSON file
+        async function loadRegionData() {
+            try {
+                const response = await fetch('./region.json');
+                if (!response.ok) {
+                    throw new Error('Failed to load region data');
+                }
+                regionData = await response.json();
+                console.log('✅ Region data loaded:', regionData.length, 'regions');
+                initializeProvinceSelector();
+            } catch (error) {
+                console.error('❌ Failed to load region data:', error);
+            }
+        }
+        
+        // Initialize province selector
+        function initializeProvinceSelector() {
+            const provinces = regionData.filter(region => region.parentId === 0);
+            const provinceSelect = document.getElementById('province-select');
+            
+            provinces.forEach(province => {
+                const option = document.createElement('option');
+                option.value = province.code;
+                option.textContent = province.name;
+                option.dataset.id = province.id;
+                provinceSelect.appendChild(option);
+            });
+            
+            // Add change event listener
+            provinceSelect.addEventListener('change', handleProvinceChange);
+        }
+        
+        // Handle province selection
+        function handleProvinceChange() {
+            const provinceSelect = document.getElementById('province-select');
+            const citySelect = document.getElementById('city-select');
+            const districtSelect = document.getElementById('district-select');
+            
+            // Reset city and district selections
+            citySelect.innerHTML = '<option value="">请选择城市</option>';
+            districtSelect.innerHTML = '<option value="">请选择区县</option>';
+            citySelect.disabled = true;
+            districtSelect.disabled = true;
+            
+            selectedProvince = null;
+            selectedCity = null;
+            selectedDistrict = null;
+            
+            const selectedProvinceCode = provinceSelect.value;
+            if (!selectedProvinceCode) {
+                updateRegionDisplay();
+                return;
+            }
+            
+            // Find selected province
+            selectedProvince = regionData.find(region => region.code === selectedProvinceCode);
+            
+            // Load cities for this province
+            const cities = regionData.filter(region => 
+                region.parentId === selectedProvince.id
+            );
+            
+            cities.forEach(city => {
+                const option = document.createElement('option');
+                option.value = city.code;
+                option.textContent = city.name;
+                option.dataset.id = city.id;
+                citySelect.appendChild(option);
+            });
+            
+            citySelect.disabled = false;
+            citySelect.addEventListener('change', handleCityChange);
+            updateRegionDisplay();
+        }
+        
+        // Handle city selection
+        function handleCityChange() {
+            const citySelect = document.getElementById('city-select');
+            const districtSelect = document.getElementById('district-select');
+            
+            // Reset district selection
+            districtSelect.innerHTML = '<option value="">请选择区县</option>';
+            districtSelect.disabled = true;
+            
+            selectedCity = null;
+            selectedDistrict = null;
+            
+            const selectedCityCode = citySelect.value;
+            if (!selectedCityCode) {
+                updateRegionDisplay();
+                return;
+            }
+            
+            // Find selected city
+            selectedCity = regionData.find(region => region.code === selectedCityCode);
+            
+            // Load districts for this city
+            const districts = regionData.filter(region => 
+                region.parentId === selectedCity.id
+            );
+            
+            if (districts.length > 0) {
+                districts.forEach(district => {
+                    const option = document.createElement('option');
+                    option.value = district.code;
+                    option.textContent = district.name;
+                    option.dataset.id = district.id;
+                    districtSelect.appendChild(option);
+                });
+                districtSelect.disabled = false;
+                districtSelect.addEventListener('change', handleDistrictChange);
+            }
+            
+            updateRegionDisplay();
+        }
+        
+        // Handle district selection
+        function handleDistrictChange() {
+            const districtSelect = document.getElementById('district-select');
+            const selectedDistrictCode = districtSelect.value;
+            
+            if (!selectedDistrictCode) {
+                selectedDistrict = null;
+            } else {
+                selectedDistrict = regionData.find(region => region.code === selectedDistrictCode);
+            }
+            
+            updateRegionDisplay();
+        }
+        
+        // Update region display and hidden inputs
+        function updateRegionDisplay() {
+            const regionDisplay = document.getElementById('region-display');
+            const selectedRegionDiv = document.getElementById('selected-region');
+            const regionInput = document.getElementById('region');
+            const regionCodeInput = document.getElementById('region-code');
+            
+            let regionNames = [];
+            let regionCode = '';
+            
+            if (selectedProvince) {
+                regionNames.push(selectedProvince.name);
+                regionCode = selectedProvince.code;
+            }
+            
+            if (selectedCity) {
+                regionNames.push(selectedCity.name);
+                regionCode = selectedCity.code;
+            }
+            
+            if (selectedDistrict) {
+                regionNames.push(selectedDistrict.name);
+                regionCode = selectedDistrict.code;
+            }
+            
+            if (regionNames.length > 0) {
+                regionDisplay.textContent = regionNames.join('-');
+                selectedRegionDiv.classList.remove('hidden');
+                regionInput.value = regionNames.join('-');
+                regionCodeInput.value = regionCode;
+                console.log('📍 Region selected:', regionNames.join('-'), 'Code:', regionCode);
+            } else {
+                selectedRegionDiv.classList.add('hidden');
+                regionInput.value = '';
+                regionCodeInput.value = '';
+            }
+        }
+        
         // Form submission handler
         document.getElementById('divineForm').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -139,7 +348,8 @@
                 name: document.getElementById('name').value,
                 birthday: document.getElementById('birthday').value,
                 sex: document.getElementById('sex').value,
-                region: document.getElementById('region').value
+                region: document.getElementById('region').value,
+                regionCode: document.getElementById('region-code').value,
             };
             
             // Validate required fields are filled
@@ -180,12 +390,12 @@
                 
                 if (isLocalDev) {
                     // Use local proxy in development
-                    chartUrl = `/api/zhouyi/qimen/divine/chart?divineTime=${encodeURIComponent(analysisTimeFormat)}&region=${encodeURIComponent(formData.region)}`;
-                    analysisUrl = `/api/zhouyi/qimen/analyzeForJiang?name=${encodeURIComponent(formData.name)}&birthday=${encodeURIComponent(analysisTimeFormat)}&region=${encodeURIComponent(formData.region)}&sex=${encodeURIComponent(formData.sex)}`;
+                    chartUrl = `/api/zhouyi/qimen/divine/chart?divineTime=${encodeURIComponent(analysisTimeFormat)}&region=${encodeURIComponent(formData.regionCode)}`;
+                    analysisUrl = `/api/zhouyi/qimen/analyzeForJiang?name=${encodeURIComponent(formData.name)}&birthday=${encodeURIComponent(analysisTimeFormat)}&region=${encodeURIComponent(formData.regionCode)}&sex=${encodeURIComponent(formData.sex)}`;
                 } else {
                     // Use direct API in production
-                    chartUrl = `https://app.withwind.run/zhouyi/qimen/divine/chart?divineTime=${encodeURIComponent(analysisTimeFormat)}&region=${encodeURIComponent(formData.region)}`;
-                    analysisUrl = `https://app.withwind.run/zhouyi/qimen/analyzeForJiang?name=${encodeURIComponent(formData.name)}&birthday=${encodeURIComponent(analysisTimeFormat)}&region=${encodeURIComponent(formData.region)}&sex=${encodeURIComponent(formData.sex)}`;
+                    chartUrl = `https://app.withwind.run/zhouyi/qimen/divine/chart?divineTime=${encodeURIComponent(analysisTimeFormat)}&region=${encodeURIComponent(formData.regionCode)}`;
+                    analysisUrl = `https://app.withwind.run/zhouyi/qimen/analyzeForJiang?name=${encodeURIComponent(formData.name)}&birthday=${encodeURIComponent(analysisTimeFormat)}&region=${encodeURIComponent(formData.regionCode)}&sex=${encodeURIComponent(formData.sex)}`;
                 }
                 
                 console.log('🔗 Chart URL:', chartUrl);
@@ -355,6 +565,8 @@
         
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
+            // Load region data
+            loadRegionData();
             
             // Initialize fade-in animations
             const observerOptions = {
