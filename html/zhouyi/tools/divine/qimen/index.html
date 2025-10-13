@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>奇门起卦工具 | 随风</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- Header and Navigation will be loaded by common.js -->
+    
+    <!-- Main Content -->
+    <section class="min-h-screen pt-20 pb-12 px-8">
+        <div class="max-w-4xl mx-auto">
+            <!-- Title -->
+            <div class="text-center mb-12 fade-in">
+                <h1 class="text-4xl md:text-5xl font-light mb-4">奇门起卦工具</h1>
+                <p class="text-gray-600 text-lg">输入个人信息，生成您的奇门遁甲命盘</p>
+            </div>
+            
+            <!-- Form Section -->
+            <div class="bg-white border border-gray-200 rounded-lg p-8 mb-8 fade-in">
+                <form id="divineForm" class="space-y-6">
+                    <!-- Name Input -->
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
+                            姓名 <span class="text-red-500">*</span>
+                        </label>
+                        <input type="text" id="name" name="name" required
+                               class="w-full px-4 py-2 border border-gray-300 focus:ring-1 focus:ring-black focus:border-black outline-none transition-colors"
+                               placeholder="请输入您的姓名">
+                    </div>
+                    
+                    <!-- Birthday DateTime -->
+                    <div>
+                        <label for="birthday" class="block text-sm font-medium text-gray-700 mb-2">
+                            生日 <span class="text-red-500">*</span>
+                        </label>
+                        <input type="datetime-local" id="birthday" name="birthday" required
+                               class="w-full px-4 py-2 border border-gray-300 focus:ring-1 focus:ring-black focus:border-black outline-none transition-colors">
+                    </div>
+                    
+                    <!-- Sex Selection -->
+                    <div>
+                        <label for="sex" class="block text-sm font-medium text-gray-700 mb-2">
+                            性别 <span class="text-red-500">*</span>
+                        </label>
+                        <select id="sex" name="sex" required
+                                class="w-full px-4 py-2 border border-gray-300 focus:ring-1 focus:ring-black focus:border-black outline-none transition-colors">
+                            <option value="">请选择性别</option>
+                            <option value="1">男</option>
+                            <option value="0">女</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Region Input -->
+                    <div>
+                        <label for="region" class="block text-sm font-medium text-gray-700 mb-2">
+                            地区 <span class="text-gray-400">（选填）</span>
+                        </label>
+                        <input type="text" id="region" name="region"
+                               class="w-full px-4 py-2 border border-gray-300 focus:ring-1 focus:ring-black focus:border-black outline-none transition-colors"
+                               placeholder="请输入您的地区，如：北京市朝阳区">
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <div class="pt-4">
+                        <button type="submit" 
+                                class="w-full bg-black text-white py-3 px-6 hover:bg-gray-800 transition-colors duration-200 font-light">
+                            开始排盘
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Loading State -->
+            <div id="loadingSection" class="hidden text-center py-12">
+                <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-black mb-4"></div>
+                <p class="text-gray-600">正在生成奇门命盘，请稍候...</p>
+            </div>
+            
+            <!-- Results Section -->
+            <div id="resultsSection" class="hidden space-y-8 fade-in">
+                <!-- Chart Image -->
+                <div id="chartSection" class="hidden">
+                    <h2 class="text-2xl font-light mb-6 text-center">奇门命盘图</h2>
+                    <div class="text-center">
+                        <img id="chartImage" src="" alt="奇门命盘图" 
+                             class="max-w-full mx-auto border border-gray-200 rounded-lg shadow-sm">
+                    </div>
+                </div>
+                
+                <!-- Analysis Data -->
+                <div id="analysisSection" class="hidden">
+                    <h2 class="text-2xl font-light mb-6 text-center">命盘分析</h2>
+                    <div id="analysisContent" class="bg-white border border-gray-200 rounded-lg p-8 text-gray-700 leading-relaxed">
+                        <!-- Analysis data will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <script>
+        // Form submission handler
+        document.getElementById('divineForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                birthday: document.getElementById('birthday').value,
+                sex: document.getElementById('sex').value,
+                region: document.getElementById('region').value
+            };
+            
+            // Validate required fields are filled
+            if (!formData.name || !formData.birthday || !formData.sex) {
+                alert('请填写所有必填字段（姓名、生日、性别）');
+                return;
+            }
+            
+            // Show loading
+            document.getElementById('loadingSection').classList.remove('hidden');
+            document.getElementById('resultsSection').classList.add('hidden');
+            
+            try {
+                // Convert birthday to proper format for API
+                const birthdayDate = new Date(formData.birthday);
+                
+                // Format for Chart API: YYYY-MM-DDTHH:mm
+                const chartTimeFormat = birthdayDate.toISOString().slice(0, 16);
+                
+                // Format for Analysis API: YYYY-MM-DD HH:mm
+                const year = birthdayDate.getFullYear();
+                const month = String(birthdayDate.getMonth() + 1).padStart(2, '0');
+                const day = String(birthdayDate.getDate()).padStart(2, '0');
+                const hour = String(birthdayDate.getHours()).padStart(2, '0');
+                const minute = String(birthdayDate.getMinutes()).padStart(2, '0');
+                const analysisTimeFormat = `${year}-${month}-${day} ${hour}:${minute}`;
+                
+                // Debug: Log form data
+                console.log('📤 Form Data:', formData);
+                console.log('🕐 Chart Time Format:', chartTimeFormat);
+                console.log('🕐 Analysis Time Format:', analysisTimeFormat);
+                
+                // Determine API URLs based on environment
+                const isLocalDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+                console.log('🌐 Environment:', isLocalDev ? 'Local Development' : 'Production');
+                
+                let chartUrl, analysisUrl;
+                
+                if (isLocalDev) {
+                    // Use local proxy in development
+                    chartUrl = `/api/zhouyi//qimen/divine/chart?divineTime=${encodeURIComponent(chartTimeFormat)}`;
+                    analysisUrl = `/api/zhouyi/qimen/analyzeForJiang?name=${encodeURIComponent(formData.name)}&birthday=${encodeURIComponent(analysisTimeFormat)}&region=${encodeURIComponent(formData.region)}&sex=${encodeURIComponent(formData.sex)}`;
+                } else {
+                    // Use direct API in production
+                    chartUrl = `https://app.withwind.run/zhouyi//qimen/divine/chart?divineTime=${encodeURIComponent(chartTimeFormat)}`;
+                    analysisUrl = `https://app.withwind.run/zhouyi/qimen/analyzeForJiang?name=${encodeURIComponent(formData.name)}&birthday=${encodeURIComponent(analysisTimeFormat)}&region=${encodeURIComponent(formData.region)}&sex=${encodeURIComponent(formData.sex)}`;
+                }
+                
+                console.log('🔗 Chart URL:', chartUrl);
+                console.log('🔗 Analysis URL:', analysisUrl);
+                
+                // Make API calls in parallel
+                const [chartResponse, analysisResponse] = await Promise.all([
+                    fetch(chartUrl),
+                    fetch(analysisUrl)
+                ]);
+                
+                console.log('📊 Chart Response Status:', chartResponse.status, chartResponse.statusText);
+                console.log('📊 Analysis Response Status:', analysisResponse.status, analysisResponse.statusText);
+                
+                // Handle chart image
+                if (chartResponse.ok) {
+                    console.log('✅ Chart API successful');
+                    const chartBlob = await chartResponse.blob();
+                    console.log('🖼️ Chart blob size:', chartBlob.size, 'bytes');
+                    
+                    if (chartBlob.size > 0) {
+                        const chartImageUrl = URL.createObjectURL(chartBlob);
+                        document.getElementById('chartImage').src = chartImageUrl;
+                        document.getElementById('chartSection').classList.remove('hidden');
+                    } else {
+                        console.warn('⚠️ Chart image is empty');
+                    }
+                } else {
+                    console.error('❌ Chart API failed:', chartResponse.status, chartResponse.statusText);
+                    const errorText = await chartResponse.text();
+                    console.error('Chart Error Response:', errorText);
+                }
+                
+                // Handle analysis data
+                if (analysisResponse.ok) {
+                    console.log('✅ Analysis API successful');
+                    const analysisData = await analysisResponse.json();
+                    console.log('📋 Analysis Data:', analysisData);
+                    
+                    displayAnalysisData(analysisData);
+                    document.getElementById('analysisSection').classList.remove('hidden');
+                } else {
+                    console.error('❌ Analysis API failed:', analysisResponse.status, analysisResponse.statusText);
+                    const errorText = await analysisResponse.text();
+                    console.error('Analysis Error Response:', errorText);
+                }
+                
+                // Show results and hide loading
+                document.getElementById('loadingSection').classList.add('hidden');
+                document.getElementById('resultsSection').classList.remove('hidden');
+                
+            } catch (error) {
+                console.error('💥 API request failed:', error);
+                document.getElementById('loadingSection').classList.add('hidden');
+                alert('排盘请求失败：' + error.message);
+            }
+        });
+        
+        function displayAnalysisData(data) {
+            console.log('🎨 开始解析数据:', data);
+            const content = document.getElementById('analysisContent');
+            let html = '';
+            
+            // 如果数据为空或无效，显示提示信息
+            if (!data || (typeof data !== 'object')) {
+                console.warn('⚠️ 数据为空或格式错误:', data);
+                html = '<p class="text-center text-gray-500 py-8">暂无分析数据，请稍后重试</p>';
+                content.innerHTML = html;
+                return;
+            }
+            
+            // Basic info
+            if (data.baseInfo) {
+                const base = data.baseInfo;
+                html += `<div class="mb-8"><h3 class="text-xl font-light mb-4">${base.personName || ''}（${base.sex || ''}）奇门遁甲命盘排盘信息：</h3>`;
+                
+                html += '<div class="space-y-2">';
+                html += `<p><strong>1、基本信息：</strong></p>`;
+                
+                if (base.solarBirthday) {
+                    html += `<p>公历 ${base.solarBirthday}`;
+                    if (base.lunarBirthday) {
+                        html += `<br>农历 ${base.lunarBirthday}`;
+                    }
+                    if (base.apparentSolarTime) {
+                        html += `<br>真太阳时 ${base.apparentSolarTime}`;
+                    }
+                    html += '</p>';
+                }
+                
+                if (base.ganZhiBirthday) {
+                    html += '<p>四柱：';
+                    html += `年柱/${base.ganZhiBirthday.ganZhiYear?.name || ''} `;
+                    html += `月柱/${base.ganZhiBirthday.ganZhiMonth?.name || ''} `;
+                    html += `日柱/${base.ganZhiBirthday.ganZhiDay?.name || ''} `;
+                    html += `时柱/${base.ganZhiBirthday.ganZhiTime?.name || ''}`;
+                    html += '</p>';
+                }
+                
+                html += `<p>选局：${base.pattern || ''}</p>`;
+                html += `<p>旬首：${base.xunHead || ''}</p>`;
+                html += `<p>值符：${base.dutyStar || ''}</p>`;
+                html += `<p>值使：${base.dutyDoor || ''}</p>`;
+                
+                if (data.layout || data.anchorPalace) {
+                    html += `<p>局势：${data.layout || ''}`;
+                    if (data.layout && data.anchorPalace) html += '-';
+                    if (data.anchorPalace) html += `寄${data.anchorPalace}`;
+                    html += '</p>';
+                }
+                
+                if (base.lastSolarTerm) {
+                    html += `<p>上一个节气：${base.lastSolarTerm.name || ''} ${base.lastSolarTerm.dateTime || ''}</p>`;
+                }
+                if (base.nextSolarTerm) {
+                    html += `<p>下一个节气：${base.nextSolarTerm.name || ''} ${base.nextSolarTerm.dateTime || ''}</p>`;
+                }
+                
+                html += '</div></div>';
+            }
+            
+            // Palace info
+            if (data.palaceInfo) {
+                html += '<div><h3 class="text-xl font-light mb-4">2、八宫信息：</h3><div class="space-y-2">';
+                
+                const orderSeq = ["巽四宫", "离九宫", "坤二宫", "兑七宫", "乾六宫", "坎一宫", "艮八宫", "震三宫"];
+                
+                orderSeq.forEach(palaceName => {
+                    const palace = data.palaceInfo[palaceName];
+                    if (palace) {
+                        const doorName = palace.door?.fullName || palace.door?.name || '';
+                        const starName = palace.star?.name || palace.star?.shortName || '';
+                        const deityName = palace.deity?.name || palace.deity?.shortName || '';
+                        const tGan = palace.heaven?.gan?.name || '';
+                        const tStat = palace.heaven?.statuses || '';
+                        const dGan = palace.ground?.gan?.name || '';
+                        const dStat = palace.ground?.statuses || '';
+                        
+                        const isKongWang = (palace.isTimeEmpty || palace.isDayEmpty);
+                        const isMaXing = palace.isHorse || false;
+                        const isRuMu = (palace.ground?.isEnterTomb) || (dStat?.includes('墓'));
+                        
+                        html += `<p><strong>${palaceName}：</strong>${doorName}/${starName}/${deityName} 天${tGan}`;
+                        if (tStat) html += `【${tStat}】`;
+                        html += `/地${dGan}`;
+                        if (dStat) html += `【${dStat}】`;
+                        if (isKongWang) html += ' 空亡';
+                        if (isMaXing) html += ' 马星';
+                        if (isRuMu) html += ' 入墓';
+                        html += '</p>';
+                    }
+                });
+                
+                html += '</div></div>';
+            }
+            
+            console.log('📝 生成的HTML长度:', html.length);
+            
+            if (html.trim()) {
+                content.innerHTML = html;
+                console.log('✅ 数据解析完成并显示');
+            } else {
+                console.warn('⚠️ 生成的HTML为空');
+                content.innerHTML = '<p class="text-center text-gray-500 py-8">暂无分析数据</p>';
+            }
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // Initialize fade-in animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
