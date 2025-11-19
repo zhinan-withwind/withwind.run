@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>易趣 | Zhouyi Quiz</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="app" v-cloak :class="appClasses">
+        <div class="overlay-flash" :class="flashType" v-if="flashType"></div>
+
+        <div class="screen start-screen" v-if="state === 'start'">
+            <div class="logo-area">
+                <div class="taichi-symbol">☯</div>
+                <h1>易 趣</h1>
+                <p>今日进度：已修 {{ totalProgress }} 题</p>
+            </div>
+            
+            <div class="bank-list">
+                <h3>选择修行领域</h3>
+                <div class="bank-card" v-for="bank in banks" :key="bank.id" @click="selectBank(bank)">
+                    <div class="bank-info">
+                        <h4>{{ bank.name }}</h4>
+                        <small>{{ bank.desc }}</small>
+                    </div>
+                    <div class="bank-arrow">➜</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="screen quiz-screen" v-else-if="state === 'quiz'">
+            <div class="header-bar">
+                <div class="close-btn" @click="resetToHome">×</div>
+                <div class="progress-track">
+                    <div class="progress-fill" :style="{ width: progressPercentage + '%' }"></div>
+                </div>
+            </div>
+
+            <div class="question-container" :class="{'shake-anim': isShaking}">
+                <div class="question-card">
+                    <h2>{{ currentQuestion.question }}</h2>
+                </div>
+                
+                <div class="options-grid">
+                    <button 
+                        v-for="(opt, index) in currentQuestion.options" 
+                        :key="index"
+                        class="option-btn"
+                        :class="getOptionClass(opt)"
+                        @click="handleOptionClick(opt)"
+                        :disabled="hasAnswered"
+                    >
+                        {{ opt }}
+                        <span class="status-icon" v-if="hasAnswered && opt === currentQuestion.answer">✔</span>
+                        <span class="status-icon" v-if="hasAnswered && selectedOption === opt && opt !== currentQuestion.answer">✖</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="feedback-sheet" :class="feedbackClass" v-if="hasAnswered">
+                <div class="feedback-content">
+                    <div class="feedback-header">
+                        <h3>{{ isCorrect ? '太棒了！' : '正确答案：' + currentQuestion.answer }}</h3>
+                    </div>
+                    <p class="explanation" v-if="currentQuestion.explanation">
+                        {{ currentQuestion.explanation }}
+                    </p>
+                    <button class="btn btn-next" :class="isCorrect ? 'btn-success' : 'btn-error'" @click="nextQuestion">
+                        {{ isFinished ? '查看结果' : '继续' }}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="screen result-screen" v-else-if="state === 'result'">
+            <div class="result-card">
+                <div class="score-circle">
+                    {{ score }}%
+                </div>
+                <h2>本轮修行结束</h2>
+                <p>{{ evaluationText }}</p>
+                
+                <div class="stats">
+                    <div class="stat-item">
+                        <span>本次错题</span>
+                        <strong>{{ mistakes.length }}</strong>
+                    </div>
+                    <div class="stat-item">
+                        <span>累计修行</span>
+                        <strong>{{ totalProgress }}</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-area">
+                <button class="btn btn-primary" @click="resetToHome">返回题库</button>
+                <button class="btn btn-outline" v-if="mistakes.length > 0" @click="retryMistakes">重练错题</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

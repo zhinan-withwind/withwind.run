@@ -1,0 +1,25 @@
+[
+  {
+    "id": "basic_8",
+    "name": "八卦基础",
+    "desc": "乾坤坎离，入门必修的符号与象征。",
+    "file": "questions_basic.json"
+  },
+  {
+    "id": "wuxing_master",
+    "name": "五行生克大师",
+    "desc": "涵盖生克泄耗、五脏五常、方位季节的全能试炼。",
+    "file": "questions_wuxing.json"
+  },
+  {
+    "id": "tiangan_100",
+    "name": "十天干万象",
+    "desc": "甲乙丙丁...从性情到类象的100道深度试炼。",
+    "file": "questions_tiangan.json"
+  },
+  {
+    "id": "dizhi_200",
+    "name": "十二地支精解",
+    "desc": "子丑寅卯...藏干、生肖与时空类象。",
+    "file": "questions_dizhi.json"  }
+]
