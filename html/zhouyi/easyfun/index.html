@@ -4,105 +4,111 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>易趣 | Zhouyi Quiz</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
-</head>
-<body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+        </head>
+<body class="bg-slate-950 text-white pt-28">
 
-    <div id="app" v-cloak :class="appClasses">
-        <div class="overlay-flash" :class="flashType" v-if="flashType"></div>
 
-        <div class="screen start-screen" v-if="state === 'start'">
-            <div class="logo-area">
-                <div class="taichi-symbol">☯</div>
-                <h1>易 趣</h1>
-                <p>今日进度：已修 {{ totalProgress }} 题</p>
+
+
+
+    <div id="app" v-cloak :class="appClasses" class="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800">
+        <div class="overlay-flash fixed inset-0 pointer-events-none opacity-0 transition-opacity duration-300" :class="flashType === 'success' ? 'bg-emerald-400/30 opacity-100' : flashType === 'error' ? 'bg-rose-400/30 opacity-100' : ''" v-if="flashType"></div>
+
+        <div class="screen start-screen min-h-screen flex items-center justify-center px-6 py-10 flex-col" v-if="state === 'start'">
+            <div class="logo-area text-center mb-10">
+                <div class="taichi-symbol text-6xl mb-4">☯</div>
+                <h1 class="text-4xl md:text-5xl font-semibold tracking-widest">易 趣</h1>
+                <p class="text-sm text-white/70 mt-3">今日进度：已修 {{ totalProgress }} 题</p>
             </div>
             
-            <div class="bank-list">
-                <h3>选择修行领域</h3>
-                <div class="bank-card" v-for="bank in banks" :key="bank.id" @click="selectBank(bank)">
-                    <div class="bank-info">
-                        <h4>{{ bank.name }}</h4>
-                        <small>{{ bank.desc }}</small>
+            <div class="bank-list w-full max-w-3xl space-y-4">
+                <h3 class="text-xs uppercase tracking-widest text-white/70">选择修行领域</h3>
+                <div class="bank-card group flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-6 py-4 transition hover:-translate-y-1 hover:bg-white/10" v-for="bank in banks" :key="bank.id" @click="selectBank(bank)">
+                    <div class="bank-info text-left">
+                        <h4 class="text-lg font-semibold tracking-wide">{{ bank.name }}</h4>
+                        <small class="text-xs text-white/60 leading-relaxed">{{ bank.desc }}</small>
                     </div>
-                    <div class="bank-arrow">➜</div>
+                    <div class="bank-arrow text-xl text-white/60 group-hover:text-white">➜</div>
                 </div>
             </div>
         </div>
 
-        <div class="screen quiz-screen" v-else-if="state === 'quiz'">
-            <div class="header-bar">
-                <div class="close-btn" @click="resetToHome">×</div>
-                <div class="progress-track">
-                    <div class="progress-fill" :style="{ width: progressPercentage + '%' }"></div>
+        <div class="screen quiz-screen min-h-screen flex items-center justify-center px-6 py-10 flex-col" v-else-if="state === 'quiz'">
+            <div class="header-bar w-full max-w-3xl flex items-center gap-4 mb-6">
+                <div class="close-btn h-10 w-10 rounded-full border border-white/20 flex items-center justify-center text-2xl hover:bg-white/10" @click="resetToHome">×</div>
+                <div class="progress-track flex-1 h-2 bg-white/10 rounded-full overflow-hidden">
+                    <div class="progress-fill h-full bg-emerald-400 transition-all duration-300" :style="{ width: progressPercentage + '%' }"></div>
                 </div>
             </div>
 
-            <div class="question-container" :class="{'shake-anim': isShaking}">
-                <div class="question-card">
-                    <h2>{{ currentQuestion.question }}</h2>
+            <div class="question-container w-full max-w-3xl space-y-6" :class="isShaking ? 'animate-pulse' : ''">
+                <div class="question-card rounded-2xl border border-white/10 bg-white/5 px-6 py-6">
+                    <h2 class="text-xl md:text-2xl font-semibold">{{ currentQuestion.question }}</h2>
                 </div>
                 
-                <div class="options-grid">
+                <div class="options-grid grid grid-cols-1 md:grid-cols-2 gap-4">
                     <button 
                         v-for="(opt, index) in currentQuestion.options" 
                         :key="index"
-                        class="option-btn"
+                        class="option-btn w-full rounded-xl border border-white/20 bg-white/5 px-4 py-3 text-left text-sm md:text-base transition hover:bg-white/10 disabled:cursor-not-allowed"
                         :class="getOptionClass(opt)"
                         @click="handleOptionClick(opt)"
                         :disabled="hasAnswered"
                     >
                         {{ opt }}
-                        <span class="status-icon" v-if="hasAnswered && opt === currentQuestion.answer">✔</span>
-                        <span class="status-icon" v-if="hasAnswered && selectedOption === opt && opt !== currentQuestion.answer">✖</span>
+                        <span class="status-icon ml-2 text-sm" v-if="hasAnswered && opt === currentQuestion.answer">✔</span>
+                        <span class="status-icon ml-2 text-sm" v-if="hasAnswered && selectedOption === opt && opt !== currentQuestion.answer">✖</span>
                     </button>
                 </div>
             </div>
 
-            <div class="feedback-sheet" :class="feedbackClass" v-if="hasAnswered">
+            <div class="feedback-sheet w-full max-w-3xl rounded-2xl border border-white/10 bg-white/5 p-6 mt-4" :class="feedbackClass" v-if="hasAnswered">
                 <div class="feedback-content">
-                    <div class="feedback-header">
+                    <div class="feedback-header mb-2">
                         <h3>{{ isCorrect ? '太棒了！' : '正确答案：' + currentQuestion.answer }}</h3>
                     </div>
-                    <p class="explanation" v-if="currentQuestion.explanation">
+                    <p class="explanation text-sm text-white/80" v-if="currentQuestion.explanation">
                         {{ currentQuestion.explanation }}
                     </p>
-                    <button class="btn btn-next" :class="isCorrect ? 'btn-success' : 'btn-error'" @click="nextQuestion">
+                    <button class="rounded-full px-6 py-2 text-sm font-semibold uppercase tracking-widest transition" :class="isCorrect ? 'bg-emerald-500 text-white hover:bg-emerald-600' : 'bg-rose-500 text-white hover:bg-rose-600'" @click="nextQuestion">
                         {{ isFinished ? '查看结果' : '继续' }}
                     </button>
                 </div>
             </div>
         </div>
 
-        <div class="screen result-screen" v-else-if="state === 'result'">
-            <div class="result-card">
-                <div class="score-circle">
+        <div class="screen result-screen min-h-screen flex items-center justify-center px-6 py-10 flex-col" v-else-if="state === 'result'">
+            <div class="result-card max-w-2xl w-full rounded-2xl border border-white/10 bg-white/5 p-8 text-center space-y-4">
+                <div class="score-circle mx-auto h-24 w-24 rounded-full border-2 border-white/30 flex items-center justify-center text-2xl font-semibold">
                     {{ score }}%
                 </div>
-                <h2>本轮修行结束</h2>
-                <p>{{ evaluationText }}</p>
+                <h2 class="text-2xl font-semibold">本轮修行结束</h2>
+                <p class="text-sm text-white/70">{{ evaluationText }}</p>
                 
-                <div class="stats">
-                    <div class="stat-item">
+                <div class="stats mt-6 grid grid-cols-2 gap-4 text-sm">
+                    <div class="stat-item rounded-xl border border-white/10 bg-white/5 p-4">
                         <span>本次错题</span>
                         <strong>{{ mistakes.length }}</strong>
                     </div>
-                    <div class="stat-item">
+                    <div class="stat-item rounded-xl border border-white/10 bg-white/5 p-4">
                         <span>累计修行</span>
                         <strong>{{ totalProgress }}</strong>
                     </div>
                 </div>
             </div>
 
-            <div class="action-area">
-                <button class="btn btn-primary" @click="resetToHome">返回题库</button>
-                <button class="btn btn-outline" v-if="mistakes.length > 0" @click="retryMistakes">重练错题</button>
+            <div class="action-area mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+                <button class="rounded-full bg-white px-6 py-2 text-sm font-semibold uppercase tracking-widest text-slate-900 transition hover:bg-white/90" @click="resetToHome">返回题库</button>
+                <button class="rounded-full border border-white/40 px-6 py-2 text-sm font-semibold uppercase tracking-widest transition hover:bg-white/10" v-if="mistakes.length > 0" @click="retryMistakes">重练错题</button>
             </div>
         </div>
     </div>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="app.js"></script>
+    <script src="../scripts/main.js"></script>
+    <script src="../../js/common.js"></script>
 </body>
 </html>

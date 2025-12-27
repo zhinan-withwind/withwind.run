@@ -252,7 +252,7 @@ class AnimationUtils {
     }
 
     static addLoadingState(button) {
-        button.innerHTML = '<span class="loading"></span> 计算中...';
+        button.innerHTML = '<span class="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent mr-2"></span> 计算中...';
         button.disabled = true;
     }
 
@@ -457,45 +457,45 @@ class UIController {
         
         sizhu.forEach((column, index) => {
             const div = document.createElement('div');
-            div.className = 'sizhu-column';
+            div.className = 'sizhu-column rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition duration-300';
             div.style.setProperty('--delay', index);
             div.innerHTML = `
-                <h4>${column.name}</h4>
-                <div class="sizhu-item">
-                    <span>干神:</span>
-                    <span>${column.stem}</span>
+                <h4 class="text-sm font-semibold text-gray-700 mb-3">${column.name}</h4>
+                <div class="sizhu-item flex justify-between text-xs text-gray-600">
+                    <span>干神</span>
+                    <span class="font-medium text-gray-900">${column.stem}</span>
                 </div>
-                <div class="sizhu-item">
-                    <span>天干:</span>
-                    <span>${column.stem}</span>
+                <div class="sizhu-item flex justify-between text-xs text-gray-600">
+                    <span>天干</span>
+                    <span class="font-medium text-gray-900">${column.stem}</span>
                 </div>
-                <div class="sizhu-item">
-                    <span>地支:</span>
-                    <span>${column.branch}</span>
+                <div class="sizhu-item flex justify-between text-xs text-gray-600">
+                    <span>地支</span>
+                    <span class="font-medium text-gray-900">${column.branch}</span>
                 </div>
-                <div class="sizhu-item">
-                    <span>藏干:</span>
-                    <span>${column.hiddenStems.join(', ')}</span>
+                <div class="sizhu-item flex justify-between text-xs text-gray-600">
+                    <span>藏干</span>
+                    <span class="font-medium text-gray-900">${column.hiddenStems.join(', ')}</span>
                 </div>
-                <div class="sizhu-item">
-                    <span>星运:</span>
-                    <span>${column.xingyun}</span>
+                <div class="sizhu-item flex justify-between text-xs text-gray-600">
+                    <span>星运</span>
+                    <span class="font-medium text-gray-900">${column.xingyun}</span>
                 </div>
-                <div class="sizhu-item">
-                    <span>自坐:</span>
-                    <span>${column.zizuo}</span>
+                <div class="sizhu-item flex justify-between text-xs text-gray-600">
+                    <span>自坐</span>
+                    <span class="font-medium text-gray-900">${column.zizuo}</span>
                 </div>
-                <div class="sizhu-item">
-                    <span>空亡:</span>
-                    <span>${column.kongwang}</span>
+                <div class="sizhu-item flex justify-between text-xs text-gray-600">
+                    <span>空亡</span>
+                    <span class="font-medium text-gray-900">${column.kongwang}</span>
                 </div>
-                <div class="sizhu-item">
-                    <span>纳音:</span>
-                    <span>${column.nayin}</span>
+                <div class="sizhu-item flex justify-between text-xs text-gray-600">
+                    <span>纳音</span>
+                    <span class="font-medium text-gray-900">${column.nayin}</span>
                 </div>
-                <div class="sizhu-item">
-                    <span>神煞:</span>
-                    <span>${column.shensha}</span>
+                <div class="sizhu-item flex justify-between text-xs text-gray-600">
+                    <span>神煞</span>
+                    <span class="font-medium text-gray-900">${column.shensha}</span>
                 </div>
             `;
             grid.appendChild(div);
@@ -508,37 +508,37 @@ class UIController {
         
         dayun.forEach((item, index) => {
             const div = document.createElement('div');
-            div.className = 'dayun-item';
+            div.className = 'dayun-item rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition duration-300';
             div.style.setProperty('--delay', index);
             div.innerHTML = `
-                <h5>${item.age}岁 (${item.year}年)</h5>
-                <div class="sizhu-item">
-                    <span>干神:</span>
-                    <span>${item.stem}</span>
+                <h5 class="text-sm font-semibold text-gray-700 mb-3">${item.age}岁 (${item.year}年)</h5>
+                <div class="sizhu-item flex justify-between text-xs text-gray-600">
+                    <span>干神</span>
+                    <span class="font-medium text-gray-900">${item.stem}</span>
                 </div>
-                <div class="sizhu-item">
-                    <span>天干:</span>
-                    <span>${item.stem}</span>
+                <div class="sizhu-item flex justify-between text-xs text-gray-600">
+                    <span>天干</span>
+                    <span class="font-medium text-gray-900">${item.stem}</span>
                 </div>
-                <div class="sizhu-item">
-                    <span>地支:</span>
-                    <span>${item.branch}</span>
+                <div class="sizhu-item flex justify-between text-xs text-gray-600">
+                    <span>地支</span>
+                    <span class="font-medium text-gray-900">${item.branch}</span>
                 </div>
-                <div class="sizhu-item">
-                    <span>支神:</span>
-                    <span>${item.branchGod}</span>
+                <div class="sizhu-item flex justify-between text-xs text-gray-600">
+                    <span>支神</span>
+                    <span class="font-medium text-gray-900">${item.branchGod}</span>
                 </div>
-                <div class="sizhu-item">
-                    <span>星运:</span>
-                    <span>${item.xingyun}</span>
+                <div class="sizhu-item flex justify-between text-xs text-gray-600">
+                    <span>星运</span>
+                    <span class="font-medium text-gray-900">${item.xingyun}</span>
                 </div>
-                <div class="sizhu-item">
-                    <span>自坐:</span>
-                    <span>${item.zizuo}</span>
+                <div class="sizhu-item flex justify-between text-xs text-gray-600">
+                    <span>自坐</span>
+                    <span class="font-medium text-gray-900">${item.zizuo}</span>
                 </div>
-                <div class="sizhu-item">
-                    <span>纳音:</span>
-                    <span>${item.nayin}</span>
+                <div class="sizhu-item flex justify-between text-xs text-gray-600">
+                    <span>纳音</span>
+                    <span class="font-medium text-gray-900">${item.nayin}</span>
                 </div>
             `;
             grid.appendChild(div);
@@ -551,37 +551,37 @@ class UIController {
         
         liunian.forEach((item, index) => {
             const div = document.createElement('div');
-            div.className = 'liunian-item';
+            div.className = 'liunian-item rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition duration-300';
             div.style.setProperty('--delay', index);
             div.innerHTML = `
-                <h5>${item.age}岁 (${item.year}年)</h5>
-                <div class="sizhu-item">
-                    <span>干神:</span>
-                    <span>${item.stem}</span>
+                <h5 class="text-sm font-semibold text-gray-700 mb-3">${item.age}岁 (${item.year}年)</h5>
+                <div class="sizhu-item flex justify-between text-xs text-gray-600">
+                    <span>干神</span>
+                    <span class="font-medium text-gray-900">${item.stem}</span>
                 </div>
-                <div class="sizhu-item">
-                    <span>天干:</span>
-                    <span>${item.stem}</span>
+                <div class="sizhu-item flex justify-between text-xs text-gray-600">
+                    <span>天干</span>
+                    <span class="font-medium text-gray-900">${item.stem}</span>
                 </div>
-                <div class="sizhu-item">
-                    <span>地支:</span>
-                    <span>${item.branch}</span>
+                <div class="sizhu-item flex justify-between text-xs text-gray-600">
+                    <span>地支</span>
+                    <span class="font-medium text-gray-900">${item.branch}</span>
                 </div>
-                <div class="sizhu-item">
-                    <span>支神:</span>
-                    <span>${item.branchGod}</span>
+                <div class="sizhu-item flex justify-between text-xs text-gray-600">
+                    <span>支神</span>
+                    <span class="font-medium text-gray-900">${item.branchGod}</span>
                 </div>
-                <div class="sizhu-item">
-                    <span>星运:</span>
-                    <span>${item.xingyun}</span>
+                <div class="sizhu-item flex justify-between text-xs text-gray-600">
+                    <span>星运</span>
+                    <span class="font-medium text-gray-900">${item.xingyun}</span>
                 </div>
-                <div class="sizhu-item">
-                    <span>自坐:</span>
-                    <span>${item.zizuo}</span>
+                <div class="sizhu-item flex justify-between text-xs text-gray-600">
+                    <span>自坐</span>
+                    <span class="font-medium text-gray-900">${item.zizuo}</span>
                 </div>
-                <div class="sizhu-item">
-                    <span>纳音:</span>
-                    <span>${item.nayin}</span>
+                <div class="sizhu-item flex justify-between text-xs text-gray-600">
+                    <span>纳音</span>
+                    <span class="font-medium text-gray-900">${item.nayin}</span>
                 </div>
             `;
             grid.appendChild(div);
@@ -590,17 +590,40 @@ class UIController {
 
     applyElementStyle(element) {
         const sections = ['sizhuSection', 'dayunSection', 'liunianSection'];
+        const themeMap = {
+            wood: { section: ['border-black', 'bg-gray-50'], title: ['text-gray-800'] },
+            fire: { section: ['border-black', 'bg-gray-50'], title: ['text-gray-800'] },
+            earth: { section: ['border-black', 'bg-gray-50'], title: ['text-gray-800'] },
+            metal: { section: ['border-black', 'bg-gray-50'], title: ['text-gray-800'] },
+            water: { section: ['border-black', 'bg-gray-50'], title: ['text-gray-800'] }
+        };
+        const allSectionThemes = [
+            'border-black', 'bg-gray-50'
+        ];
+        const allTitleThemes = [
+            'text-gray-800'
+        ];
         
-        // 移除所有五行样式
         sections.forEach(sectionId => {
             const section = document.getElementById(sectionId);
-            section.className = section.className.replace(/element-\w+/g, '');
+            if (!section) return;
+            section.classList.remove(...allSectionThemes);
+            const title = section.querySelector('.section-title');
+            if (title) {
+                title.classList.remove(...allTitleThemes);
+            }
         });
         
-        // 应用新的五行样式
+        const theme = themeMap[element];
+        if (!theme) return;
         sections.forEach(sectionId => {
             const section = document.getElementById(sectionId);
-            section.classList.add(elementColors[element]);
+            if (!section) return;
+            section.classList.add(...theme.section);
+            const title = section.querySelector('.section-title');
+            if (title) {
+                title.classList.add(...theme.title);
+            }
         });
     }
 
@@ -637,8 +660,7 @@ class UIController {
         liunianItems.forEach(item => {
             const yearText = item.querySelector('h5').textContent;
             if (yearText.includes(currentYear.toString())) {
-                item.classList.add('pulse-on-hover');
-                item.style.border = '2px solid #000';
+                item.classList.add('animate-pulse', 'border-2', 'border-black');
                 item.style.boxShadow = '0 0 20px rgba(0, 0, 0, 0.2)';
             }
         });

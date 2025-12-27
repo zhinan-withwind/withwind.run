@@ -6,311 +6,79 @@
     <title>八字排盘 - 信息输入 | Bazi Input</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
-            min-height: 100vh;
-            color: #000;
-        }
-        
-        .input-container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-        
-        .form-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 2.5rem;
-            animation: fadeInUp 0.8s ease-out;
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #374151;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .form-input {
-            width: 100%;
-            padding: 0.875rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: #fafafa;
-        }
-        
-        .form-input:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-            background: white;
-            transform: translateY(-2px);
-        }
-        
-        .form-select {
-            width: 100%;
-            padding: 0.875rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: #fafafa;
-            cursor: pointer;
-        }
-        
-        .form-select:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-            background: white;
-        }
-        
-        .location-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
-        }
-        
-        .btn-primary:active {
-            transform: translateY(0);
-        }
-        
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-        
-        .btn-primary:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-        
-        .page-title {
-            text-align: center;
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .page-subtitle {
-            text-align: center;
-            color: #6b7280;
-            margin-bottom: 2rem;
-            font-size: 1.1rem;
-        }
-        
-        .error-message {
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            color: #dc2626;
-            padding: 0.75rem;
-            border-radius: 6px;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-            animation: shake 0.5s ease-in-out;
-        }
-        
-        .loading {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            border: 2px solid #ffffff;
-            border-top: 2px solid transparent;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-right: 0.5rem;
-        }
-        
-        .datetime-input {
-            position: relative;
-        }
-        
-        .datetime-input input[type="datetime-local"] {
-            appearance: none;
-            -webkit-appearance: none;
-        }
-        
-        .datetime-input::before {
-            content: '\f073';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            right: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #6b7280;
-            pointer-events: none;
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        @media (max-width: 768px) {
-            .location-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .input-container {
-                padding: 1rem;
-            }
-            
-            .form-card {
-                padding: 1.5rem;
-            }
-            
-            .page-title {
-                font-size: 1.5rem;
-            }
-        }
-        
-        /* 隐藏原生日期时间选择器的箭头 */
-        input[type="datetime-local"]::-webkit-calendar-picker-indicator {
-            filter: invert(0.5);
-            cursor: pointer;
-        }
-        
-        .input-hint {
-            font-size: 0.8rem;
-            color: #6b7280;
-            margin-top: 0.25rem;
-        }
-    </style>
+    
 </head>
-<body>
-    <div class="input-container">
-        <div class="form-card">
-            <h1 class="page-title">八字排盘系统</h1>
-            <p class="page-subtitle">请填写您的个人信息以生成八字排盘</p>
+<body class="bg-white min-h-screen text-black">
+    <main class="pt-28">
+
+
+
+
+    <div class="input-container max-w-xl mx-auto px-6 py-12">
+        <div class="form-card bg-white rounded-2xl shadow-xl p-10">
+            <h1 class="page-title text-center text-3xl font-bold bg-gradient-to-r from-black to-black text-black mb-2">八字排盘系统</h1>
+            <p class="page-subtitle text-center text-gray-600 mb-8">请填写您的个人信息以生成八字排盘</p>
             
-            <div id="errorContainer"></div>
+            <div id="errorContainer" class="mb-4"></div>
             
             <form id="baziInputForm">
-                <div class="form-group">
-                    <label class="form-label" for="name">
+                <div class="form-group mb-6">
+                    <label class="form-label block text-xs uppercase tracking-widest text-gray-600 mb-2" for="name">
                         <i class="fas fa-user mr-2"></i>姓名
                     </label>
-                    <input type="text" id="name" name="name" class="form-input" 
+                    <input type="text" id="name" name="name" class="form-input w-full rounded-lg border-2 border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-800 transition focus:border-black focus:bg-white focus:outline-none focus:ring-2 focus:ring-black/20" 
                            placeholder="请输入您的姓名" required>
-                    <div class="input-hint">请输入真实姓名，用于排盘显示</div>
+                    <div class="input-hint text-xs text-gray-600 mt-2">请输入真实姓名，用于排盘显示</div>
                 </div>
                 
-                <div class="form-group">
-                    <label class="form-label" for="gender">
+                <div class="form-group mb-6">
+                    <label class="form-label block text-xs uppercase tracking-widest text-gray-600 mb-2" for="gender">
                         <i class="fas fa-venus-mars mr-2"></i>性别
                     </label>
-                    <select id="gender" name="gender" class="form-select" required>
+                    <select id="gender" name="gender" class="form-select w-full rounded-lg border-2 border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-800 transition focus:border-black focus:bg-white focus:outline-none focus:ring-2 focus:ring-black/20 appearance-none cursor-pointer" required>
                         <option value="">请选择性别</option>
                         <option value="男">男</option>
                         <option value="女">女</option>
                     </select>
                 </div>
                 
-                <div class="form-group">
-                    <label class="form-label">
+                <div class="form-group mb-6">
+                    <label class="form-label block text-xs uppercase tracking-widest text-gray-600 mb-2">
                         <i class="fas fa-map-marker-alt mr-2"></i>出生地
                     </label>
-                    <div class="location-grid">
+                    <div class="location-grid grid grid-cols-1 md:grid-cols-3 gap-3">
                         <div>
-                            <select id="province" name="province" class="form-select" required>
+                            <select id="province" name="province" class="form-select w-full rounded-lg border-2 border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-800 transition focus:border-black focus:bg-white focus:outline-none focus:ring-2 focus:ring-black/20 appearance-none cursor-pointer" required>
                                 <option value="">选择省份</option>
                             </select>
                         </div>
                         <div>
-                            <select id="city" name="city" class="form-select" required disabled>
+                            <select id="city" name="city" class="form-select w-full rounded-lg border-2 border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-800 transition focus:border-black focus:bg-white focus:outline-none focus:ring-2 focus:ring-black/20 appearance-none cursor-pointer" required disabled>
                                 <option value="">选择城市</option>
                             </select>
                         </div>
                         <div>
-                            <select id="area" name="area" class="form-select" required disabled>
+                            <select id="area" name="area" class="form-select w-full rounded-lg border-2 border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-800 transition focus:border-black focus:bg-white focus:outline-none focus:ring-2 focus:ring-black/20 appearance-none cursor-pointer" required disabled>
                                 <option value="">选择地区</option>
                             </select>
                         </div>
                     </div>
-                    <div class="input-hint">请选择详细的出生地址，用于确定时区</div>
+                    <div class="input-hint text-xs text-gray-600 mt-2">请选择详细的出生地址，用于确定时区</div>
                 </div>
                 
-                <div class="form-group">
-                    <label class="form-label" for="birthdate">
+                <div class="form-group mb-6">
+                    <label class="form-label block text-xs uppercase tracking-widest text-gray-600 mb-2" for="birthdate">
                         <i class="fas fa-calendar-alt mr-2"></i>出生时间
                     </label>
-                    <div class="datetime-input">
+                    <div class="datetime-input relative">
                         <input type="datetime-local" id="birthdate" name="birthdate" 
-                               class="form-input" required>
+                               class="form-input w-full rounded-lg border-2 border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-800 transition focus:border-black focus:bg-white focus:outline-none focus:ring-2 focus:ring-black/20" required>
                     </div>
-                    <div class="input-hint">请选择准确的出生日期和时间</div>
+                    <div class="input-hint text-xs text-gray-600 mt-2">请选择准确的出生日期和时间</div>
                 </div>
                 
-                <div class="form-group">
-                    <button type="submit" class="btn-primary" id="submitBtn">
+                <div class="form-group mb-6">
+                    <button type="submit" class="btn-primary w-full rounded-lg bg-white border border-black py-3 text-sm font-semibold uppercase tracking-widest text-black transition hover:bg-gray-100" id="submitBtn">
                         <span id="btnText">生成八字排盘</span>
                     </button>
                 </div>
@@ -464,7 +232,7 @@
             
             if (errors.length > 0) {
                 const errorDiv = document.createElement('div');
-                errorDiv.className = 'error-message';
+                errorDiv.className = 'error-message rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-sm text-gray-700';
                 errorDiv.innerHTML = `
                     <i class="fas fa-exclamation-triangle mr-2"></i>
                     <strong>请修正以下错误：</strong>
@@ -526,7 +294,7 @@
             const originalText = btnText.textContent;
             
             submitBtn.disabled = true;
-            btnText.innerHTML = '<span class="loading"></span>正在生成排盘...';
+            btnText.innerHTML = '<span class="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent mr-2"></span>正在生成排盘...';
             
             // 模拟处理时间
             setTimeout(() => {
@@ -607,5 +375,9 @@
             }, 2000);
         });
     </script>
+    </main>
+
+<script src="../scripts/main.js"></script>
+    <script src="../../js/common.js"></script>
 </body>
 </html>

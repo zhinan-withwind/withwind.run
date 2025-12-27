@@ -6,106 +6,111 @@
     <title>八字排盘结果 | Bazi Chart Result</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="bazi.css">
+    
 </head>
-<body>
-    <div class="bazi-container">
+<body class="bg-white text-black antialiased">
+    <main class="pt-28">
+
+
+
+
+    <div class="bazi-container max-w-6xl mx-auto px-6 py-12">
         <!-- 返回按钮 -->
         <div class="mb-6">
             <button onclick="window.location.href='bazi-input.html'" 
-                    class="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200">
+                    class="inline-flex items-center px-4 py-2 bg-white text-black border border-black hover:bg-gray-100 rounded-lg transition-colors duration-200">
                 <i class="fas fa-arrow-left mr-2"></i>
                 重新输入
             </button>
         </div>
 
         <!-- 基本信息显示 -->
-        <div id="basicInfo" class="info-grid">
-            <div class="info-item">
+        <div id="basicInfo" class="info-grid grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="info-item rounded-lg border border-gray-200 bg-white p-4 text-sm">
                 <h4><i class="fas fa-user mr-2"></i>姓名</h4>
                 <p id="displayName">-</p>
             </div>
-            <div class="info-item">
+            <div class="info-item rounded-lg border border-gray-200 bg-white p-4 text-sm">
                 <h4><i class="fas fa-venus-mars mr-2"></i>性别</h4>
                 <p id="displayGender">-</p>
             </div>
-            <div class="info-item">
+            <div class="info-item rounded-lg border border-gray-200 bg-white p-4 text-sm">
                 <h4><i class="fas fa-map-marker-alt mr-2"></i>出生地</h4>
                 <p id="displayBirthplace">-</p>
             </div>
-            <div class="info-item">
+            <div class="info-item rounded-lg border border-gray-200 bg-white p-4 text-sm">
                 <h4><i class="fas fa-calendar-alt mr-2"></i>出生时间</h4>
                 <p id="displayBirthdate">-</p>
             </div>
         </div>
 
         <!-- 四柱信息 -->
-        <div id="sizhuSection" class="bazi-chart">
+        <div id="sizhuSection" class="bazi-chart border-2 border-gray-200 bg-white rounded-xl p-8 mb-8 shadow-sm">
             <div class="chart-section">
-                <h3 class="section-title">
+                <h3 class="section-title text-xl font-semibold text-center mb-6 border-b border-black pb-2">
                     <i class="fas fa-table mr-2"></i>四柱信息
                 </h3>
-                <div class="sizhu-headers">
+                <div class="sizhu-headers grid grid-cols-4 gap-2 mb-4 text-xs uppercase tracking-widest text-gray-500">
                     <div class="sizhu-header-row">
-                        <div class="sizhu-header-cell">年柱</div>
-                        <div class="sizhu-header-cell">月柱</div>
-                        <div class="sizhu-header-cell">日柱</div>
-                        <div class="sizhu-header-cell">时柱</div>
+                        <div class="sizhu-header-cell text-center py-2 border border-gray-200 rounded-md bg-gray-50">年柱</div>
+                        <div class="sizhu-header-cell text-center py-2 border border-gray-200 rounded-md bg-gray-50">月柱</div>
+                        <div class="sizhu-header-cell text-center py-2 border border-gray-200 rounded-md bg-gray-50">日柱</div>
+                        <div class="sizhu-header-cell text-center py-2 border border-gray-200 rounded-md bg-gray-50">时柱</div>
                     </div>
                 </div>
-                <div class="sizhu-grid" id="sizhuGrid">
+                <div class="sizhu-grid space-y-2" id="sizhuGrid">
                     <!-- 四柱信息将通过JavaScript动态生成 -->
                 </div>
             </div>
         </div>
 
         <!-- 大运信息 -->
-        <div id="dayunSection" class="bazi-chart">
+        <div id="dayunSection" class="bazi-chart border-2 border-gray-200 bg-white rounded-xl p-8 mb-8 shadow-sm">
             <div class="chart-section">
-                <h3 class="section-title">
+                <h3 class="section-title text-xl font-semibold text-center mb-6 border-b border-black pb-2">
                     <i class="fas fa-route mr-2"></i>大运信息
                 </h3>
-                <div class="dayun-headers">
+                <div class="dayun-headers grid grid-cols-5 md:grid-cols-10 gap-2 mb-4 text-xs uppercase tracking-widest text-gray-500">
                     <div class="dayun-header-row">
-                        <div class="dayun-header-cell">8岁</div>
-                        <div class="dayun-header-cell">18岁</div>
-                        <div class="dayun-header-cell">28岁</div>
-                        <div class="dayun-header-cell">38岁</div>
-                        <div class="dayun-header-cell">48岁</div>
-                        <div class="dayun-header-cell">58岁</div>
-                        <div class="dayun-header-cell">68岁</div>
-                        <div class="dayun-header-cell">78岁</div>
-                        <div class="dayun-header-cell">88岁</div>
-                        <div class="dayun-header-cell">98岁</div>
+                        <div class="dayun-header-cell text-center py-2 border border-gray-200 rounded-md bg-gray-50">8岁</div>
+                        <div class="dayun-header-cell text-center py-2 border border-gray-200 rounded-md bg-gray-50">18岁</div>
+                        <div class="dayun-header-cell text-center py-2 border border-gray-200 rounded-md bg-gray-50">28岁</div>
+                        <div class="dayun-header-cell text-center py-2 border border-gray-200 rounded-md bg-gray-50">38岁</div>
+                        <div class="dayun-header-cell text-center py-2 border border-gray-200 rounded-md bg-gray-50">48岁</div>
+                        <div class="dayun-header-cell text-center py-2 border border-gray-200 rounded-md bg-gray-50">58岁</div>
+                        <div class="dayun-header-cell text-center py-2 border border-gray-200 rounded-md bg-gray-50">68岁</div>
+                        <div class="dayun-header-cell text-center py-2 border border-gray-200 rounded-md bg-gray-50">78岁</div>
+                        <div class="dayun-header-cell text-center py-2 border border-gray-200 rounded-md bg-gray-50">88岁</div>
+                        <div class="dayun-header-cell text-center py-2 border border-gray-200 rounded-md bg-gray-50">98岁</div>
                     </div>
                 </div>
-                <div class="dayun-grid" id="dayunGrid">
+                <div class="dayun-grid space-y-2" id="dayunGrid">
                     <!-- 大运信息将通过JavaScript动态生成 -->
                 </div>
             </div>
         </div>
 
         <!-- 流年信息 -->
-        <div id="liunianSection" class="bazi-chart">
+        <div id="liunianSection" class="bazi-chart border-2 border-gray-200 bg-white rounded-xl p-8 mb-8 shadow-sm">
             <div class="chart-section">
-                <h3 class="section-title">
+                <h3 class="section-title text-xl font-semibold text-center mb-6 border-b border-black pb-2">
                     <i class="fas fa-calendar mr-2"></i>流年信息
                 </h3>
-                <div class="liunian-headers">
+                <div class="liunian-headers grid grid-cols-5 md:grid-cols-10 gap-2 mb-4 text-xs uppercase tracking-widest text-gray-500">
                     <div class="liunian-header-row">
-                        <div class="liunian-header-cell">今年</div>
-                        <div class="liunian-header-cell">明年</div>
-                        <div class="liunian-header-cell">后年</div>
-                        <div class="liunian-header-cell">3年后</div>
-                        <div class="liunian-header-cell">4年后</div>
-                        <div class="liunian-header-cell">5年后</div>
-                        <div class="liunian-header-cell">6年后</div>
-                        <div class="liunian-header-cell">7年后</div>
-                        <div class="liunian-header-cell">8年后</div>
-                        <div class="liunian-header-cell">9年后</div>
+                        <div class="liunian-header-cell text-center py-2 border border-gray-200 rounded-md bg-gray-50">今年</div>
+                        <div class="liunian-header-cell text-center py-2 border border-gray-200 rounded-md bg-gray-50">明年</div>
+                        <div class="liunian-header-cell text-center py-2 border border-gray-200 rounded-md bg-gray-50">后年</div>
+                        <div class="liunian-header-cell text-center py-2 border border-gray-200 rounded-md bg-gray-50">3年后</div>
+                        <div class="liunian-header-cell text-center py-2 border border-gray-200 rounded-md bg-gray-50">4年后</div>
+                        <div class="liunian-header-cell text-center py-2 border border-gray-200 rounded-md bg-gray-50">5年后</div>
+                        <div class="liunian-header-cell text-center py-2 border border-gray-200 rounded-md bg-gray-50">6年后</div>
+                        <div class="liunian-header-cell text-center py-2 border border-gray-200 rounded-md bg-gray-50">7年后</div>
+                        <div class="liunian-header-cell text-center py-2 border border-gray-200 rounded-md bg-gray-50">8年后</div>
+                        <div class="liunian-header-cell text-center py-2 border border-gray-200 rounded-md bg-gray-50">9年后</div>
                     </div>
                 </div>
-                <div class="liunian-grid" id="liunianGrid">
+                <div class="liunian-grid space-y-2" id="liunianGrid">
                     <!-- 流年信息将通过JavaScript动态生成 -->
                 </div>
             </div>
@@ -118,8 +123,9 @@
             </button>
         </div>
     </div>
+    </main>
 
-    <script src="bazi-chart.js"></script>
+<script src="bazi-chart.js"></script>
     <script>
         // 页面加载时处理数据
         document.addEventListener('DOMContentLoaded', function() {
@@ -238,5 +244,7 @@
             }, 5000);
         }, 2000);
     </script>
+    <script src="../scripts/main.js"></script>
+    <script src="../../js/common.js"></script>
 </body>
 </html>

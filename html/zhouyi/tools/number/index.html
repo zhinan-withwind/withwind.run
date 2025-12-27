@@ -4,205 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>车牌号码生成器</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: white;
-            color: #333;
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 60px 20px;
-        }
-        
-        .title {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-        
-        .title h1 {
-            font-size: 28px;
-            font-weight: 300;
-            margin-bottom: 8px;
-        }
-        
-        .title p {
-            font-size: 14px;
-            color: #666;
-        }
-        
-        .form {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 60px;
-        }
-        
-        .form input {
-            flex: 1;
-            padding: 12px 16px;
-            border: 1px solid #ddd;
-            font-size: 14px;
-            text-transform: uppercase;
-        }
-        
-        .form input:focus {
-            outline: none;
-            border-color: #333;
-        }
-        
-        .form button {
-            padding: 12px 24px;
-            background: #333;
-            color: white;
-            border: none;
-            font-size: 14px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        
-        .form button:hover {
-            background: #555;
-        }
-        
-        .form button:disabled {
-            background: #999;
-            cursor: not-allowed;
-        }
-        
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: #666;
-            display: none;
-        }
-        
-        .loading.show {
-            display: block;
-        }
-        
-        .spinner {
-            border: 2px solid #f3f3f3;
-            border-top: 2px solid #333;
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 16px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .results {
-            display: none;
-        }
-        
-        .results.show {
-            display: block;
-        }
-        
-        .results-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-        }
-        
-        .results-title {
-            font-size: 20px;
-            font-weight: 300;
-        }
-        
-        .reset-btn {
-            background: none;
-            border: none;
-            color: #666;
-            font-size: 14px;
-            cursor: pointer;
-        }
-        
-        .reset-btn:hover {
-            color: #333;
-        }
-        
-        .result-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 0;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .result-number {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .result-rank {
-            color: #999;
-            font-size: 14px;
-        }
-        
-        .result-info h3 {
-            font-size: 16px;
-            font-weight: 500;
-            margin-bottom: 2px;
-        }
-        
-        .result-info span {
-            font-size: 12px;
-            color: #999;
-        }
-        
-        .result-score {
-            text-align: right;
-        }
-        
-        .score-high {
-            color: #10b981;
-        }
-        
-        .score-medium {
-            color: #3b82f6;
-        }
-        
-        .score-low {
-            color: #6b7280;
-        }
-        
-        .error {
-            text-align: center;
-            padding: 40px;
-            color: #ef4444;
-            display: none;
-        }
-        
-        .error.show {
-            display: block;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    
 </head>
-<body>
-    <div class="container">
-        <div class="title">
-            <h1>车牌号码生成器</h1>
-            <p>基于周易算法的吉祥车牌号推荐系统</p>
+<body class="bg-white text-gray-900">
+    <main class="pt-28">
+
+
+
+
+    <div class="container max-w-xl mx-auto px-6 py-16">
+        <div class="title text-center mb-10">
+            <h1 class="text-2xl md:text-3xl font-light mb-2">车牌号码生成器</h1>
+            <p class="text-sm text-gray-500">基于周易算法的吉祥车牌号推荐系统</p>
         </div>
         
-        <form class="form" id="plateForm">
-            <input 
+        <form class="form flex flex-col sm:flex-row gap-3 mb-10" id="plateForm">
+            <input class="flex-1 uppercase border border-gray-300 px-4 py-3 text-sm rounded-md focus:outline-none focus:ring-2 focus:ring-black/20 focus:border-black" 
                 type="text" 
                 id="prefix" 
                 name="prefix" 
@@ -210,24 +29,24 @@
                 maxlength="3"
                 required
             >
-            <button type="submit" id="generateBtn">生成号码</button>
+            <button type="submit" id="generateBtn" class="bg-white text-black border border-black px-6 py-3 text-sm uppercase tracking-widest transition hover:bg-gray-100 disabled:bg-gray-400 disabled:cursor-not-allowed rounded-md">生成号码</button>
         </form>
         
-        <div class="loading" id="loadingSection">
-            <div class="spinner"></div>
+        <div class="loading hidden text-center py-10 text-gray-500" id="loadingSection">
+            <div class="spinner mx-auto mb-4 h-6 w-6 animate-spin rounded-full border-2 border-gray-200 border-t-gray-800"></div>
             <p>正在生成...</p>
         </div>
         
-        <div class="results" id="resultsSection">
-            <div class="results-header">
-                <h2 class="results-title">推荐结果</h2>
-                <button class="reset-btn" id="resetBtn">重新生成</button>
+        <div class="results hidden" id="resultsSection">
+            <div class="results-header flex items-center justify-between mb-6">
+                <h2 class="results-title text-lg font-light">推荐结果</h2>
+                <button class="reset-btn text-sm text-gray-500 transition hover:text-gray-800" id="resetBtn">重新生成</button>
             </div>
             
-            <div id="resultsContainer"></div>
+            <div id="resultsContainer" class="space-y-2"></div>
         </div>
         
-        <div class="error" id="errorSection">
+        <div class="error hidden text-center py-10 text-gray-700" id="errorSection">
             <p id="errorMessage"></p>
         </div>
     </div>
@@ -306,14 +125,14 @@
             
             showLoading() {
                 this.hideAll();
-                this.loadingSection.classList.add('show');
+                this.loadingSection.classList.remove('hidden');
                 this.generateBtn.disabled = true;
                 this.generateBtn.textContent = '生成中...';
             }
             
             showResults(data, prefix) {
                 this.hideAll();
-                this.resultsSection.classList.add('show');
+                this.resultsSection.classList.remove('hidden');
                 this.generateBtn.disabled = false;
                 this.generateBtn.textContent = '生成号码';
                 
@@ -331,20 +150,20 @@
             
             createResultItem(result, prefix, rank) {
                 const div = document.createElement('div');
-                div.className = 'result-item';
+                div.className = 'result-item flex items-center justify-between border-b border-gray-200 py-4';
                 
                 const fullNumber = `${result.number}`;
                 const scoreClass = this.getScoreClass(result.score);
                 
                 div.innerHTML = `
-                    <div class="result-number">
-                        <span class="result-rank">${rank}.</span>
+                    <div class="result-number flex items-center gap-3">
+                        <span class="result-rank text-sm text-gray-400">${rank}.</span>
                         <div class="result-info">
-                            <h3>${fullNumber}</h3>
-                            <span>${result.number}</span>
+                            <h3 class="text-base font-medium text-gray-900">${fullNumber}</h3>
+                            <span class="text-xs text-gray-400">${result.number}</span>
                         </div>
                     </div>
-                    <div class="result-score">
+                    <div class="result-score text-right text-sm font-semibold">
                         <span class="${scoreClass}">${result.score.toFixed(1)}</span>
                     </div>
                 `;
@@ -353,23 +172,23 @@
             }
             
             getScoreClass(score) {
-                if (score >= 8.0) return 'score-high';
-                if (score >= 6.0) return 'score-medium';
-                return 'score-low';
+                if (score >= 8.0) return 'text-gray-800';
+                if (score >= 6.0) return 'text-gray-600';
+                return 'text-gray-500';
             }
             
             showError(message) {
                 this.hideAll();
-                this.errorSection.classList.add('show');
+                this.errorSection.classList.remove('hidden');
                 this.errorMessage.textContent = message;
                 this.generateBtn.disabled = false;
                 this.generateBtn.textContent = '生成号码';
             }
             
             hideAll() {
-                this.loadingSection.classList.remove('show');
-                this.resultsSection.classList.remove('show');
-                this.errorSection.classList.remove('show');
+                this.loadingSection.classList.add('hidden');
+                this.resultsSection.classList.add('hidden');
+                this.errorSection.classList.add('hidden');
             }
             
             reset() {
@@ -385,5 +204,9 @@
             new LicensePlateGenerator();
         });
     </script>
+    </main>
+
+<script src="../../scripts/main.js"></script>
+    <script src="../../../js/common.js"></script>
 </body>
 </html>

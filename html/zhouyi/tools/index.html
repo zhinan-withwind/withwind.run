@@ -3,196 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>八字排盘系统 | Bazi Chart System</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>周易工具 | WithWind</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-        }
-        
-        .index-container {
-            text-align: center;
-            max-width: 600px;
-            padding: 2rem;
-        }
-        
-        .main-title {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            animation: fadeInDown 1s ease-out;
-        }
-        
-        .subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 3rem;
-            opacity: 0.9;
-            animation: fadeInUp 1s ease-out 0.3s both;
-        }
-        
-        .start-button {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            border: none;
-            padding: 1rem 3rem;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            animation: fadeInUp 1s ease-out 0.6s both;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .start-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-        }
-        
-        .start-button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-        
-        .start-button:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-        
-        .features {
-            margin-top: 3rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            animation: fadeInUp 1s ease-out 0.9s both;
-        }
-        
-        .feature-item {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1.5rem;
-            border-radius: 12px;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-        
-        .feature-item:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-5px);
-        }
-        
-        .feature-icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: #fbbf24;
-        }
-        
-        .feature-title {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-        
-        .feature-desc {
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-        
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .main-title {
-                font-size: 2rem;
-            }
-            
-            .features {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-            
-            .index-container {
-                padding: 1rem;
-            }
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <div class="index-container">
-        <h1 class="main-title">
-            <i class="fas fa-yin-yang mr-3"></i>八字排盘系统
-        </h1>
-        <p class="subtitle">基于传统命理学的现代化八字排盘工具</p>
-        
-        <button onclick="window.location.href='bazi-input.html'" class="start-button">
-            <i class="fas fa-play mr-2"></i>开始排盘
-        </button>
-        
-        <div class="features">
-            <div class="feature-item">
-                <div class="feature-icon">
-                    <i class="fas fa-map-marker-alt"></i>
+<body class="min-h-screen bg-white text-gray-900">
+    <main class="pt-28 px-6 pb-20">
+        <section class="max-w-5xl mx-auto space-y-4 text-center py-10">
+            <p class="text-xs uppercase tracking-[0.3em] text-gray-500">Tools</p>
+            <h1 class="text-4xl md:text-5xl font-light tracking-widest">周易工具</h1>
+            <p class="text-base md:text-lg text-gray-600">聚合排盘、占卜与号码解析，快速进入实用场景。</p>
+        </section>
+
+        <section class="max-w-5xl mx-auto space-y-12">
+            <div class="space-y-4">
+                <h2 class="text-sm uppercase tracking-[0.2em] text-gray-500">排盘</h2>
+                <div class="grid gap-6 md:grid-cols-3">
+                    <a href="bazi/bazi-input.html" class="border border-gray-200 rounded-2xl p-6 space-y-3 transition hover:border-black hover:-translate-y-1">
+                        <h3 class="text-lg font-medium">八字</h3>
+                        <p class="text-sm text-gray-600">输入生日与地点，一键生成八字盘与分析。</p>
+                    </a>
                 </div>
-                <div class="feature-title">精准定位</div>
-                <div class="feature-desc">省市区三级联动选择，确保时区准确</div>
             </div>
-            
-            <div class="feature-item">
-                <div class="feature-icon">
-                    <i class="fas fa-palette"></i>
+
+            <div class="space-y-4">
+                <h2 class="text-sm uppercase tracking-[0.2em] text-gray-500">占卜</h2>
+                <div class="grid gap-6 md:grid-cols-3">
+                    <a href="divine/liuyao/index.html" class="border border-gray-200 rounded-2xl p-6 space-y-3 transition hover:border-black hover:-translate-y-1">
+                        <h3 class="text-lg font-medium">六爻</h3>
+                        <p class="text-sm text-gray-600">起卦流程清晰，适合快速问事与解析。</p>
+                    </a>
+                    <a href="divine/qimen/index.html" class="border border-gray-200 rounded-2xl p-6 space-y-3 transition hover:border-black hover:-translate-y-1">
+                        <h3 class="text-lg font-medium">奇门</h3>
+                        <p class="text-sm text-gray-600">奇门遁甲排盘与解读入口。</p>
+                    </a>
+                    <a href="divine/meihua/index.html" class="border border-gray-200 rounded-2xl p-6 space-y-3 transition hover:border-black hover:-translate-y-1">
+                        <h3 class="text-lg font-medium">梅花</h3>
+                        <p class="text-sm text-gray-600">梅花易数工具入口。</p>
+                    </a>
                 </div>
-                <div class="feature-title">五行配色</div>
-                <div class="feature-desc">根据日主五行自动切换主题色彩</div>
             </div>
-            
-            <div class="feature-item">
-                <div class="feature-icon">
-                    <i class="fas fa-chart-line"></i>
+
+            <div class="space-y-4">
+                <h2 class="text-sm uppercase tracking-[0.2em] text-gray-500">号码</h2>
+                <div class="grid gap-6 md:grid-cols-3">
+                    <a href="number/index.html" class="border border-gray-200 rounded-2xl p-6 space-y-3 transition hover:border-black hover:-translate-y-1">
+                        <h3 class="text-lg font-medium">电话号码</h3>
+                        <p class="text-sm text-gray-600">号码五行与能量分析。</p>
+                    </a>
+                    <a href="number/index.html" class="border border-gray-200 rounded-2xl p-6 space-y-3 transition hover:border-black hover:-translate-y-1">
+                        <h3 class="text-lg font-medium">车牌号码</h3>
+                        <p class="text-sm text-gray-600">车牌数字能量趋势解析。</p>
+                    </a>
                 </div>
-                <div class="feature-title">完整分析</div>
-                <div class="feature-desc">四柱、大运、流年全方位解析</div>
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
+
+    <script src="../../js/common.js"></script>
 </body>
 </html>

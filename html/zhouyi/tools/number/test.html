@@ -2,11 +2,19 @@
 <html>
 <head>
     <title>API Test</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>API Test</h1>
-    <button onclick="testAPI()">Test API</button>
-    <div id="result"></div>
+<body class="bg-white text-gray-900">
+
+
+
+
+    <main class="max-w-xl mx-auto pt-28 px-6 py-16 space-y-6">
+        <h1 class="text-2xl font-semibold">API Test</h1>
+        <button onclick="testAPI()" class="rounded-md bg-white border border-black px-4 py-2 text-sm font-semibold text-black transition hover:bg-gray-100">Test API</button>
+        <pre id="result" class="rounded-lg border border-gray-200 bg-gray-50 p-4 text-sm"></pre>
+    </main>
     
     <script>
         async function testAPI() {
@@ -23,5 +31,7 @@
             }
         }
     </script>
+    <script src="../../scripts/main.js"></script>
+    <script src="../../../js/common.js"></script>
 </body>
 </html>

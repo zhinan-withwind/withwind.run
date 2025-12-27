@@ -6,9 +6,8 @@
     <title>随风 | 个人主页</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="bg-white text-black overflow-x-hidden">
     <!-- Header and Navigation will be loaded by common.js -->
 
     <!-- Hero Section -->
@@ -20,10 +19,10 @@
             <p class="text-xl md:text-2xl text-gray-600 mb-4 fade-in" style="animation-delay: 0.2s">
                 WithWind
             </p>
-            <div class="text-lg md:text-xl text-gray-500 mb-12 fade-in lang-transition" style="animation-delay: 0.4s">
-                <span class="typing-effect" data-lang-key="hero-tagline">代码 · 易经 · 美食</span>
+            <div class="text-lg md:text-xl text-gray-500 mb-12 fade-in" style="animation-delay: 0.4s">
+                <span class="tracking-wide" data-lang-key="hero-tagline">代码 · 易经 · 美食</span>
             </div>
-            <div class="scroll-indicator mt-16 fade-in" style="animation-delay: 0.6s">
+            <div class="mt-16 fade-in animate-bounce" style="animation-delay: 0.6s">
                 <i class="fas fa-chevron-down text-2xl text-gray-600"></i>
             </div>
         </div>
@@ -81,7 +80,7 @@
         <div class="max-w-6xl mx-auto">
             <h2 class="text-4xl md:text-5xl font-light mb-12 text-center fade-in" data-lang-key="tags-title">三个标签</h2>
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="tag-card p-8 rounded-lg hover-lift fade-in">
+                <div class="rounded-lg border border-gray-200 bg-gray-50 p-8 transition duration-300 ease-out hover:-translate-y-1 hover:border-black hover:bg-gray-100 hover:shadow-lg fade-in">
                     <div class="text-4xl mb-4">
                         <i class="fas fa-code"></i>
                     </div>
@@ -91,7 +90,7 @@
                         从汇编到人工智能，从单机到云端，始终保持着对技术的热情和好奇。
                     </p>
                 </div>
-                <div class="tag-card p-8 rounded-lg hover-lift fade-in cursor-pointer" style="animation-delay: 0.2s" onclick="window.location.href='zhouyi/index.html'">
+                <div class="rounded-lg border border-gray-200 bg-gray-50 p-8 transition duration-300 ease-out hover:-translate-y-1 hover:border-black hover:bg-gray-100 hover:shadow-lg fade-in cursor-pointer" style="animation-delay: 0.2s" onclick="window.location.href='zhouyi/index.html'">
                     <div class="text-4xl mb-4">
                         <i class="fas fa-yin-yang"></i>
                     </div>
@@ -102,7 +101,7 @@
                         相信阴阳平衡之道能够启发更优雅的算法设计。
                     </p>
                 </div>
-                <div class="tag-card p-8 rounded-lg hover-lift fade-in" style="animation-delay: 0.4s">
+                <div class="rounded-lg border border-gray-200 bg-gray-50 p-8 transition duration-300 ease-out hover:-translate-y-1 hover:border-black hover:bg-gray-100 hover:shadow-lg fade-in" style="animation-delay: 0.4s">
                     <div class="text-4xl mb-4">
                         <i class="fas fa-utensils"></i>
                     </div>
@@ -121,20 +120,20 @@
     <section id="contact" class="py-20 px-8 bg-gray-50">
         <div class="max-w-4xl mx-auto text-center">
             <h2 class="text-4xl md:text-5xl font-light mb-12 fade-in" data-lang-key="contact-title">联系我</h2>
-            <p class="text-gray-600 mb-12 fade-in lang-transition" style="animation-delay: 0.2s" data-lang-key="contact-desc">
+            <p class="text-gray-600 mb-12 fade-in" style="animation-delay: 0.2s" data-lang-key="contact-desc">
                 如果您对我的工作感兴趣，或者想要交流技术、易经或美食，欢迎与我联系。
             </p>
             <div class="flex justify-center space-x-8 fade-in" style="animation-delay: 0.4s">
-                <a href="mailto:withwind@gmail.com" class="hover-lift">
+                <a href="mailto:withwind@gmail.com" class="transition transform hover:-translate-y-1">
                     <i class="fas fa-envelope text-2xl"></i>
                 </a>
-                <a href="https://github.com/zhinan-withwind" class="hover-lift">
+                <a href="https://github.com/zhinan-withwind" class="transition transform hover:-translate-y-1">
                     <i class="fab fa-github text-2xl"></i>
                 </a>
-                <a href="#" class="hover-lift">
+                <a href="#" class="transition transform hover:-translate-y-1">
                     <i class="fab fa-linkedin text-2xl"></i>
                 </a>
-                <a href="#" class="hover-lift">
+                <a href="#" class="transition transform hover:-translate-y-1">
                     <i class="fab fa-twitter text-2xl"></i>
                 </a>
             </div>

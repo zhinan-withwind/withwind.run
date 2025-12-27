@@ -4,97 +4,108 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>讼卦 - 第六卦 | 周易六十四卦</title>
-    <link rel="stylesheet" href="hexagram.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    
 </head>
-<body>
-    <div class="header">
-        <div class="hexagram-number">第六卦</div>
-        <h1 class="hexagram-title">讼卦</h1>
-        <div class="hexagram-symbol">
-            <img src="images/06.svg" alt="讼卦" />
+<body class="bg-white text-black antialiased font-serif">
+    <main class="max-w-3xl mx-auto px-5 pt-28 pb-12">
+
+
+
+
+    <div class="header text-center mb-12 border-b border-black pb-10">
+        <div class="hexagram-number text-xs tracking-widest text-black/60 mb-2">第六卦</div>
+        <h1 class="hexagram-title text-4xl md:text-5xl font-normal mb-4">讼卦</h1>
+        <div class="hexagram-symbol my-8 flex flex-col items-center gap-2">
+            <img src="images/06.svg" alt="讼卦"  class="w-32 md:w-40 h-auto" />
         </div>
     </div>
 
-    <div class="section">
-        <h2 class="section-title">卦辞</h2>
-        <div class="original-text">有孚，窒惕，中吉，终凶。利见大人，不利涉大川。</div>
-        <div class="explanation">
+    <div class="section mb-12">
+        <h2 class="section-title text-2xl font-normal mb-5 pb-2 border-b border-black/20">卦辞</h2>
+        <div class="original-text text-lg leading-relaxed mb-4">有孚，窒惕，中吉，终凶。利见大人，不利涉大川。</div>
+        <div class="explanation text-base leading-relaxed text-gray-700">
             讼卦象征着争讼，诉讼纠纷。卦辞意为：有诚信，但窒塞警惕，中间吉祥，最终凶险。有利于见到大人物，不利于涉越大河。讼卦告诫我们诉讼虽然有理，但最终结果往往不好，应当尽量避免。
         </div>
     </div>
 
-    <div class="section">
-        <h2 class="section-title">彖传</h2>
-        <div class="original-text">讼，上刚下险，险而健，讼。讼，有孚窒惕，中吉，刚来而得中也。终凶，讼不可成也。利见大人，尚中正也。不利涉大川，入于渊也。</div>
-        <div class="explanation">
+    <div class="section mb-12">
+        <h2 class="section-title text-2xl font-normal mb-5 pb-2 border-b border-black/20">彖传</h2>
+        <div class="original-text text-lg leading-relaxed mb-4">讼，上刚下险，险而健，讼。讼，有孚窒惕，中吉，刚来而得中也。终凶，讼不可成也。利见大人，尚中正也。不利涉大川，入于渊也。</div>
+        <div class="explanation text-base leading-relaxed text-gray-700">
             彖传说：讼卦，上刚下险，在危险中刚健，就是讼。讼有诚信窒塞警惕，中间吉祥，是因为刚来而得中。最终凶险，是因为诉讼不可能成功。有利于见到大人，是崇尚中正。不利于涉越大川，是会陷入深渊。
         </div>
     </div>
 
-    <div class="section">
-        <h2 class="section-title">象传</h2>
-        <div class="original-text">天与水违行，讼。君子以作事谋始。</div>
-        <div class="explanation">
+    <div class="section mb-12">
+        <h2 class="section-title text-2xl font-normal mb-5 pb-2 border-b border-black/20">象传</h2>
+        <div class="original-text text-lg leading-relaxed mb-4">天与水违行，讼。君子以作事谋始。</div>
+        <div class="explanation text-base leading-relaxed text-gray-700">
             象传说：天与水背道而驰，就是讼卦。君子应当效法这种精神，做事要谋划好开始。天向上，水向下，背道而驰，君子做事要从开始就周密考虑，避免后患。
         </div>
     </div>
 
-    <div class="section yaos">
-        <h2 class="section-title">爻辞</h2>
+    <div class="section yaos mb-12 mt-8">
+        <h2 class="section-title text-2xl font-normal mb-5 pb-2 border-b border-black/20">爻辞</h2>
         
-        <div class="yao">
-            <div class="yao-position">初六：不永所事，小有言，终吉</div>
-            <div class="yao-text">不长久纠缠于事情，小的言语争执，最终吉祥。</div>
-            <div class="yao-explanation">
+        <div class="yao mb-6 border-l-2 border-black pl-5">
+            <div class="yao-position font-bold mb-2">初六：不永所事，小有言，终吉</div>
+            <div class="yao-text mb-2">不长久纠缠于事情，小的言语争执，最终吉祥。</div>
+            <div class="yao-explanation text-sm text-gray-600">
                 初六爻位于最下方，象征刚开始诉讼。不要长久纠缠于争讼，虽然会有小的争执，但最终会获得吉祥的结果。
             </div>
         </div>
 
-        <div class="yao">
-            <div class="yao-position">九二：不克讼，归而逋，其邑人三百户，无眚</div>
-            <div class="yao-text">不能胜诉，归来而逃亡，其邑人三百户，没有灾害。</div>
-            <div class="yao-explanation">
+        <div class="yao mb-6 border-l-2 border-black pl-5">
+            <div class="yao-position font-bold mb-2">九二：不克讼，归而逋，其邑人三百户，无眚</div>
+            <div class="yao-text mb-2">不能胜诉，归来而逃亡，其邑人三百户，没有灾害。</div>
+            <div class="yao-explanation text-sm text-gray-600">
                 九二爻得中得正，但诉讼不能取胜。应当退让归来，避免更大损失，这样同邑的人也不会受到牵连。
             </div>
         </div>
 
-        <div class="yao">
-            <div class="yao-position">六三：食旧德，贞厉，终吉。或从王事，无成</div>
-            <div class="yao-text">依赖旧的德行，坚守正道有危险，最终吉祥。或者跟随君王做事，没有成就。</div>
-            <div class="yao-explanation">
+        <div class="yao mb-6 border-l-2 border-black pl-5">
+            <div class="yao-position font-bold mb-2">六三：食旧德，贞厉，终吉。或从王事，无成</div>
+            <div class="yao-text mb-2">依赖旧的德行，坚守正道有危险，最终吉祥。或者跟随君王做事，没有成就。</div>
+            <div class="yao-explanation text-sm text-gray-600">
                 六三爻位置不当，依靠过去的德行。虽然有危险，但坚守正道最终吉祥。辅佐君王做事，但不会有显著的成就。
             </div>
         </div>
 
-        <div class="yao">
-            <div class="yao-position">九四：不克讼，复即命，渝安贞，吉</div>
-            <div class="yao-text">不能胜诉，回归天命，改变安守正道，吉祥。</div>
-            <div class="yao-explanation">
+        <div class="yao mb-6 border-l-2 border-black pl-5">
+            <div class="yao-position font-bold mb-2">九四：不克讼，复即命，渝安贞，吉</div>
+            <div class="yao-text mb-2">不能胜诉，回归天命，改变安守正道，吉祥。</div>
+            <div class="yao-explanation text-sm text-gray-600">
                 九四爻接近君位，诉讼不能取胜。应当回归天命，改变态度安守正道，这样就会获得吉祥。
             </div>
         </div>
 
-        <div class="yao">
-            <div class="yao-position">九五：讼元吉</div>
-            <div class="yao-text">诉讼大吉大利。</div>
-            <div class="yao-explanation">
+        <div class="yao mb-6 border-l-2 border-black pl-5">
+            <div class="yao-position font-bold mb-2">九五：讼元吉</div>
+            <div class="yao-text mb-2">诉讼大吉大利。</div>
+            <div class="yao-explanation text-sm text-gray-600">
                 九五爻居中尊位，象征公正的裁判。由这位大人物来处理诉讼，会获得大吉大利的结果，因为能够公正无私。
             </div>
         </div>
 
-        <div class="yao">
-            <div class="yao-position">上九：或锡之鞶带，终朝三褫之</div>
-            <div class="yao-text">或者赏赐大带，但一天之内三次被剥夺。</div>
-            <div class="yao-explanation">
+        <div class="yao mb-6 border-l-2 border-black pl-5">
+            <div class="yao-position font-bold mb-2">上九：或锡之鞶带，终朝三褫之</div>
+            <div class="yao-text mb-2">或者赏赐大带，但一天之内三次被剥夺。</div>
+            <div class="yao-explanation text-sm text-gray-600">
                 上九爻位于极点，虽然可能得到赏赐，但不会长久。象征通过诉讼得到的好处不会持久，容易失去。
             </div>
         </div>
     </div>
 
-    <div class="navigation">
-        <a href="05.html" class="nav-link">← 第五卦</a>
-        <a href="07.html" class="nav-link">第七卦 →</a>
+    <div class="navigation mt-12 pt-6 border-t border-black/20 flex flex-col sm:flex-row justify-between gap-4 text-center">
+        <a href="05.html" class="nav-link text-xs text-black/70 transition hover:text-black">← 第五卦</a>
+        <a href="07.html" class="nav-link text-xs text-black/70 transition hover:text-black">第七卦 →</a>
     </div>
-    <script src="hexagram-menu.js"></script>
+    </main>
+
+<script src="hexagram-menu.js"></script>
+    <script src="../scripts/main.js"></script>
+    <script src="../../js/common.js"></script>
 </body>
 </html>

@@ -6,231 +6,13 @@
     <title>林泉儿子奇门遁甲命理分析报告</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500&display=swap');
-        
-        body {
-            font-family: 'Noto Serif SC', serif;
-            font-weight: 300;
-        }
-        
-        .section-card {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 16px;
-            padding: 3rem;
-            margin-bottom: 3rem;
-            transition: all 0.3s ease;
-        }
-        
-        .section-title {
-            font-size: 1.75rem;
-            font-weight: 300;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #f3f4f6;
-            letter-spacing: 0.05em;
-        }
-        
-        .highlight {
-            font-weight: 400;
-            border-bottom: 1px solid #000;
-        }
-        
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-        
-        .info-item {
-            background: #fafafa;
-            padding: 2rem;
-            border-radius: 12px;
-            border-left: 2px solid #000;
-        }
-        
-        .info-item h3 {
-            font-weight: 400;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-        
-        .info-item p {
-            font-weight: 300;
-            line-height: 1.8;
-        }
-        
-        .content-section {
-            margin: 2rem 0;
-        }
-        
-        .content-section h3 {
-            font-weight: 400;
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .content-section h4 {
-            font-weight: 400;
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-        }
-        
-        .content-section p,
-        .content-section li {
-            font-weight: 300;
-            line-height: 1.8;
-            margin-bottom: 1rem;
-        }
-        
-        .analysis-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-        
-        .analysis-box {
-            background: #fafafa;
-            padding: 2rem;
-            border-radius: 12px;
-        }
-        
-        .analysis-box h4 {
-            font-weight: 400;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-        
-        .analysis-box ul {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .analysis-box li {
-            font-weight: 300;
-            line-height: 1.8;
-            margin-bottom: 0.5rem;
-        }
-        
-        .point-item {
-            background: #fafafa;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 1.5rem;
-            font-weight: 300;
-            line-height: 1.8;
-        }
-        
-        .suggestion-list {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .suggestion-list li {
-            background: #fafafa;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 1.5rem;
-            font-weight: 300;
-            line-height: 1.8;
-            position: relative;
-            padding-left: 3rem;
-        }
-        
-        .suggestion-list li:before {
-            content: "";
-            position: absolute;
-            left: 1.5rem;
-            top: 2rem;
-            width: 4px;
-            height: 4px;
-            background: #000;
-            border-radius: 50%;
-        }
-        
-        .insight-box {
-            background: #fafafa;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 2rem;
-            margin: 2rem 0;
-            font-weight: 300;
-            line-height: 1.8;
-        }
-        
-        .emoji-title {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        @media print {
-            .no-print {
-                display: none;
-            }
-            
-            .section-card {
-                break-inside: avoid;
-                page-break-inside: avoid;
-            }
-        }
-        
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 0.8s ease forwards;
-        }
-        
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; }
-        .delay-4 { animation-delay: 0.4s; }
-        .delay-5 { animation-delay: 0.5s; }
-        .delay-6 { animation-delay: 0.6s; }
-        .delay-7 { animation-delay: 0.7s; }
-        .delay-8 { animation-delay: 0.8s; }
-        
-        /* Typography improvements */
-        h1, h2, h3, h4, h5, h6 {
-            font-weight: 300;
-        }
-        
-        strong, b {
-            font-weight: 400;
-        }
-    </style>
+    
 </head>
-<body class="bg-gray-50">
+<body class="bg-white text-gray-900 font-serif">
     <!-- Header -->
-    <header class="bg-white shadow-sm border-b border-gray-200 no-print">
-        <div class="max-w-4xl mx-auto px-4 py-6">
-            <div class="flex justify-between items-center">
-                <a href="index.html" class="text-gray-600 hover:text-gray-900 transition-colors">
-                    <i class="fas fa-arrow-left mr-2"></i>返回起卦工具
-                </a>
-                <button onclick="window.print()" class="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors">
-                    <i class="fas fa-print mr-2"></i>打印报告
-                </button>
-            </div>
-        </div>
-    </header>
 
     <!-- Main Content -->
-    <main class="max-w-4xl mx-auto px-4 py-8">
+    <main class="max-w-4xl mx-auto pt-28 px-4 py-8">
         <!-- Title Section -->
         <div class="text-center mb-16 fade-in">
             <h1 class="text-5xl md:text-6xl font-light text-gray-900 mb-8 tracking-wide">
@@ -250,28 +32,28 @@
         </div>
 
         <!-- Basic Information -->
-        <div class="section-card fade-in delay-1">
-            <h2 class="section-title">
+        <div class="section-card fade-in delay-1 bg-white border border-gray-200 rounded-2xl p-8 md:p-12 mb-12 shadow-sm">
+            <h2 class="section-title text-2xl md:text-3xl font-light mb-8 pb-4 border-b border-gray-100 tracking-wide">
                 基本信息
             </h2>
-            <div class="info-grid">
-                <div class="info-item">
-                    <h3 class="emoji-title">出生时间</h3>
+            <div class="info-grid grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+                <div class="info-item bg-gray-50 rounded-xl border-l-2 border-black p-6">
+                    <h3 class="emoji-title text-lg font-medium flex items-center gap-2">出生时间</h3>
                     <p>公历：1993年8月23日 08:00</p>
                     <p class="text-sm text-gray-500 mt-2">真太阳时修正为7:06</p>
                 </div>
-                <div class="info-item">
-                    <h3 class="emoji-title">四柱八字</h3>
+                <div class="info-item bg-gray-50 rounded-xl border-l-2 border-black p-6">
+                    <h3 class="emoji-title text-lg font-medium flex items-center gap-2">四柱八字</h3>
                     <p>癸酉 庚申 丙子 戊戌</p>
                     <p class="text-sm text-gray-500 mt-2">日主：丙火（阳火）</p>
                 </div>
-                <div class="info-item">
-                    <h3 class="emoji-title">五行分析</h3>
+                <div class="info-item bg-gray-50 rounded-xl border-l-2 border-black p-6">
+                    <h3 class="emoji-title text-lg font-medium flex items-center gap-2">五行分析</h3>
                     <p>金水旺盛，火势衰微</p>
                     <p class="text-sm text-gray-500 mt-2">喜神：木、火 | 忌神：金、水、土</p>
                 </div>
-                <div class="info-item">
-                    <h3 class="emoji-title">本宫位置</h3>
+                <div class="info-item bg-gray-50 rounded-xl border-l-2 border-black p-6">
+                    <h3 class="emoji-title text-lg font-medium flex items-center gap-2">本宫位置</h3>
                     <p>乾六宫</p>
                     <p class="text-sm text-gray-500 mt-2">天英星·惊门·九天神</p>
                 </div>
@@ -279,47 +61,47 @@
         </div>
 
         <!-- Personality Analysis -->
-        <div class="section-card fade-in delay-2">
-            <h2 class="section-title">
+        <div class="section-card fade-in delay-2 bg-white border border-gray-200 rounded-2xl p-8 md:p-12 mb-12 shadow-sm">
+            <h2 class="section-title text-2xl md:text-3xl font-light mb-8 pb-4 border-b border-gray-100 tracking-wide">
                 性格特点分析
             </h2>
             <div class="space-y-6">
-                <div class="content-section">
-                    <h3 class="emoji-title">外在热情，内心思虑</h3>
+                <div class="content-section my-8">
+                    <h3 class="emoji-title text-lg font-medium flex items-center gap-2">外在热情，内心思虑</h3>
                     <p>丙火日主外在表现热情开朗，但金水压制导致内心易感压力大，思虑过多。</p>
                 </div>
-                <div class="content-section">
-                    <h3 class="emoji-title">物质追求强烈</h3>
+                <div class="content-section my-8">
+                    <h3 class="emoji-title text-lg font-medium flex items-center gap-2">物质追求强烈</h3>
                     <p>月柱庚申偏财旺，对物质追求强烈，但身弱不胜财，易为财所累。</p>
                 </div>
-                <div class="content-section">
-                    <h3 class="emoji-title">才华横溢但精力不足</h3>
+                <div class="content-section my-8">
+                    <h3 class="emoji-title text-lg font-medium flex items-center gap-2">才华横溢但精力不足</h3>
                     <p>时柱戊戌食神有才华，但土泄火气，精力易不足，需要注意劳逸结合。</p>
                 </div>
             </div>
         </div>
 
         <!-- Life Palace Analysis -->
-        <div class="section-card fade-in delay-3">
-            <h2 class="section-title">
+        <div class="section-card fade-in delay-3 bg-white border border-gray-200 rounded-2xl p-8 md:p-12 mb-12 shadow-sm">
+            <h2 class="section-title text-2xl md:text-3xl font-light mb-8 pb-4 border-b border-gray-100 tracking-wide">
                 本宫（乾六宫）命理分析
             </h2>
             
-            <div class="analysis-grid mb-8">
-                <div class="analysis-box">
+            <div class="analysis-grid mb-8 grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+                <div class="analysis-box bg-gray-50 rounded-xl p-6">
                     <h4>宫位信息</h4>
-                    <ul>
-                        <li>天盘天干：<span class="highlight">丙（火）</span></li>
-                        <li>地盘天干：<span class="highlight">己（土）</span></li>
-                        <li>星：<span class="highlight">天英（火）</span></li>
-                        <li>门：<span class="highlight">惊门（金）</span></li>
-                        <li>神：<span class="highlight">九天（吉神）</span></li>
+                    <ul class="list-none space-y-2 text-sm text-gray-700">
+                        <li>天盘天干：<span class="highlight font-medium border-b border-black">丙（火）</span></li>
+                        <li>地盘天干：<span class="highlight font-medium border-b border-black">己（土）</span></li>
+                        <li>星：<span class="highlight font-medium border-b border-black">天英（火）</span></li>
+                        <li>门：<span class="highlight font-medium border-b border-black">惊门（金）</span></li>
+                        <li>神：<span class="highlight font-medium border-b border-black">九天（吉神）</span></li>
                     </ul>
                 </div>
                 
-                <div class="analysis-box">
+                <div class="analysis-box bg-gray-50 rounded-xl p-6">
                     <h4>能量状态</h4>
-                    <ul>
+                    <ul class="list-none space-y-2 text-sm text-gray-700">
                         <li>天盘丙火入墓：才华受困</li>
                         <li>地盘己土胎养：需积累资源</li>
                         <li>火克金：需付出较多精力</li>
@@ -327,24 +109,24 @@
                 </div>
             </div>
 
-            <div class="content-section mb-8">
+            <div class="content-section mb-8 my-8">
                 <h3>星门神组合分析</h3>
                 <div class="space-y-4">
-                    <div class="point-item">
+                    <div class="point-item bg-gray-50 border border-gray-200 rounded-xl p-6 text-gray-700">
                         天英火 + 惊门金：火克金，星克门，主才华难以施展，易有口舌是非。
                     </div>
-                    <div class="point-item">
+                    <div class="point-item bg-gray-50 border border-gray-200 rounded-xl p-6 text-gray-700">
                         惊门金 + 九天吉神：吉神缓解凶门，可通过沟通或远行化解矛盾。
                     </div>
-                    <div class="point-item">
+                    <div class="point-item bg-gray-50 border border-gray-200 rounded-xl p-6 text-gray-700">
                         天英火 + 九天：火性升腾，利于文化、艺术领域发展。
                     </div>
                 </div>
             </div>
 
-            <div class="content-section">
+            <div class="content-section my-8">
                 <h3>发展建议</h3>
-                <ul class="suggestion-list">
+                <ul class="suggestion-list list-disc list-inside space-y-2 text-sm text-gray-700">
                     <li>增强木火能量（如向东、南方向发展）</li>
                     <li>修心养性，减少争讼</li>
                     <li>选择文化、技术类职业发挥天英星优势</li>
@@ -354,44 +136,44 @@
         </div>
 
         <!-- Seven Life Aspects -->
-        <div class="section-card fade-in delay-4">
-            <h2 class="section-title">
+        <div class="section-card fade-in delay-4 bg-white border border-gray-200 rounded-2xl p-8 md:p-12 mb-12 shadow-sm">
+            <h2 class="section-title text-2xl md:text-3xl font-light mb-8 pb-4 border-b border-gray-100 tracking-wide">
                 七大方面命理分析
             </h2>
 
             <!-- Education -->
             <div class="mb-12 pb-8 border-b border-gray-200">
-                <h3 class="emoji-title">学业分析（兑七宫）</h3>
+                <h3 class="emoji-title text-lg font-medium flex items-center gap-2">学业分析（兑七宫）</h3>
                 
-                <div class="analysis-grid mb-8">
-                    <div class="analysis-box">
+                <div class="analysis-grid mb-8 grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+                    <div class="analysis-box bg-gray-50 rounded-xl p-6">
                         <h4>用神信息</h4>
-                        <ul>
-                            <li>门：<span class="highlight">死门（土）</span> 主阻滞</li>
-                            <li>星：<span class="highlight">天辅（木）</span> 文星教育</li>
-                            <li>神：<span class="highlight">值符</span> 最吉神权威</li>
+                        <ul class="list-none space-y-2 text-sm text-gray-700">
+                            <li>门：<span class="highlight font-medium border-b border-black">死门（土）</span> 主阻滞</li>
+                            <li>星：<span class="highlight font-medium border-b border-black">天辅（木）</span> 文星教育</li>
+                            <li>神：<span class="highlight font-medium border-b border-black">值符</span> 最吉神权威</li>
                         </ul>
                     </div>
-                    <div class="analysis-box">
+                    <div class="analysis-box bg-gray-50 rounded-xl p-6">
                         <h4>能量状态</h4>
-                        <ul>
+                        <ul class="list-none space-y-2 text-sm text-gray-700">
                             <li>天盘辛金：临官（旺相）</li>
                             <li>地盘戊土：死地（能量弱）</li>
                         </ul>
                     </div>
                 </div>
                 
-                <div class="content-section mb-6">
+                <div class="content-section mb-6 my-8">
                     <h4>学业状况</h4>
                     <div class="space-y-4">
-                        <div class="point-item">死门克天辅木星，学习过程易遇瓶颈，需防半途而废</div>
-                        <div class="point-item">值符缓解死门凶性，遇权威师长可突破障碍</div>
+                        <div class="point-item bg-gray-50 border border-gray-200 rounded-xl p-6 text-gray-700">死门克天辅木星，学习过程易遇瓶颈，需防半途而废</div>
+                        <div class="point-item bg-gray-50 border border-gray-200 rounded-xl p-6 text-gray-700">值符缓解死门凶性，遇权威师长可突破障碍</div>
                     </div>
                 </div>
                 
-                <div class="content-section">
+                <div class="content-section my-8">
                     <h4>学业建议</h4>
-                    <ul class="suggestion-list">
+                    <ul class="suggestion-list list-disc list-inside space-y-2 text-sm text-gray-700">
                         <li>选择传统教育路径，避免自学或非主流方式</li>
                         <li>制定严格计划，以毅力化解死门阻滞</li>
                         <li>专注技术、法律等需精密思维的学科</li>
@@ -408,27 +190,27 @@
                     <div>
                         <h4 class="font-medium text-gray-700 mb-2">用神信息</h4>
                         <ul class="text-sm text-gray-600 space-y-1">
-                            <li>门：<span class="highlight-positive">生门（土）</span> 吉门主财运</li>
-                            <li>星：<span class="highlight-neutral">天心（金）</span> 医药策划</li>
-                            <li>神：<span class="highlight-negative">白虎</span> 压力竞争</li>
+                            <li>门：<span class="highlight-positive text-gray-700 font-medium">生门（土）</span> 吉门主财运</li>
+                            <li>星：<span class="highlight-neutral text-gray-700 font-medium">天心（金）</span> 医药策划</li>
+                            <li>神：<span class="highlight-negative text-gray-700 font-medium">白虎</span> 压力竞争</li>
                         </ul>
                     </div>
                     <div>
                         <h4 class="font-medium text-gray-700 mb-2">能量状态</h4>
                         <ul class="text-sm text-gray-600 space-y-1">
-                            <li>天盘己土：<span class="tag-negative">病地</span> 调整期</li>
-                            <li>地盘癸水：<span class="tag-negative">死地</span> 流动性差</li>
+                            <li>天盘己土：<span class="tag-negative inline-flex items-center rounded-full bg-gray-50 text-gray-700 px-2 py-0.5 text-xs font-medium">病地</span> 调整期</li>
+                            <li>地盘癸水：<span class="tag-negative inline-flex items-center rounded-full bg-gray-50 text-gray-700 px-2 py-0.5 text-xs font-medium">死地</span> 流动性差</li>
                         </ul>
                     </div>
                 </div>
                 
                 <div class="space-y-3">
-                    <div class="opportunity-item">生门为财门，天心星主谋划，财运有潜力</div>
-                    <div class="risk-item">白虎凶神竞争多，需防投资风险</div>
+                    <div class="opportunity-item rounded-xl border border-gray-200 bg-gray-50 p-4 text-gray-700 text-sm">生门为财门，天心星主谋划，财运有潜力</div>
+                    <div class="risk-item rounded-xl border border-gray-200 bg-gray-50 p-4 text-gray-700 text-sm">白虎凶神竞争多，需防投资风险</div>
                 </div>
                 
                 <h4 class="font-medium text-gray-700 mt-4 mb-2">💡 财富建议</h4>
-                <ul class="suggestion-list">
+                <ul class="suggestion-list list-disc list-inside space-y-2 text-sm text-gray-700">
                     <li>选择稳定行业（如医疗、科技）</li>
                     <li>避免高风险投资，注重长期积累</li>
                     <li>通过技术或资源控制收益</li>
@@ -444,35 +226,35 @@
                     <div>
                         <h4 class="font-medium text-gray-700 mb-2">用神信息</h4>
                         <ul class="text-sm text-gray-600 space-y-1">
-                            <li>门：<span class="highlight-negative">伤门（木）</span> 主变动损伤</li>
-                            <li>星：<span class="highlight-neutral">天蓬（水）</span> 冒险波动</li>
-                            <li>神：<span class="highlight-positive">六合</span> 吉神主婚姻</li>
+                            <li>门：<span class="highlight-negative text-gray-700 font-medium">伤门（木）</span> 主变动损伤</li>
+                            <li>星：<span class="highlight-neutral text-gray-700 font-medium">天蓬（水）</span> 冒险波动</li>
+                            <li>神：<span class="highlight-positive text-gray-700 font-medium">六合</span> 吉神主婚姻</li>
                         </ul>
                     </div>
                     <div>
                         <h4 class="font-medium text-gray-700 mb-2">特殊状态</h4>
                         <ul class="text-sm text-gray-600 space-y-1">
-                            <li><span class="tag-negative">空亡（辰巳空）</span> 感情易落空</li>
-                            <li>天盘辛金：<span class="tag-negative">䞬死（能量低迷）</span></li>
+                            <li><span class="tag-negative inline-flex items-center rounded-full bg-gray-50 text-gray-700 px-2 py-0.5 text-xs font-medium">空亡（辰巳空）</span> 感情易落空</li>
+                            <li>天盘辛金：<span class="tag-negative inline-flex items-center rounded-full bg-gray-50 text-gray-700 px-2 py-0.5 text-xs font-medium">䞬死（能量低迷）</span></li>
                         </ul>
                     </div>
                 </div>
                 
                 <div class="space-y-3">
-                    <div class="opportunity-item">六合为婚姻正神，天生具备缔结良缘的潜力</div>
-                    <div class="risk-item">空亡+伤门：感情易"无疾而终"或异地相隔</div>
-                    <div class="risk-item">天蓬+双辛：需防酒色财气影响感情纯粹性</div>
+                    <div class="opportunity-item rounded-xl border border-gray-200 bg-gray-50 p-4 text-gray-700 text-sm">六合为婚姻正神，天生具备缔结良缘的潜力</div>
+                    <div class="risk-item rounded-xl border border-gray-200 bg-gray-50 p-4 text-gray-700 text-sm">空亡+伤门：感情易"无疾而终"或异地相隔</div>
+                    <div class="risk-item rounded-xl border border-gray-200 bg-gray-50 p-4 text-gray-700 text-sm">天蓬+双辛：需防酒色财气影响感情纯粹性</div>
                 </div>
                 
                 <h4 class="font-medium text-gray-700 mt-4 mb-2">❤️ 婚恋建议</h4>
-                <ul class="suggestion-list">
+                <ul class="suggestion-list list-disc list-inside space-y-2 text-sm text-gray-700">
                     <li>把握2024-2025年空亡填实之机促成婚恋</li>
                     <li>选择命局中带"戊土"（诚信）或"丙火"（热情）的伴侣</li>
                     <li>避免与生肖兔、鸡者深交</li>
                 </ul>
                 
-                <div class="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                    <p class="text-sm text-blue-800">
+                <div class="mt-4 p-3 bg-gray-50 border border-gray-200 rounded-lg">
+                    <p class="text-sm text-gray-700">
                         <i class="fas fa-lightbulb mr-2"></i>
                         <strong>奇门启示：</strong>巽宫见双辛为"伏吟天庭"，主婚恋迟发却可借迟得稳，三十五岁后姻缘渐入佳境。
                     </p>
@@ -488,36 +270,36 @@
                     <div>
                         <h4 class="font-medium text-gray-700 mb-2">用神信息</h4>
                         <ul class="text-sm text-gray-600 space-y-1">
-                            <li>门：<span class="highlight-positive">开门（金）</span> 吉门主事业</li>
-                            <li>星：<span class="highlight-neutral">天芮（土）</span> 病星也主学问</li>
-                            <li>神：<span class="highlight-neutral">九地</span> 阴神主稳定</li>
+                            <li>门：<span class="highlight-positive text-gray-700 font-medium">开门（金）</span> 吉门主事业</li>
+                            <li>星：<span class="highlight-neutral text-gray-700 font-medium">天芮（土）</span> 病星也主学问</li>
+                            <li>神：<span class="highlight-neutral text-gray-700 font-medium">九地</span> 阴神主稳定</li>
                         </ul>
                     </div>
                     <div>
                         <h4 class="font-medium text-gray-700 mb-2">能量状态</h4>
                         <ul class="text-sm text-gray-600 space-y-1">
-                            <li>天盘癸水：<span class="tag-positive">临官（旺相）</span></li>
-                            <li>地盘丁火：<span class="tag-negative">绝地（能量弱）</span></li>
+                            <li>天盘癸水：<span class="tag-positive inline-flex items-center rounded-full bg-gray-50 text-gray-700 px-2 py-0.5 text-xs font-medium">临官（旺相）</span></li>
+                            <li>地盘丁火：<span class="tag-negative inline-flex items-center rounded-full bg-gray-50 text-gray-700 px-2 py-0.5 text-xs font-medium">绝地（能量弱）</span></li>
                         </ul>
                     </div>
                 </div>
                 
                 <div class="space-y-3">
-                    <div class="opportunity-item">开门为事业吉门，注定适合在稳定平台发展</div>
-                    <div class="opportunity-item">天芮星指向教育、医疗、科研等知识型行业</div>
-                    <div class="risk-item">九地虽稳但缺乏爆发力，晋升速度缓慢</div>
+                    <div class="opportunity-item rounded-xl border border-gray-200 bg-gray-50 p-4 text-gray-700 text-sm">开门为事业吉门，注定适合在稳定平台发展</div>
+                    <div class="opportunity-item rounded-xl border border-gray-200 bg-gray-50 p-4 text-gray-700 text-sm">天芮星指向教育、医疗、科研等知识型行业</div>
+                    <div class="risk-item rounded-xl border border-gray-200 bg-gray-50 p-4 text-gray-700 text-sm">九地虽稳但缺乏爆发力，晋升速度缓慢</div>
                 </div>
                 
                 <h4 class="font-medium text-gray-700 mt-4 mb-2">🚀 事业建议</h4>
-                <ul class="suggestion-list">
+                <ul class="suggestion-list list-disc list-inside space-y-2 text-sm text-gray-700">
                     <li>优先选择教育、医疗、科研、咨询等行业</li>
                     <li>适合政府机关、事业单位、大型企业等稳定环境</li>
                     <li>增强"火"元素对抗癸水克制，保持运动和热情</li>
                     <li>保持耐心，专注专业深度积累，等待时机</li>
                 </ul>
                 
-                <div class="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
-                    <p class="text-sm text-green-800">
+                <div class="mt-4 p-3 bg-gray-50 border border-gray-200 rounded-lg">
+                    <p class="text-sm text-gray-700">
                         <i class="fas fa-quote-left mr-2"></i>
                         <strong>奇门启示：</strong>事业宫见开门与九地，是"守成"之象。事业成就非一蹴而就，而是像树木生长，扎根越深，日后枝叶越繁茂。
                     </p>
@@ -533,36 +315,36 @@
                     <div>
                         <h4 class="font-medium text-gray-700 mb-2">用神信息</h4>
                         <ul class="text-sm text-gray-600 space-y-1">
-                            <li>门：<span class="highlight-neutral">开门（金）</span> 主开放扩散</li>
-                            <li>星：<span class="highlight-negative">天芮（土）</span> 病星问题</li>
-                            <li>神：<span class="highlight-neutral">九地</span> 阴神主潜伏</li>
+                            <li>门：<span class="highlight-neutral text-gray-700 font-medium">开门（金）</span> 主开放扩散</li>
+                            <li>星：<span class="highlight-negative text-gray-700 font-medium">天芮（土）</span> 病星问题</li>
+                            <li>神：<span class="highlight-neutral text-gray-700 font-medium">九地</span> 阴神主潜伏</li>
                         </ul>
                     </div>
                     <div>
                         <h4 class="font-medium text-gray-700 mb-2">能量状态</h4>
                         <ul class="text-sm text-gray-600 space-y-1">
-                            <li>天盘癸水：<span class="tag-positive">临官（旺相）</span> 病气活跃</li>
-                            <li>地盘丁火：<span class="tag-negative">绝地（能量弱）</span> 修复弱</li>
+                            <li>天盘癸水：<span class="tag-positive inline-flex items-center rounded-full bg-gray-50 text-gray-700 px-2 py-0.5 text-xs font-medium">临官（旺相）</span> 病气活跃</li>
+                            <li>地盘丁火：<span class="tag-negative inline-flex items-center rounded-full bg-gray-50 text-gray-700 px-2 py-0.5 text-xs font-medium">绝地（能量弱）</span> 修复弱</li>
                         </ul>
                     </div>
                 </div>
                 
                 <div class="space-y-3">
-                    <div class="risk-item">天芮在坎宫：肾水系统、泌尿生殖系统需注意</div>
-                    <div class="risk-item">开门+九地：病情易反复，康复过程较长</div>
-                    <div class="risk-item">癸水临官克丁火绝地：防范心血系统问题</div>
+                    <div class="risk-item rounded-xl border border-gray-200 bg-gray-50 p-4 text-gray-700 text-sm">天芮在坎宫：肾水系统、泌尿生殖系统需注意</div>
+                    <div class="risk-item rounded-xl border border-gray-200 bg-gray-50 p-4 text-gray-700 text-sm">开门+九地：病情易反复，康复过程较长</div>
+                    <div class="risk-item rounded-xl border border-gray-200 bg-gray-50 p-4 text-gray-700 text-sm">癸水临官克丁火绝地：防范心血系统问题</div>
                 </div>
                 
                 <h4 class="font-medium text-gray-700 mt-4 mb-2">🌿 养生建议</h4>
-                <ul class="suggestion-list">
+                <ul class="suggestion-list list-disc list-inside space-y-2 text-sm text-gray-700">
                     <li>重点防护：每年子月（农历十一月）和午月（农历五月）</li>
                     <li>增强火土能量：多食红色、黄色食物，适当日晒</li>
                     <li>定期检查：重点关注肾功能、心血管和内分泌指标</li>
                     <li>作息规律：避免熬夜，因修复能力不足</li>
                 </ul>
                 
-                <div class="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-                    <p class="text-sm text-yellow-800">
+                <div class="mt-4 p-3 bg-gray-50 border border-gray-200 rounded-lg">
+                    <p class="text-sm text-gray-700">
                         <i class="fas fa-exclamation-triangle mr-2"></i>
                         <strong>奇门启示：</strong>天芮逢开门，病易查却难除，须以"防"代"治"，建立长期养生习惯优于病发求医。
                     </p>
@@ -578,36 +360,36 @@
                     <div>
                         <h4 class="font-medium text-gray-700 mb-2">用神信息</h4>
                         <ul class="text-sm text-gray-600 space-y-1">
-                            <li>门：<span class="highlight-positive">休门（水）</span> 吉门主贵人</li>
-                            <li>星：<span class="highlight-negative">天柱（金）</span> 破军星口舌</li>
-                            <li>神：<span class="highlight-negative">玄武</span> 凶神暧昧欺骗</li>
+                            <li>门：<span class="highlight-positive text-gray-700 font-medium">休门（水）</span> 吉门主贵人</li>
+                            <li>星：<span class="highlight-negative text-gray-700 font-medium">天柱（金）</span> 破军星口舌</li>
+                            <li>神：<span class="highlight-negative text-gray-700 font-medium">玄武</span> 凶神暧昧欺骗</li>
                         </ul>
                     </div>
                     <div>
                         <h4 class="font-medium text-gray-700 mb-2">能量状态</h4>
                         <ul class="text-sm text-gray-600 space-y-1">
-                            <li>天盘戊土：<span class="tag-neutral">养地</span> 需滋养</li>
-                            <li>地盘乙木：<span class="tag-negative">衰旺</span> 状态不稳</li>
+                            <li>天盘戊土：<span class="tag-neutral inline-flex items-center rounded-full bg-gray-50 text-gray-700 px-2 py-0.5 text-xs font-medium">养地</span> 需滋养</li>
+                            <li>地盘乙木：<span class="tag-negative inline-flex items-center rounded-full bg-gray-50 text-gray-700 px-2 py-0.5 text-xs font-medium">衰旺</span> 状态不稳</li>
                         </ul>
                     </div>
                 </div>
                 
                 <div class="space-y-3">
-                    <div class="opportunity-item">休门为贵人吉门，贵人运有基础</div>
-                    <div class="risk-item">玄武+天柱：需警惕"伪贵人"和口舌牵连</div>
-                    <div class="risk-item">地盘乙木克天盘戊土：助力过程多有波折</div>
+                    <div class="opportunity-item rounded-xl border border-gray-200 bg-gray-50 p-4 text-gray-700 text-sm">休门为贵人吉门，贵人运有基础</div>
+                    <div class="risk-item rounded-xl border border-gray-200 bg-gray-50 p-4 text-gray-700 text-sm">玄武+天柱：需警惕"伪贵人"和口舌牵连</div>
+                    <div class="risk-item rounded-xl border border-gray-200 bg-gray-50 p-4 text-gray-700 text-sm">地盘乙木克天盘戊土：助力过程多有波折</div>
                 </div>
                 
                 <h4 class="font-medium text-gray-700 mt-4 mb-2">🤝 贵人建议</h4>
-                <ul class="suggestion-list">
+                <ul class="suggestion-list list-disc list-inside space-y-2 text-sm text-gray-700">
                     <li>明辨贵人：重点观察行事稳重、低调的人</li>
                     <li>关注东北方（艮宫方位）的机缘</li>
                     <li>真诚维护人际关系，尤其是支持过你的人</li>
                     <li>与贵人合作需明确规则，留下凭证</li>
                 </ul>
                 
-                <div class="mt-4 p-3 bg-purple-50 border border-purple-200 rounded-lg">
-                    <p class="text-sm text-purple-800">
+                <div class="mt-4 p-3 bg-gray-50 border border-gray-200 rounded-lg">
+                    <p class="text-sm text-gray-700">
                         <i class="fas fa-yin-yang mr-2"></i>
                         <strong>奇门启示：</strong>贵人如水，可载舟亦可覆舟。真正的贵人或许是那个给你逆耳忠言或在你低谷时予你清净之人。
                     </p>
@@ -616,9 +398,9 @@
         </div>
 
         <!-- Four Harms Analysis -->
-        <div class="section-card fade-in delay-5">
-            <h2 class="section-title flex items-center">
-                <i class="fas fa-exclamation-triangle mr-3 text-red-600"></i>
+        <div class="section-card fade-in delay-5 bg-white border border-gray-200 rounded-2xl p-8 md:p-12 mb-12 shadow-sm">
+            <h2 class="section-title flex items-center text-2xl md:text-3xl font-light mb-8 pb-4 border-b border-gray-100 tracking-wide">
+                <i class="fas fa-exclamation-triangle mr-3 text-gray-700"></i>
                 四害宫位分析
             </h2>
             
@@ -628,7 +410,7 @@
                         <span class="text-xl mr-2">🚪</span>门迫（门克宫）
                     </h3>
                     <p class="text-gray-600">
-                        惊门（金）落乾六宫（金），门宫比和，<span class="highlight-positive">无门迫</span>
+                        惊门（金）落乾六宫（金），门宫比和，<span class="highlight-positive text-gray-700 font-medium">无门迫</span>
                     </p>
                 </div>
                 
@@ -638,7 +420,7 @@
                     </h3>
                     <p class="text-gray-600">
                         巽四宫（辰巳空），伤门+天蓬+六合，
-                        <span class="tag-negative">空亡主合作易落空</span>
+                        <span class="tag-negative inline-flex items-center rounded-full bg-gray-50 text-gray-700 px-2 py-0.5 text-xs font-medium">空亡主合作易落空</span>
                     </p>
                 </div>
                 
@@ -648,7 +430,7 @@
                     </h3>
                     <p class="text-gray-600">
                         乾六宫天盘丙火入墓（辰巳墓库），
-                        <span class="tag-negative">才华受困</span>
+                        <span class="tag-negative inline-flex items-center rounded-full bg-gray-50 text-gray-700 px-2 py-0.5 text-xs font-medium">才华受困</span>
                     </p>
                 </div>
                 
@@ -658,14 +440,14 @@
                     </h3>
                     <p class="text-gray-600">
                         无显著击刑（如戊落震宫、庚落艮宫等），
-                        <span class="tag-positive">无重大击刑</span>
+                        <span class="tag-positive inline-flex items-center rounded-full bg-gray-50 text-gray-700 px-2 py-0.5 text-xs font-medium">无重大击刑</span>
                     </p>
                 </div>
             </div>
             
-            <div class="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-                <h3 class="font-medium text-red-900 mb-2">⚠️ 四害总结</h3>
-                <ul class="text-red-800 space-y-1">
+            <div class="mt-6 p-4 bg-gray-50 border border-gray-200 rounded-lg">
+                <h3 class="font-medium text-gray-800 mb-2">⚠️ 四害总结</h3>
+                <ul class="text-gray-700 space-y-1">
                     <li><strong>空亡：</strong>巽四宫（合作、健康需注意）</li>
                     <li><strong>入墓：</strong>乾六宫（本宫，才华受困）</li>
                 </ul>
@@ -673,9 +455,9 @@
         </div>
 
         <!-- Knowledge Section -->
-        <div class="section-card fade-in delay-6">
-            <h2 class="section-title flex items-center">
-                <i class="fas fa-book mr-3 text-indigo-600"></i>
+        <div class="section-card fade-in delay-6 bg-white border border-gray-200 rounded-2xl p-8 md:p-12 mb-12 shadow-sm">
+            <h2 class="section-title flex items-center text-2xl md:text-3xl font-light mb-8 pb-4 border-b border-gray-100 tracking-wide">
+                <i class="fas fa-book mr-3 text-gray-700"></i>
                 奇门遁甲小知识
             </h2>
             
@@ -722,8 +504,8 @@
         </div>
 
         <!-- Disclaimer -->
-        <div class="section-card fade-in delay-7 bg-gray-50">
-            <h2 class="section-title flex items-center">
+        <div class="section-card fade-in delay-7 bg-gray-50 bg-white border border-gray-200 rounded-2xl p-8 md:p-12 mb-12 shadow-sm">
+            <h2 class="section-title flex items-center text-2xl md:text-3xl font-light mb-8 pb-4 border-b border-gray-100 tracking-wide">
                 <i class="fas fa-info-circle mr-3 text-gray-600"></i>
                 声明说明
             </h2>
@@ -742,13 +524,7 @@
         </div>
 
         <!-- Footer -->
-        <footer class="text-center mt-16 pb-12 text-gray-500 text-sm fade-in delay-8">
-            <div class="space-y-2">
-                <p>报告生成时间：2025年10月</p>
-                <p>撰写人：江太公钓鱼</p>
-                <p>技术支持：奇门遁甲 + AI智能分析</p>
-            </div>
-        </footer>
+        
     </main>
 
     <script>
@@ -786,5 +562,7 @@
             });
         });
     </script>
+    <script src="../../../scripts/main.js"></script>
+    <script src="../../../../js/common.js"></script>
 </body>
 </html>

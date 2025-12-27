@@ -4,97 +4,108 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>蒙卦 - 第四卦 | 周易六十四卦</title>
-    <link rel="stylesheet" href="hexagram.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    
 </head>
-<body>
-    <div class="header">
-        <div class="hexagram-number">第四卦</div>
-        <h1 class="hexagram-title">蒙卦</h1>
-        <div class="hexagram-symbol">
-            <img src="images/04.svg" alt="蒙卦" />
+<body class="bg-white text-black antialiased font-serif">
+    <main class="max-w-3xl mx-auto px-5 pt-28 pb-12">
+
+
+
+
+    <div class="header text-center mb-12 border-b border-black pb-10">
+        <div class="hexagram-number text-xs tracking-widest text-black/60 mb-2">第四卦</div>
+        <h1 class="hexagram-title text-4xl md:text-5xl font-normal mb-4">蒙卦</h1>
+        <div class="hexagram-symbol my-8 flex flex-col items-center gap-2">
+            <img src="images/04.svg" alt="蒙卦"  class="w-32 md:w-40 h-auto" />
         </div>
     </div>
 
-    <div class="section">
-        <h2 class="section-title">卦辞</h2>
-        <div class="original-text">亨。匪我求童蒙，童蒙求我。初筮告，再三渎，渎则不告。利贞。</div>
-        <div class="explanation">
+    <div class="section mb-12">
+        <h2 class="section-title text-2xl font-normal mb-5 pb-2 border-b border-black/20">卦辞</h2>
+        <div class="original-text text-lg leading-relaxed mb-4">亨。匪我求童蒙，童蒙求我。初筮告，再三渎，渎则不告。利贞。</div>
+        <div class="explanation text-base leading-relaxed text-gray-700">
             蒙卦象征着蒙昧，需要启蒙教育。卦辞意为：亨通。不是我求蒙昧的童子，而是童子求我。第一次占卜告知，再三亵渎，亵渎就不告知。有利于坚守正道。蒙卦教导我们教育要遵循自愿原则，学习者主动求教才能获得真知。
         </div>
     </div>
 
-    <div class="section">
-        <h2 class="section-title">彖传</h2>
-        <div class="original-text">蒙，山下有险，险而止，蒙。蒙亨，以亨行时中也。匪我求童蒙，童蒙求我，志应也。初筮告，以刚中也。再三渎，渎则不告，渎蒙也。蒙以养正，圣功也。</div>
-        <div class="explanation">
+    <div class="section mb-12">
+        <h2 class="section-title text-2xl font-normal mb-5 pb-2 border-b border-black/20">彖传</h2>
+        <div class="original-text text-lg leading-relaxed mb-4">蒙，山下有险，险而止，蒙。蒙亨，以亨行时中也。匪我求童蒙，童蒙求我，志应也。初筮告，以刚中也。再三渎，渎则不告，渎蒙也。蒙以养正，圣功也。</div>
+        <div class="explanation text-base leading-relaxed text-gray-700">
             彖传说：蒙卦，山下有危险，遇险而停止，就是蒙。蒙亨通，是因为以亨通行于中道。不是我求蒙昧的童子，而是童子求我，是志向相应。第一次占卜告知，因为有刚中的德行。再三亵渎，亵渎就不告知，是亵渎了蒙昧。蒙昧用来培养正道，是圣人的功业。
         </div>
     </div>
 
-    <div class="section">
-        <h2 class="section-title">象传</h2>
-        <div class="original-text">山下出泉，蒙。君子以果行育德。</div>
-        <div class="explanation">
+    <div class="section mb-12">
+        <h2 class="section-title text-2xl font-normal mb-5 pb-2 border-b border-black/20">象传</h2>
+        <div class="original-text text-lg leading-relaxed mb-4">山下出泉，蒙。君子以果行育德。</div>
+        <div class="explanation text-base leading-relaxed text-gray-700">
             象传说：山下流出泉水，就是蒙卦。君子应当效法这种精神，果断行动培育德行。泉水从山下流出，象征着启蒙的力量，君子要果断地行动来培育自己的德行。
         </div>
     </div>
 
-    <div class="section yaos">
-        <h2 class="section-title">爻辞</h2>
+    <div class="section yaos mb-12 mt-8">
+        <h2 class="section-title text-2xl font-normal mb-5 pb-2 border-b border-black/20">爻辞</h2>
         
-        <div class="yao">
-            <div class="yao-position">初六：发蒙，利用刑人，用说桎梏，以往吝</div>
-            <div class="yao-text">启发蒙昧，利于使用刑法，解脱桎梏，前往有困难。</div>
-            <div class="yao-explanation">
+        <div class="yao mb-6 border-l-2 border-black pl-5">
+            <div class="yao-position font-bold mb-2">初六：发蒙，利用刑人，用说桎梏，以往吝</div>
+            <div class="yao-text mb-2">启发蒙昧，利于使用刑法，解脱桎梏，前往有困难。</div>
+            <div class="yao-explanation text-sm text-gray-600">
                 初六爻位于最下方，象征最初的蒙昧状态。需要用严格的方法来启发，像用刑法来约束一样，最终目的是解脱束缚，但急于行动会有困难。
             </div>
         </div>
 
-        <div class="yao">
-            <div class="yao-position">九二：包蒙，吉。纳妇吉，子克家</div>
-            <div class="yao-text">包容蒙昧，吉祥。接纳妇人吉祥，儿子能够成家。</div>
-            <div class="yao-explanation">
+        <div class="yao mb-6 border-l-2 border-black pl-5">
+            <div class="yao-position font-bold mb-2">九二：包蒙，吉。纳妇吉，子克家</div>
+            <div class="yao-text mb-2">包容蒙昧，吉祥。接纳妇人吉祥，儿子能够成家。</div>
+            <div class="yao-explanation text-sm text-gray-600">
                 九二爻得中得正，具有包容之心。能够包容蒙昧的人是吉祥的，如同接纳妇人、儿子成家一样，都有良好的结果。
             </div>
         </div>
 
-        <div class="yao">
-            <div class="yao-position">六三：勿用取女，见金夫，不有躬，无攸利</div>
-            <div class="yao-text">不要娶这个女子，见到有财势的男子，就不会有自身，没有利益。</div>
-            <div class="yao-explanation">
+        <div class="yao mb-6 border-l-2 border-black pl-5">
+            <div class="yao-position font-bold mb-2">六三：勿用取女，见金夫，不有躬，无攸利</div>
+            <div class="yao-text mb-2">不要娶这个女子，见到有财势的男子，就不会有自身，没有利益。</div>
+            <div class="yao-explanation text-sm text-gray-600">
                 六三爻失位，象征不贞正的女子。不要娶这样的女子，因为她见到有钱有势的男子就会变心，不会有真正的利益。
             </div>
         </div>
 
-        <div class="yao">
-            <div class="yao-position">六四：困蒙，吝</div>
-            <div class="yao-text">困于蒙昧，困难。</div>
-            <div class="yao-explanation">
+        <div class="yao mb-6 border-l-2 border-black pl-5">
+            <div class="yao-position font-bold mb-2">六四：困蒙，吝</div>
+            <div class="yao-text mb-2">困于蒙昧，困难。</div>
+            <div class="yao-explanation text-sm text-gray-600">
                 六四爻位置不当，被蒙昧所困。处于困境中，难以获得知识，需要更多的努力和帮助。
             </div>
         </div>
 
-        <div class="yao">
-            <div class="yao-position">六五：童蒙，吉</div>
-            <div class="yao-text">童子蒙昧，吉祥。</div>
-            <div class="yao-explanation">
+        <div class="yao mb-6 border-l-2 border-black pl-5">
+            <div class="yao-position font-bold mb-2">六五：童蒙，吉</div>
+            <div class="yao-text mb-2">童子蒙昧，吉祥。</div>
+            <div class="yao-explanation text-sm text-gray-600">
                 六五爻居中尊位，虽为童子但心地纯正。童子的蒙昧是吉祥的，因为纯真无邪，容易接受正确的教导。
             </div>
         </div>
 
-        <div class="yao">
-            <div class="yao-position">上九：击蒙，不利为寇，利御寇</div>
-            <div class="yao-text">击打蒙昧，不利于做盗寇，利于抵御盗寇。</div>
-            <div class="yao-explanation">
+        <div class="yao mb-6 border-l-2 border-black pl-5">
+            <div class="yao-position font-bold mb-2">上九：击蒙，不利为寇，利御寇</div>
+            <div class="yao-text mb-2">击打蒙昧，不利于做盗寇，利于抵御盗寇。</div>
+            <div class="yao-explanation text-sm text-gray-600">
                 上九爻位于极点，需要严厉的手段来击打蒙昧。但这种严厉不是为了伤害别人，而是为了保护自己免受伤害。
             </div>
         </div>
     </div>
 
-    <div class="navigation">
-        <a href="03.html" class="nav-link">← 第三卦</a>
-        <a href="05.html" class="nav-link">第五卦 →</a>
+    <div class="navigation mt-12 pt-6 border-t border-black/20 flex flex-col sm:flex-row justify-between gap-4 text-center">
+        <a href="03.html" class="nav-link text-xs text-black/70 transition hover:text-black">← 第三卦</a>
+        <a href="05.html" class="nav-link text-xs text-black/70 transition hover:text-black">第五卦 →</a>
     </div>
-    <script src="hexagram-menu.js"></script>
+    </main>
+
+<script src="hexagram-menu.js"></script>
+    <script src="../scripts/main.js"></script>
+    <script src="../../js/common.js"></script>
 </body>
 </html>

@@ -263,12 +263,12 @@ function displaySizhu(sizhu) {
     // 为每个表头创建一行
     headers.forEach((header, rowIndex) => {
         const row = document.createElement('div');
-        row.className = 'sizhu-row';
+        row.className = 'sizhu-row grid grid-cols-4 gap-2';
         row.style.setProperty('--delay', rowIndex);
         
         sizhu.forEach((column, colIndex) => {
             const cell = document.createElement('div');
-            cell.className = 'sizhu-cell';
+            cell.className = 'sizhu-cell text-center text-xs text-gray-700 bg-white border border-gray-200 rounded-md py-2';
             
             let value = '';
             switch(header) {
@@ -315,13 +315,13 @@ function displayDayun(dayun) {
     
     // 创建表头行（年龄）
     const ageRow = document.createElement('div');
-    ageRow.className = 'dayun-row';
+    ageRow.className = 'dayun-row grid grid-cols-5 md:grid-cols-10 gap-2';
     ageRow.style.setProperty('--delay', 0);
     
     dayun.forEach((item, index) => {
         const cell = document.createElement('div');
-        cell.className = 'dayun-cell';
-        cell.innerHTML = `<strong>${item.age}岁<br>(${item.year}年)</strong>`;
+        cell.className = 'dayun-cell text-center text-[11px] text-gray-700 bg-white border border-gray-200 rounded-md py-2 font-semibold';
+        cell.innerHTML = `${item.age}岁<br>(${item.year}年)`;
         ageRow.appendChild(cell);
     });
     grid.appendChild(ageRow);
@@ -331,12 +331,12 @@ function displayDayun(dayun) {
     
     rows.forEach((rowType, rowIndex) => {
         const row = document.createElement('div');
-        row.className = 'dayun-row';
+        row.className = 'dayun-row grid grid-cols-5 md:grid-cols-10 gap-2';
         row.style.setProperty('--delay', rowIndex + 1);
         
         dayun.forEach((item, colIndex) => {
             const cell = document.createElement('div');
-            cell.className = 'dayun-cell';
+            cell.className = 'dayun-cell text-center text-[11px] text-gray-700 bg-white border border-gray-200 rounded-md py-2';
             
             let value = '';
             switch(rowType) {
@@ -377,13 +377,13 @@ function displayLiunian(liunian) {
     
     // 创建表头行（年龄）
     const ageRow = document.createElement('div');
-    ageRow.className = 'liunian-row';
+    ageRow.className = 'liunian-row grid grid-cols-5 md:grid-cols-10 gap-2';
     ageRow.style.setProperty('--delay', 0);
     
     liunian.forEach((item, index) => {
         const cell = document.createElement('div');
-        cell.className = 'liunian-cell';
-        cell.innerHTML = `<strong>${item.age}岁<br>(${item.year}年)</strong>`;
+        cell.className = 'liunian-cell text-center text-[11px] text-gray-700 bg-white border border-gray-200 rounded-md py-2 font-semibold';
+        cell.innerHTML = `${item.age}岁<br>(${item.year}年)`;
         ageRow.appendChild(cell);
     });
     grid.appendChild(ageRow);
@@ -393,12 +393,12 @@ function displayLiunian(liunian) {
     
     rows.forEach((rowType, rowIndex) => {
         const row = document.createElement('div');
-        row.className = 'liunian-row';
+        row.className = 'liunian-row grid grid-cols-5 md:grid-cols-10 gap-2';
         row.style.setProperty('--delay', rowIndex + 1);
         
         liunian.forEach((item, colIndex) => {
             const cell = document.createElement('div');
-            cell.className = 'liunian-cell';
+            cell.className = 'liunian-cell text-center text-[11px] text-gray-700 bg-white border border-gray-200 rounded-md py-2';
             
             let value = '';
             switch(rowType) {
@@ -435,27 +435,46 @@ function displayLiunian(liunian) {
 
 function applyElementStyle(element) {
     const sections = ['sizhuSection', 'dayunSection', 'liunianSection'];
+    const themeMap = {
+        wood: { section: ['border-black', 'bg-gray-50'], title: ['text-gray-800'] },
+        fire: { section: ['border-black', 'bg-gray-50'], title: ['text-gray-800'] },
+        earth: { section: ['border-black', 'bg-gray-50'], title: ['text-gray-800'] },
+        metal: { section: ['border-black', 'bg-gray-50'], title: ['text-gray-800'] },
+        water: { section: ['border-black', 'bg-gray-50'], title: ['text-gray-800'] }
+    };
+    const allSectionThemes = [
+        'border-black', 'bg-gray-50'
+    ];
+    const allTitleThemes = [
+        'text-gray-800'
+    ];
     
-    // 移除所有五行样式
     sections.forEach(sectionId => {
         const section = document.getElementById(sectionId);
-        if (section) {
-            section.className = section.className.replace(/element-\w+/g, '');
+        if (!section) return;
+        section.classList.remove(...allSectionThemes);
+        const title = section.querySelector('.section-title');
+        if (title) {
+            title.classList.remove(...allTitleThemes);
         }
     });
     
-    // 应用新的五行样式
+    const theme = themeMap[element];
+    if (!theme) return;
     sections.forEach(sectionId => {
         const section = document.getElementById(sectionId);
-        if (section) {
-            section.classList.add(elementColors[element]);
+        if (!section) return;
+        section.classList.add(...theme.section);
+        const title = section.querySelector('.section-title');
+        if (title) {
+            title.classList.add(...theme.title);
         }
     });
 }
 
 function addResultAnimations() {
     // 为结果项添加交互动画
-    const interactiveElements = document.querySelectorAll('.sizhu-column, .dayun-item, .liunian-item');
+    const interactiveElements = document.querySelectorAll('.sizhu-cell, .dayun-cell, .liunian-cell');
     
     interactiveElements.forEach(element => {
         element.addEventListener('mouseenter', function() {
@@ -469,14 +488,12 @@ function addResultAnimations() {
 
     // 添加脉冲动画到当前年份
     const currentYear = new Date().getFullYear();
-    const liunianItems = document.querySelectorAll('.liunian-item');
+    const liunianCells = document.querySelectorAll('.liunian-row:first-child .liunian-cell');
     
-    liunianItems.forEach(item => {
-        const yearText = item.querySelector('h5').textContent;
-        if (yearText.includes(currentYear.toString())) {
-            item.classList.add('pulse-on-hover');
-            item.style.border = '2px solid #000';
-            item.style.boxShadow = '0 0 20px rgba(0, 0, 0, 0.2)';
+    liunianCells.forEach(cell => {
+        if (cell.textContent.includes(currentYear.toString())) {
+            cell.classList.add('animate-pulse', 'border-2', 'border-black');
+            cell.style.boxShadow = '0 0 20px rgba(0, 0, 0, 0.2)';
         }
     });
 }

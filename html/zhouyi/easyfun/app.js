@@ -32,7 +32,9 @@ createApp({
         });
 
         const isFinished = computed(() => currentIndex.value >= quizQueue.value.length - 1);
-        const feedbackClass = computed(() => isCorrect.value ? 'success' : 'error');
+        const feedbackClass = computed(() => isCorrect.value
+            ? 'border-emerald-400/40 bg-emerald-500/10 text-emerald-100'
+            : 'border-rose-400/40 bg-rose-500/10 text-rose-100');
         
         const totalProgress = computed(() => {
             // 计算所有题库总共做过多少题
@@ -181,9 +183,9 @@ createApp({
 
         const getOptionClass = (opt) => {
             if (!hasAnswered.value) return '';
-            if (opt === currentQuestion.value.answer) return 'correct'; // 显示正确答案
-            if (opt === selectedOption.value && !isCorrect.value) return 'wrong'; // 显示用户选错的
-            return 'disabled'; // 其他选项
+            if (opt === currentQuestion.value.answer) return 'border-emerald-400 bg-emerald-500/20 text-emerald-100';
+            if (opt === selectedOption.value && !isCorrect.value) return 'border-rose-400 bg-rose-500/20 text-rose-100';
+            return 'opacity-50';
         };
 
         const nextQuestion = () => {

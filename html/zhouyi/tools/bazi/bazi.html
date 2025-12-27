@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>八字排盘系统 | Bazi Chart System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-white text-black antialiased">
+    <main class="pt-28">
+
+
+
+
+    <div class="bazi-container max-w-6xl mx-auto px-6 py-12">
+        <!-- 输入表单 -->
+        <div class="form-section bg-gray-50 border border-gray-200 rounded-xl p-8 mb-12 shadow-sm">
+            <h2 class="text-2xl font-bold mb-6 text-center">八字排盘信息输入</h2>
+            <form id="baziForm">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="form-label block text-xs uppercase tracking-widest text-gray-600 mb-2">姓名</label>
+                        <input type="text" id="name" class="form-input w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-800 transition focus:border-black focus:outline-none focus:ring-2 focus:ring-black/20" required>
+                    </div>
+                    <div>
+                        <label class="form-label block text-xs uppercase tracking-widest text-gray-600 mb-2">性别</label>
+                        <select id="gender" class="form-input w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-800 transition focus:border-black focus:outline-none focus:ring-2 focus:ring-black/20" required>
+                            <option value="">请选择</option>
+                            <option value="男">男</option>
+                            <option value="女">女</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label block text-xs uppercase tracking-widest text-gray-600 mb-2">出生地</label>
+                        <input type="text" id="birthplace" class="form-input w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-800 transition focus:border-black focus:outline-none focus:ring-2 focus:ring-black/20" required>
+                    </div>
+                    <div>
+                        <label class="form-label block text-xs uppercase tracking-widest text-gray-600 mb-2">出生日期</label>
+                        <input type="datetime-local" id="birthdate" class="form-input w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-800 transition focus:border-black focus:outline-none focus:ring-2 focus:ring-black/20" required>
+                    </div>
+                </div>
+                <div class="text-center mt-6">
+                    <button type="submit" class="btn-primary inline-flex items-center justify-center rounded-full bg-white border border-black px-6 py-2 text-sm font-semibold uppercase tracking-widest text-black transition hover:bg-gray-100">生成八字排盘</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- 基本信息显示 -->
+        <div id="basicInfo" class="info-grid hidden grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="info-item rounded-lg border border-gray-200 bg-white p-4 text-sm">
+                <h4 class="text-gray-500 text-xs uppercase tracking-widest mb-2">姓名</h4>
+                <p id="displayName"></p>
+            </div>
+            <div class="info-item rounded-lg border border-gray-200 bg-white p-4 text-sm">
+                <h4 class="text-gray-500 text-xs uppercase tracking-widest mb-2">性别</h4>
+                <p id="displayGender"></p>
+            </div>
+            <div class="info-item rounded-lg border border-gray-200 bg-white p-4 text-sm">
+                <h4 class="text-gray-500 text-xs uppercase tracking-widest mb-2">出生地</h4>
+                <p id="displayBirthplace"></p>
+            </div>
+            <div class="info-item rounded-lg border border-gray-200 bg-white p-4 text-sm">
+                <h4 class="text-gray-500 text-xs uppercase tracking-widest mb-2">出生时间</h4>
+                <p id="displayBirthdate"></p>
+            </div>
+        </div>
+
+        <!-- 四柱信息 -->
+        <div id="sizhuSection" class="bazi-chart hidden border-2 border-gray-200 bg-white rounded-xl p-8 mb-8 shadow-sm">
+            <div class="chart-section">
+                <h3 class="section-title text-xl font-semibold text-center mb-6 border-b border-black pb-2">四柱信息</h3>
+                <div class="sizhu-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" id="sizhuGrid">
+                    <!-- 四柱信息将通过JavaScript动态生成 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 大运信息 -->
+        <div id="dayunSection" class="bazi-chart hidden border-2 border-gray-200 bg-white rounded-xl p-8 mb-8 shadow-sm">
+            <div class="chart-section">
+                <h3 class="section-title text-xl font-semibold text-center mb-6 border-b border-black pb-2">大运信息</h3>
+                <div class="dayun-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4" id="dayunGrid">
+                    <!-- 大运信息将通过JavaScript动态生成 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 流年信息 -->
+        <div id="liunianSection" class="bazi-chart hidden border-2 border-gray-200 bg-white rounded-xl p-8 mb-8 shadow-sm">
+            <div class="chart-section">
+                <h3 class="section-title text-xl font-semibold text-center mb-6 border-b border-black pb-2">流年信息</h3>
+                <div class="liunian-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4" id="liunianGrid">
+                    <!-- 流年信息将通过JavaScript动态生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>
+
+<script src="bazi.js"></script>
+    <script src="../scripts/main.js"></script>
+    <script src="../../js/common.js"></script>
+</body>
+</html>

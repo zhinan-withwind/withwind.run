@@ -4,22 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>六爻起卦界面</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/zh.js"></script>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
-        }
-    </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+<body class="bg-white min-h-screen p-4 text-gray-900">
+    <main class="pt-28 flex items-center justify-center">
 
-    <div class="max-w-md-640 p-6 bg-white rounded-2xl shadow-xl space-y-8">
+
+
+
+
+    <div class="max-w-lg w-full p-6 bg-white rounded-2xl shadow-xl space-y-8">
         <!-- 标题 -->
         <div class="text-center">
             <h1 class="text-2xl font-bold text-gray-800">六爻起卦</h1>
@@ -29,7 +27,7 @@
         <div class="space-y-4">
             <div class="flex items-center justify-between text-lg font-medium text-gray-700">
                 <span class="mr-2">起卦时间 (公历)</span>
-                <label for="datetimePicker"></label><input type="text" id="datetimePicker" class="picker-select w-40 text-right">
+                <label for="datetimePicker"></label><input type="text" id="datetimePicker" class="picker-select w-40 text-right rounded-md border border-gray-300 px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-black/20">
             </div>
         </div>
 
@@ -43,7 +41,7 @@
 
         <!-- 起卦按钮 -->
         <div class="pt-4">
-            <button id="startDivination" class="w-full py-3 bg-indigo-600 text-white font-bold rounded-xl shadow-lg hover:bg-indigo-700 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-indigo-500/50">
+            <button id="startDivination" class="w-full py-3 bg-white text-black border border-black font-bold rounded-xl shadow-lg hover:bg-gray-100 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-black/20">
                 起卦
             </button>
         </div>
@@ -53,9 +51,10 @@
     <div id="messageBox" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden items-center justify-center transition-opacity duration-300">
         <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm mx-auto text-center">
             <p id="messageText" class="text-lg font-semibold text-gray-800 mb-4"></p>
-            <button id="closeButton" class="bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600">确定</button>
+            <button id="closeButton" class="bg-white text-black border border-black px-4 py-2 rounded-lg hover:bg-gray-100">确定</button>
         </div>
     </div>
+    </main>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const GUA_YAO_OPTIONS = [
@@ -78,11 +77,11 @@
             const yaos = ['第一次摇卦', '第二次摇卦', '第三次摇卦', '第四次摇卦', '第五次摇卦', '第六次摇卦'];
             yaos.forEach((yaoName, index) => {
                 const yaoDiv = document.createElement('div');
-                yaoDiv.className = 'flex items-center justify-between';
+                yaoDiv.className = 'flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3';
                 yaoDiv.innerHTML = `
-                    <label class="text-gray-600 p-4">${yaoName}</label>
-                    <div class="relative w-80 p-4">
-                        <select id="yao-${index}" class="ppearance-none cursor-pointer text-gray-500">
+                    <label class="text-gray-600 text-sm font-medium">${yaoName}</label>
+                    <div class="relative w-72">
+                        <select id="yao-${index}" class="appearance-none w-full cursor-pointer rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-black/20">
                             ${GUA_YAO_OPTIONS.map(option => `<option value="${option.value}">${option.text}</option>`).join('')}
                         </select>
                     </div>
@@ -143,5 +142,7 @@
             });
         });
     </script>
+    <script src="../../../scripts/main.js"></script>
+    <script src="../../../../js/common.js"></script>
 </body>
 </html>

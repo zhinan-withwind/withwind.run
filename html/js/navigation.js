@@ -2,12 +2,18 @@
 class Navigation {
     constructor() {
         this.currentLang = 'zh';
+        this.langActiveClasses = ['bg-black', 'text-white', 'font-medium'];
+        this.langInactiveClasses = ['text-gray-700', 'hover:bg-gray-100'];
         this.init();
     }
 
     init() {
         this.checkUrlLanguage();
         this.bindEvents();
+        this.updateLanguageUI();
+        if (this.currentLang !== 'zh') {
+            this.updateContent();
+        }
         this.updateNavigationLinks(this.currentLang);
     }
 
@@ -16,10 +22,8 @@ class Navigation {
         const langParam = urlParams.get('lang');
         if (langParam && (langParam === 'en' || langParam === 'zh')) {
             this.currentLang = langParam;
-            this.updateLanguageUI();
-            this.updateContent();
-            document.documentElement.lang = this.currentLang === 'zh' ? 'zh-CN' : 'en-US';
         }
+        document.documentElement.lang = this.currentLang === 'zh' ? 'zh-CN' : 'en-US';
     }
 
     bindEvents() {
@@ -58,8 +62,14 @@ class Navigation {
     }
 
     updateLanguageUI() {
-        document.querySelectorAll('.lang-switch span, .lang-switch-mobile span').forEach(s => s.classList.remove('active'));
-        document.querySelectorAll(`[data-lang="${this.currentLang}"]`).forEach(s => s.classList.add('active'));
+        document.querySelectorAll('.lang-switch span, .lang-switch-mobile span').forEach(span => {
+            span.classList.remove(...this.langActiveClasses);
+            span.classList.add(...this.langInactiveClasses);
+        });
+        document.querySelectorAll(`[data-lang="${this.currentLang}"]`).forEach(span => {
+            span.classList.remove(...this.langInactiveClasses);
+            span.classList.add(...this.langActiveClasses);
+        });
     }
 
     updateContent() {
