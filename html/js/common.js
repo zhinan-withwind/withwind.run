@@ -19,14 +19,14 @@ class Common {
                 <a href="${baseUrl}zhouyi/index.html" class="transition hover:text-black">周易</a>
                 <a href="${baseUrl}zhouyi/knowledge/index.html" class="transition hover:text-black">知识</a>
                 <a href="${baseUrl}zhouyi/tools/index.html" class="transition hover:text-black">工具</a>
-                <a href="${baseUrl}zhouyi/easyfun/index.html" class="transition hover:text-black">测试</a>
+                <a href="${baseUrl}zhouyi/app/index.html" class="transition hover:text-black">应用</a>
             </div>` : '';
             var zhouyiMobileLinks = isZhouyi ? `
         <div class="text-xs uppercase tracking-widest text-gray-400">周易导航</div>
         <a href="${baseUrl}zhouyi/index.html" class="text-2xl tracking-wide transition hover:text-black mobile-nav-link">周易</a>
         <a href="${baseUrl}zhouyi/knowledge/index.html" class="text-2xl tracking-wide transition hover:text-black mobile-nav-link">知识</a>
         <a href="${baseUrl}zhouyi/tools/index.html" class="text-2xl tracking-wide transition hover:text-black mobile-nav-link">工具</a>
-        <a href="${baseUrl}zhouyi/easyfun/index.html" class="text-2xl tracking-wide transition hover:text-black mobile-nav-link">测试</a>` : '';
+        <a href="${baseUrl}zhouyi/app/index.html" class="text-2xl tracking-wide transition hover:text-black mobile-nav-link">应用</a>` : '';
             
             // Header HTML content
             const headerHtml = `

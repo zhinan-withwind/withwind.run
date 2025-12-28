@@ -33,8 +33,8 @@ createApp({
 
         const isFinished = computed(() => currentIndex.value >= quizQueue.value.length - 1);
         const feedbackClass = computed(() => isCorrect.value
-            ? 'border-emerald-400/40 bg-emerald-500/10 text-emerald-100'
-            : 'border-rose-400/40 bg-rose-500/10 text-rose-100');
+            ? 'border-gray-300 bg-gray-50 text-gray-900'
+            : 'border-gray-300 bg-gray-100 text-gray-900');
         
         const totalProgress = computed(() => {
             // 计算所有题库总共做过多少题
@@ -183,8 +183,8 @@ createApp({
 
         const getOptionClass = (opt) => {
             if (!hasAnswered.value) return '';
-            if (opt === currentQuestion.value.answer) return 'border-emerald-400 bg-emerald-500/20 text-emerald-100';
-            if (opt === selectedOption.value && !isCorrect.value) return 'border-rose-400 bg-rose-500/20 text-rose-100';
+            if (opt === currentQuestion.value.answer) return 'border-black bg-gray-100 text-gray-900';
+            if (opt === selectedOption.value && !isCorrect.value) return 'border-gray-400 bg-gray-100 text-gray-600';
             return 'opacity-50';
         };
 

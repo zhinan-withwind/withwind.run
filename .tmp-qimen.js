@@ -1,176 +1,3 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>奇门起卦工具 | 随风</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body class="bg-white text-gray-900">
-    <main class="pt-28">
-
-
-
-
-    <!-- Header and Navigation will be loaded by common.js -->
-    
-    <!-- Main Content -->
-    <section class="min-h-screen pt-8 pb-12 px-8">
-        <div class="max-w-4xl mx-auto">
-            <!-- Title -->
-            <div class="text-center mb-8 fade-in">
-                <p class="text-xs uppercase tracking-[0.3em] text-gray-500">Qimen</p>
-                <h1 class="text-3xl md:text-4xl font-light mt-2">奇门遁甲</h1>
-                <p class="text-gray-500 text-sm mt-2">起卦排盘与解读</p>
-            </div>
-            
-            <!-- Form Section -->
-            <div class="bg-white border border-gray-200 rounded-3xl shadow-sm mb-8 fade-in">
-                <div class="bg-gray-100 text-gray-900 rounded-t-3xl px-6 py-4 flex items-center justify-between">
-                    <span class="font-medium tracking-wide">奇门起盘</span>
-                    <span class="text-xs opacity-90">起卦原则</span>
-                </div>
-                <form id="divineForm" class="divide-y divide-gray-100" novalidate>
-                    <!-- Name Input -->
-                    <div class="px-6 py-4 flex items-center justify-between gap-4">
-                        <label for="name" class="text-sm text-gray-700">姓名 <span class="text-gray-400">（选填）</span></label>
-                        <input type="text" id="name" name="name"
-                               class="w-56 text-right text-sm text-gray-900 placeholder-gray-400 focus:outline-none"
-                               placeholder="请输入">
-                    </div>
-                    
-                    <!-- Sex Selection -->
-                    <div class="px-6 py-4 flex items-center justify-between gap-4">
-                        <span class="text-sm text-gray-700">性别 <span class="text-gray-400">（必填）</span></span>
-                        <div class="flex items-center gap-2">
-                            <button type="button" class="sex-pill px-4 py-1.5 rounded-full border border-black bg-black text-white text-xs" data-value="1">男</button>
-                            <button type="button" class="sex-pill px-4 py-1.5 rounded-full border border-gray-200 text-gray-600 text-xs" data-value="0">女</button>
-                        </div>
-                        <select id="sex" name="sex" required class="sr-only" aria-hidden="true">
-                            <option value="">请选择性别</option>
-                            <option value="1">男</option>
-                            <option value="0">女</option>
-                        </select>
-                    </div>
-                    
-                    <!-- Birthday DateTime -->
-                    <div class="px-6 py-4 space-y-3">
-                        <div class="flex items-center justify-between">
-                            <label for="birthday" class="text-sm text-gray-700">出生时间 <span class="text-gray-400">（必填）</span></label>
-                        </div>
-                        <input type="datetime-local" id="birthday" name="birthday" required
-                               class="w-full text-sm text-gray-900 border border-gray-200 rounded-xl px-4 py-2 focus:ring-1 focus:ring-black focus:border-black outline-none transition-colors">
-                    </div>
-
-                    <!-- Optional Fields -->
-                    <details class="px-6 py-4">
-                        <summary class="cursor-pointer text-sm text-gray-600">更多选项</summary>
-                        <div class="mt-4 space-y-4">
-                            <!-- Region Selection -->
-                            <div>
-                                <label for="region-selector" class="block text-sm text-gray-700 mb-2">地区 <span class="text-gray-400">（选填）</span></label>
-                                <div id="region-selector" class="space-y-4">
-                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                        <div>
-                                            <select id="province-select" 
-                                                    class="w-full px-4 py-2 border border-gray-300 focus:ring-1 focus:ring-black focus:border-black outline-none transition-colors">
-                                                <option value="">请选择省份</option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <select id="city-select" 
-                                                    class="w-full px-4 py-2 border border-gray-300 focus:ring-1 focus:ring-black focus:border-black outline-none transition-colors" 
-                                                    disabled>
-                                                <option value="">请选择城市</option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <select id="district-select" 
-                                                    class="w-full px-4 py-2 border border-gray-300 focus:ring-1 focus:ring-black focus:border-black outline-none transition-colors" 
-                                                    disabled>
-                                                <option value="">请选择区县</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div id="selected-region" class="hidden">
-                                        <span class="text-sm text-gray-600">已选择：</span>
-                                        <span id="region-display" class="text-sm font-medium text-gray-800"></span>
-                                    </div>
-                                </div>
-                                <input type="hidden" id="region" name="region">
-                                <input type="hidden" id="region-code" name="regionCode">
-                            </div>
-                        </div>
-                    </details>
-                    
-                    <!-- Submit Button -->
-                    <div class="px-6 py-6">
-                        <button id="startDivination" type="submit" 
-                                class="w-full rounded-full bg-black text-white py-3 px-6 hover:bg-gray-800 transition-colors duration-200 font-medium">
-                            起盘
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Loading State -->
-            <div id="loadingSection" class="hidden text-center py-12">
-                <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-black mb-4"></div>
-                <p class="text-gray-600">正在生成奇门命盘，请稍候...</p>
-            </div>
-            
-            <!-- Results Section -->
-            <div id="resultsSection" class="hidden space-y-8 fade-in">
-                <!-- Chart Image -->
-                <div id="chartSection" class="hidden">
-                    <h2 class="text-2xl font-light mb-6 text-center">奇门命盘图</h2>
-                    <div class="text-center">
-                        <img id="chartImage" src="" alt="奇门命盘图" 
-                             class="max-w-full mx-auto border border-gray-200 rounded-lg shadow-sm">
-                    </div>
-                </div>
-                
-                <!-- Analysis Data -->
-                <div id="analysisSection" class="hidden">
-                    <h2 class="text-4xl md:text-5xl font-light mb-12 text-center text-gray-800">命盘分析</h2>
-                    
-                    <!-- Basic Info Template -->
-                    <div id="basicInfoTemplate" class="hidden bg-white border border-gray-200 rounded-lg p-8 mb-8 fade-in">
-                        <h3 class="text-2xl font-light mb-6 text-gray-800">
-                            <span id="personName"></span>（<span id="title"></span>）奇门遁甲命盘排盘信息：
-                        </h3>
-                        <div class="space-y-4 text-gray-700 leading-relaxed font-light">
-                            <div class="text-lg font-light">1、基本信息：</div>
-                            <div class="ml-6">生日：<span id="datetimeInfo" class="font-light"></span></div>
-                            <div class="ml-6">干支：<span id="ganZhiInfo" class="font-light"></span></div>
-                            <div class="ml-6">选局：<span id="pattern" class="font-light"></span></div>
-                            <div class="ml-6">旬首：<span id="xunHead" class="font-light"></span></div>
-                            <div class="ml-6">值符：<span id="dutyStar" class="font-light"></span></div>
-                            <div class="ml-6">值使：<span id="dutyDoor" class="font-light"></span></div>
-                            <div class="ml-6">局势：<span id="layout" class="font-light">转盘-拆补-寄坤二宫</span></div>
-                            <div class="ml-6">上一个节气：<br/><span id="lastSolarTerm" class="font-light"></span></div>
-                            <div class="ml-6">下一个节气：<br/><span id="nextSolarTerm" class="font-light"></span></div>
-                        </div>
-                    </div>
-                    
-                    <!-- Palace Info Template -->
-                    <div id="palaceInfoTemplate" class="hidden bg-white border border-gray-200 rounded-lg p-8 fade-in">
-                        <h3 class="text-2xl font-light mb-6 text-gray-800">2、八宫信息：</h3>
-                        <div id="palaceList" class="space-y-3 text-gray-700 leading-relaxed"></div>
-                    </div>
-                    
-                    <!-- No Data Message -->
-                    <div id="noDataMessage" class="hidden bg-white border border-gray-200 rounded-lg p-12 text-center fade-in">
-                        <p class="text-gray-500 text-lg">暂无分析数据，请稍后重试</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    
-    <script>
         // Region data and selection functionality
         let regionData = [];
         let selectedProvince = null;
@@ -358,8 +185,8 @@
             };
             
             // Validate required fields are filled
-            if (!formData.birthday || !formData.sex) {
-                alert('请填写所有必填字段（生日、性别）');
+            if (!formData.name || !formData.birthday || !formData.sex) {
+                alert('请填写所有必填字段（姓名、生日、性别）');
                 return;
             }
             
@@ -370,11 +197,6 @@
             try {
                 // Convert birthday to proper format for API
                 const birthdayDate = new Date(formData.birthday);
-                if (Number.isNaN(birthdayDate.getTime())) {
-                    alert('生日格式无效，请重新选择日期和时间');
-                    document.getElementById('loadingSection').classList.add('hidden');
-                    return;
-                }
                 
                 // Format for Chart API: YYYY-MM-DDTHH:mm
                 const chartTimeFormat = birthdayDate.toISOString().slice(0, 16);
@@ -573,29 +395,10 @@
             console.log('✅ 数据解析完成并显示');
         }
         
-            const sexButtons = document.querySelectorAll('.sex-pill');
-            const sexInput = document.getElementById('sex');
-            sexButtons.forEach((button) => {
-                button.addEventListener('click', () => {
-                    sexButtons.forEach((btn) => {
-                        btn.classList.remove('bg-black', 'text-white', 'border-black');
-                        btn.classList.add('border-gray-200', 'text-gray-600');
-                    });
-                    button.classList.add('bg-black', 'text-white', 'border-black');
-                    button.classList.remove('border-gray-200', 'text-gray-600');
-                    sexInput.value = button.dataset.value;
-                });
-            });
-
-            // Initialize on page load
-            document.addEventListener('DOMContentLoaded', function() {
-                // Ensure default sex matches UI
-                if (sexInput && !sexInput.value) {
-                    sexInput.value = '1';
-                }
-
-                // Load region data
-                loadRegionData();
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load region data
+            loadRegionData();
             
             // Initialize fade-in animations
             const observerOptions = {
@@ -615,10 +418,3 @@
                 observer.observe(el);
             });
         });
-    </script>
-    </main>
-
-<script src="../../../scripts/main.js"></script>
-    <script src="../../../../js/common.js"></script>
-</body>
-</html>
