@@ -350,11 +350,11 @@
             e.preventDefault();
             
             const formData = {
-                name: document.getElementById('name').value,
+                name: document.getElementById('name').value.trim(),
                 birthday: document.getElementById('birthday').value,
                 sex: document.getElementById('sex').value,
-                region: document.getElementById('region').value,
-                regionCode: document.getElementById('region-code').value,
+                region: document.getElementById('region').value.trim(),
+                regionCode: document.getElementById('region-code').value.trim(),
             };
             
             // Validate required fields are filled
@@ -398,15 +398,25 @@
                 
                 let chartUrl, analysisUrl;
                 
-                if (isLocalDev) {
-                    // Use local proxy in development
-                    chartUrl = `/api/zhouyi/qimen/divine/chart?divineTime=${encodeURIComponent(analysisTimeFormat)}&region=${encodeURIComponent(formData.regionCode)}`;
-                    analysisUrl = `/api/zhouyi/qimen/analyzeForJiang?name=${encodeURIComponent(formData.name)}&birthday=${encodeURIComponent(analysisTimeFormat)}&region=${encodeURIComponent(formData.regionCode)}&sex=${encodeURIComponent(formData.sex)}`;
-                } else {
-                    // Use direct API in production
-                    chartUrl = `https://app.withwind.run/zhouyi/qimen/divine/chart?divineTime=${encodeURIComponent(analysisTimeFormat)}&region=${encodeURIComponent(formData.regionCode)}`;
-                    analysisUrl = `https://app.withwind.run/zhouyi/qimen/analyzeForJiang?name=${encodeURIComponent(formData.name)}&birthday=${encodeURIComponent(analysisTimeFormat)}&region=${encodeURIComponent(formData.regionCode)}&sex=${encodeURIComponent(formData.sex)}`;
+                const baseUrl = isLocalDev ? '' : 'https://app.withwind.run';
+                const chartParams = new URLSearchParams();
+                chartParams.set('divineTime', analysisTimeFormat);
+                if (formData.regionCode) {
+                    chartParams.set('region', formData.regionCode);
                 }
+
+                const analysisParams = new URLSearchParams();
+                analysisParams.set('birthday', analysisTimeFormat);
+                analysisParams.set('sex', formData.sex);
+                if (formData.name) {
+                    analysisParams.set('name', formData.name);
+                }
+                if (formData.regionCode) {
+                    analysisParams.set('region', formData.regionCode);
+                }
+
+                chartUrl = `${baseUrl}/api/zhouyi/qimen/divine/chart?${chartParams.toString()}`;
+                analysisUrl = `${baseUrl}/api/zhouyi/qimen/analyzeForJiang?${analysisParams.toString()}`;
                 
                 console.log('🔗 Chart URL:', chartUrl);
                 console.log('🔗 Analysis URL:', analysisUrl);
