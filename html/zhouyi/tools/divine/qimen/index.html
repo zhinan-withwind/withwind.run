@@ -392,13 +392,9 @@
                 console.log('🕐 Chart Time Format:', chartTimeFormat);
                 console.log('🕐 Analysis Time Format:', analysisTimeFormat);
                 
-                // Determine API URLs based on environment
-                const isLocalDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-                console.log('🌐 Environment:', isLocalDev ? 'Local Development' : 'Production');
-                
+                // Build API URLs
                 let chartUrl, analysisUrl;
-                
-                const baseUrl = isLocalDev ? '' : 'https://app.withwind.run';
+                const baseUrl = 'https://app.withwind.run';
                 const chartParams = new URLSearchParams();
                 chartParams.set('divineTime', analysisTimeFormat);
                 if (formData.regionCode) {
@@ -415,8 +411,8 @@
                     analysisParams.set('region', formData.regionCode);
                 }
 
-                chartUrl = `${baseUrl}/api/zhouyi/qimen/divine/chart?${chartParams.toString()}`;
-                analysisUrl = `${baseUrl}/api/zhouyi/qimen/analyzeForJiang?${analysisParams.toString()}`;
+                chartUrl = `${baseUrl}/zhouyi/qimen/divine/chart?${chartParams.toString()}`;
+                analysisUrl = `${baseUrl}/zhouyi/qimen/analyzeForJiang?${analysisParams.toString()}`;
                 
                 console.log('🔗 Chart URL:', chartUrl);
                 console.log('🔗 Analysis URL:', analysisUrl);
