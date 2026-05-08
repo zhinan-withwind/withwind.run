@@ -1,0 +1,34 @@
+[
+  {
+    "id": "fate-chart",
+    "name": "八字排盘",
+    "description": "生成八字四柱、大运流年和基础命盘",
+    "href": "../chart/",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "fate-analysis",
+    "name": "命局分析",
+    "description": "分析五行能量、十神分布、命局格局和用神忌神",
+    "href": "../analysis/",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "fate-character",
+    "name": "性格画像",
+    "description": "基于日主、十神和五行偏向生成命理性格画像",
+    "href": "../character/",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "fate-fortune",
+    "name": "运势走势",
+    "description": "展示大运、流年、流月和流日的运势走势",
+    "href": "../fortune/",
+    "enabled": true,
+    "order": 4
+  }
+]
