@@ -30,5 +30,69 @@
     "href": "fate/fortune/",
     "enabled": true,
     "order": 4
+  },
+  {
+    "id": "fate-study",
+    "name": "八字学业",
+    "description": "分析学习能力、考试节奏、专业倾向和阶段性学业机会",
+    "href": "fate/study/",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "fate-career",
+    "name": "八字事业",
+    "description": "分析职业方向、事业阶段、协作模式和发展机会",
+    "href": "fate/career/",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "fate-marriage",
+    "name": "八字婚恋",
+    "description": "分析亲密关系、婚恋节奏、伴侣倾向和相处模式",
+    "href": "fate/marriage/",
+    "enabled": true,
+    "order": 7
+  },
+  {
+    "id": "fate-wealth",
+    "name": "八字财富",
+    "description": "分析财运结构、收入方式、资产倾向和风险偏好",
+    "href": "fate/wealth/",
+    "enabled": true,
+    "order": 8
+  },
+  {
+    "id": "fate-health",
+    "name": "八字健康",
+    "description": "分析五行偏性、体质倾向、压力来源和养护节奏",
+    "href": "fate/health/",
+    "enabled": true,
+    "order": 9
+  },
+  {
+    "id": "fate-compatibility",
+    "name": "八字合婚",
+    "description": "分析双方命盘互补、关系张力、婚配结构和长期相处",
+    "href": "fate/compatibility/",
+    "enabled": true,
+    "order": 10
+  },
+  {
+    "id": "fate-naming",
+    "name": "八字取名",
+    "description": "辅助分析命局喜忌、五行补益、字义音形和取名方向",
+    "href": "fate/naming/",
+    "enabled": true,
+    "order": 11
+  },
+  {
+    "id": "fate-auspicious",
+    "name": "八字择吉",
+    "description": "辅助分析用事类型、命局配合、时间节律和吉日选择",
+    "href": "fate/auspicious/",
+    "enabled": true,
+    "order": 12
   }
 ]
