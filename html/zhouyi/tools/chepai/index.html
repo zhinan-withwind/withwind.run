@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>车牌选号</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f1e8;
+      --ink: #1f1d19;
+      --muted: #756f65;
+      --line: #ded4c4;
+      --paper: #fffaf0;
+      --paper-2: #ebe2d3;
+      --good: #1f7a4d;
+      --warn: #a76519;
+      --bad: #a33a2f;
+      --black: #16130f;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        linear-gradient(90deg, rgba(31, 29, 25, .04) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(31, 29, 25, .04) 1px, transparent 1px),
+        var(--bg);
+      background-size: 28px 28px;
+      color: var(--ink);
+      font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+    }
+
+    main {
+      width: min(960px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 44px 0 56px;
+    }
+
+    header {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 26px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 38px;
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+
+    .sub {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .panel {
+      background: rgba(255, 250, 240, .92);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 18px 50px rgba(55, 43, 25, .12);
+    }
+
+    .input-panel {
+      padding: 18px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+    }
+
+    input {
+      width: 100%;
+      min-height: 52px;
+      border: 1px solid #cbbb9f;
+      border-radius: 6px;
+      padding: 0 16px;
+      background: #fffdf7;
+      color: var(--ink);
+      font: 600 20px/1.2 ui-monospace, "SFMono-Regular", Menlo, monospace;
+      outline: none;
+      text-transform: uppercase;
+    }
+
+    input:focus {
+      border-color: var(--black);
+      box-shadow: 0 0 0 3px rgba(22, 19, 15, .08);
+    }
+
+    button {
+      min-height: 52px;
+      border: 0;
+      border-radius: 6px;
+      padding: 0 22px;
+      background: var(--black);
+      color: #fffaf0;
+      cursor: pointer;
+      font: 700 16px/1 "Songti SC", "STSong", serif;
+      white-space: nowrap;
+    }
+
+    button:hover {
+      background: #312b22;
+    }
+
+    .result {
+      display: none;
+      margin-top: 18px;
+      overflow: hidden;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      padding: 20px;
+      border-bottom: 1px solid var(--line);
+      background: #272219;
+      color: #fffaf0;
+    }
+
+    .summary h2 {
+      margin: 0 0 8px;
+      font-size: 24px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .summary p {
+      margin: 0;
+      color: #d8cab5;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .score {
+      min-width: 120px;
+      text-align: right;
+      align-self: center;
+    }
+
+    .score strong {
+      display: block;
+      font: 800 42px/1 ui-monospace, "SFMono-Regular", Menlo, monospace;
+    }
+
+    .score span {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: #fffaf0;
+      color: var(--black);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .content {
+      padding: 20px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .fact {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 12px;
+      background: #fffdf7;
+      min-height: 72px;
+    }
+
+    .label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .value {
+      font: 700 20px/1.2 ui-monospace, "SFMono-Regular", Menlo, monospace;
+      word-break: break-all;
+    }
+
+    section h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      letter-spacing: 0;
+    }
+
+    .list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 76px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 11px 12px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fffdf7;
+    }
+
+    .pair {
+      font: 800 20px/1 ui-monospace, "SFMono-Regular", Menlo, monospace;
+    }
+
+    .energy {
+      font-weight: 800;
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 13px;
+      margin-left: 8px;
+      font-weight: 400;
+    }
+
+    .points {
+      font: 800 18px/1 ui-monospace, "SFMono-Regular", Menlo, monospace;
+    }
+
+    .good .energy,
+    .good .points {
+      color: var(--good);
+    }
+
+    .bad .energy,
+    .bad .points {
+      color: var(--bad);
+    }
+
+    .neutral .energy,
+    .neutral .points {
+      color: var(--warn);
+    }
+
+    .empty {
+      border: 1px dashed #cbbb9f;
+      border-radius: 6px;
+      padding: 14px;
+      color: var(--muted);
+      background: rgba(255, 253, 247, .6);
+    }
+
+    .rule {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 720px) {
+      main {
+        width: min(100% - 22px, 960px);
+        padding-top: 26px;
+      }
+
+      h1 {
+        font-size: 30px;
+      }
+
+      .input-panel,
+      .summary,
+      .facts,
+      .row {
+        grid-template-columns: 1fr;
+      }
+
+      .score {
+        min-width: 0;
+        text-align: left;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>车牌选号</h1>
+      <p class="sub">输入完整车牌。正式评分只看数字段；0/5 穿透后各扣 1 分。主体字母转数后接入数字段形成参考链；数字段见五鬼/绝命不推荐，参考链见五鬼/绝命降一档。</p>
+    </header>
+
+    <form class="panel input-panel" id="plateForm">
+      <input id="plateInput" autocomplete="off" placeholder="例如：苏EAA6027">
+      <button type="submit">计算</button>
+    </form>
+
+    <article class="panel result" id="result">
+      <div class="summary">
+        <div>
+          <h2 id="decision">等待输入</h2>
+          <p id="advice"></p>
+        </div>
+        <div class="score">
+          <strong id="score">0</strong>
+          <span id="rank">-</span>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="facts">
+          <div class="fact">
+            <span class="label">原始号码</span>
+            <span class="value" id="rawPlate">-</span>
+          </div>
+          <div class="fact">
+            <span class="label">正式数字段</span>
+            <span class="value" id="digits">-</span>
+          </div>
+          <div class="fact">
+            <span class="label">穿透数字</span>
+            <span class="value" id="effectiveDigits">-</span>
+          </div>
+        </div>
+
+        <section>
+          <h3>数字段能量</h3>
+          <div class="list" id="numberList"></div>
+        </section>
+
+        <section>
+          <h3>阻隔/中转扣分</h3>
+          <div class="list" id="penaltyList"></div>
+        </section>
+
+        <section>
+          <h3>字母参考</h3>
+          <div class="facts">
+            <div class="fact">
+              <span class="label">主体字母</span>
+              <span class="value" id="letters">-</span>
+            </div>
+            <div class="fact">
+              <span class="label">字母转数 / 连接链</span>
+              <span class="value" id="letterDigits">-</span>
+            </div>
+            <div class="fact">
+              <span class="label">参考分</span>
+              <span class="value" id="letterScore">-</span>
+            </div>
+          </div>
+          <div class="list" id="letterList" style="margin-top: 10px;"></div>
+        </section>
+
+        <p class="rule">规则：省份简称和第一位地区字母不参与；A=1 到 Z=26，转成个位数后只用于同分排序参考。</p>
+      </div>
+    </article>
+  </main>
+
+  <script>
+    const ENERGY = {
+      "13": ["天医", 3, "吉星"], "31": ["天医", 3, "吉星"], "68": ["天医", 3, "吉星"], "86": ["天医", 3, "吉星"],
+      "49": ["天医", 3, "吉星"], "94": ["天医", 3, "吉星"], "27": ["天医", 3, "吉星"], "72": ["天医", 3, "吉星"],
+      "14": ["生气", 2, "吉星"], "41": ["生气", 2, "吉星"], "67": ["生气", 2, "吉星"], "76": ["生气", 2, "吉星"],
+      "39": ["生气", 2, "吉星"], "93": ["生气", 2, "吉星"], "28": ["生气", 2, "吉星"], "82": ["生气", 2, "吉星"],
+      "19": ["延年", 2, "吉星"], "91": ["延年", 2, "吉星"], "78": ["延年", 2, "吉星"], "87": ["延年", 2, "吉星"],
+      "34": ["延年", 2, "吉星"], "43": ["延年", 2, "吉星"], "26": ["延年", 2, "吉星"], "62": ["延年", 2, "吉星"],
+      "11": ["伏位", 1, "吉星"], "22": ["伏位", 1, "吉星"], "33": ["伏位", 1, "吉星"], "44": ["伏位", 1, "吉星"],
+      "66": ["伏位", 1, "吉星"], "77": ["伏位", 1, "吉星"], "88": ["伏位", 1, "吉星"], "99": ["伏位", 1, "吉星"],
+      "12": ["绝命", -3, "凶星"], "21": ["绝命", -3, "凶星"], "69": ["绝命", -3, "凶星"], "96": ["绝命", -3, "凶星"],
+      "48": ["绝命", -3, "凶星"], "84": ["绝命", -3, "凶星"], "37": ["绝命", -3, "凶星"], "73": ["绝命", -3, "凶星"],
+      "18": ["五鬼", -3, "凶星"], "81": ["五鬼", -3, "凶星"], "79": ["五鬼", -3, "凶星"], "97": ["五鬼", -3, "凶星"],
+      "36": ["五鬼", -3, "凶星"], "63": ["五鬼", -3, "凶星"], "24": ["五鬼", -3, "凶星"], "42": ["五鬼", -3, "凶星"],
+      "16": ["六煞", -2, "凶星"], "61": ["六煞", -2, "凶星"], "47": ["六煞", -2, "凶星"], "74": ["六煞", -2, "凶星"],
+      "38": ["六煞", -2, "凶星"], "83": ["六煞", -2, "凶星"], "29": ["六煞", -2, "凶星"], "92": ["六煞", -2, "凶星"],
+      "17": ["祸害", -1, "凶星"], "71": ["祸害", -1, "凶星"], "89": ["祸害", -1, "凶星"], "98": ["祸害", -1, "凶星"],
+      "46": ["祸害", -1, "凶星"], "64": ["祸害", -1, "凶星"], "23": ["祸害", -1, "凶星"], "32": ["祸害", -1, "凶星"]
+    };
+
+    const severeEnergies = new Set(["五鬼", "绝命"]);
+
+    function extractDigits(value) {
+      return (value.match(/\d/g) || []).join("");
+    }
+
+    function extractBodyLetters(value) {
+      let text = value.trim();
+      const regionalMatch = text.match(/[\u4e00-\u9fff]\s*[A-Za-z]\s*(.*)/);
+      if (regionalMatch) text = regionalMatch[1];
+      return (text.match(/[A-Za-z]/g) || []).join("").toUpperCase();
+    }
+
+    function letterToDigit(letter) {
+      const index = letter.charCodeAt(0) - 64;
+      const digit = index % 9 || 9;
+      return { letter, index, digit: String(digit) };
+    }
+
+    function removeSeparators(digits) {
+      return digits.replace(/[05]/g, "");
+    }
+
+    function splitPairs(digits) {
+      const pairs = [];
+      for (let i = 0; i < digits.length - 1; i += 1) {
+        pairs.push(digits.slice(i, i + 2));
+      }
+      return pairs;
+    }
+
+    function evaluatePair(pair) {
+      const [energy, score, polarity] = ENERGY[pair];
+      return { pair, energy, score, polarity };
+    }
+
+    function separatorPenalties(digits) {
+      return Array.from(digits)
+        .filter((digit) => digit === "0" || digit === "5")
+        .map((digit) => ({
+          digit,
+          score: -1,
+          energy: digit === "0" ? "阻隔位" : "中转位",
+          note: "穿透后计算，扣 1 分"
+        }));
+    }
+
+    function baseRank(score) {
+      if (score >= 8) return "大吉";
+      if (score >= 5) return "吉";
+      if (score >= 2) return "小吉";
+      if (score >= -1) return "平";
+      if (score >= -4) return "小凶";
+      return "凶";
+    }
+
+    function downgradeRank(rank) {
+      const next = {
+        "大吉": "吉",
+        "吉": "小吉",
+        "小吉": "平",
+        "平": "不推荐",
+        "小凶": "不推荐",
+        "凶": "不推荐"
+      };
+      return next[rank] || "不推荐";
+    }
+
+    function analyze(value) {
+      const digits = extractDigits(value);
+      const effectiveDigits = removeSeparators(digits);
+      const numberResults = splitPairs(effectiveDigits).map(evaluatePair);
+      const penalties = separatorPenalties(digits);
+      const score = numberResults.reduce((sum, item) => sum + item.score, 0)
+        + penalties.reduce((sum, item) => sum + item.score, 0);
+
+      const letters = extractBodyLetters(value);
+      const letterMap = Array.from(letters).map(letterToDigit);
+      const letterDigits = letterMap.map((item) => item.digit).join("");
+      const effectiveLetterPrefix = removeSeparators(letterDigits);
+      const referenceDigits = letters ? letterDigits + digits : "";
+      const effectiveLetterDigits = letters ? effectiveLetterPrefix + effectiveDigits : "";
+      const referencePairCount = Math.max(0, effectiveLetterDigits.length - 1)
+        - Math.max(0, effectiveDigits.length - 1);
+      const letterResults = splitPairs(effectiveLetterDigits)
+        .slice(0, referencePairCount)
+        .map(evaluatePair);
+      const letterPenalties = separatorPenalties(letterDigits);
+      const hasLetterScore = letterResults.length > 0 || letterPenalties.length > 0;
+      const letterScore = hasLetterScore
+        ? letterResults.reduce((sum, item) => sum + item.score, 0)
+          + letterPenalties.reduce((sum, item) => sum + item.score, 0)
+        : null;
+
+      const numberSevereItems = numberResults.filter((item) => severeEnergies.has(item.energy));
+      const letterSevereItems = letterResults.filter((item) => severeEnergies.has(item.energy));
+      const base = baseRank(score);
+      const rank = numberSevereItems.length > 0
+        ? "不推荐"
+        : letterSevereItems.length > 0
+          ? downgradeRank(base)
+          : base;
+
+      return {
+        raw: value,
+        digits,
+        effectiveDigits,
+        numberResults,
+        penalties,
+        score,
+        rank,
+        letters,
+        letterMap,
+        letterDigits,
+        referenceDigits,
+        effectiveLetterDigits,
+        letterResults,
+        letterPenalties,
+        letterScore,
+        baseRank: base,
+        numberSevereItems,
+        letterSevereItems
+      };
+    }
+
+    function scoreText(score) {
+      return score > 0 ? `+${score}` : String(score);
+    }
+
+    function cssClass(item) {
+      if (item.polarity === "吉星") return "good";
+      if (item.polarity === "凶星") return "bad";
+      return "neutral";
+    }
+
+    function rowHtml(item) {
+      return `
+        <div class="row ${cssClass(item)}">
+          <span class="pair">${item.pair}</span>
+          <span><span class="energy">${item.energy}</span>${item.note ? `<span class="note">${item.note}</span>` : ""}</span>
+          <span class="points">${scoreText(item.score)}</span>
+        </div>
+      `;
+    }
+
+    function penaltyHtml(item) {
+      return `
+        <div class="row neutral">
+          <span class="pair">${item.digit}</span>
+          <span><span class="energy">${item.energy}</span><span class="note">${item.note}</span></span>
+          <span class="points">${item.score}</span>
+        </div>
+      `;
+    }
+
+    function emptyHtml(text) {
+      return `<div class="empty">${text}</div>`;
+    }
+
+    function advice(result) {
+      if (result.effectiveDigits.length < 2) {
+        return "穿透后数字不足两位，不能按相邻二数组合判断。";
+      }
+      if (result.numberSevereItems.length > 0) {
+        const names = result.numberSevereItems.map((item) => `${item.pair}${item.energy}`).join("、");
+        return `数字段出现 ${names}，不推荐。`;
+      }
+      if (result.letterSevereItems.length > 0) {
+        const names = result.letterSevereItems.map((item) => `${item.pair}${item.energy}`).join("、");
+        return `字母参考出现 ${names}，推荐度由${result.baseRank}降为${result.rank}。`;
+      }
+      if (result.rank === "大吉") return "优先推荐，数字段组合很强。";
+      if (result.rank === "吉") return "优先推荐，整体数字能量顺畅。";
+      if (result.rank === "小吉") return "可以考虑，若有备选再比较字母参考分。";
+      if (result.rank === "平") return "中性号码，不算突出，适合作为备选。";
+      return "不优先推荐，凶星偏多或总分偏低。";
+    }
+
+    function render(result) {
+      document.getElementById("result").classList.add("show");
+      document.getElementById("rawPlate").textContent = result.raw || "-";
+      document.getElementById("digits").textContent = result.digits || "-";
+      document.getElementById("effectiveDigits").textContent = result.effectiveDigits || "-";
+      document.getElementById("score").textContent = scoreText(result.score);
+      document.getElementById("rank").textContent = result.rank;
+      document.getElementById("decision").textContent = `推荐度：${result.rank}`;
+      document.getElementById("advice").textContent = advice(result);
+
+      document.getElementById("numberList").innerHTML = result.numberResults.length
+        ? result.numberResults.map(rowHtml).join("")
+        : emptyHtml("穿透后数字不足两位，无法形成数字能量组合。");
+
+      document.getElementById("penaltyList").innerHTML = result.penalties.length
+        ? result.penalties.map(penaltyHtml).join("")
+        : emptyHtml("没有 0/5 阻隔或中转扣分。");
+
+      const letterMapText = result.letterMap
+        .map((item) => `${item.letter}=${item.index}->${item.digit}`)
+        .join("、");
+      document.getElementById("letters").textContent = result.letters || "-";
+      document.getElementById("letterDigits").textContent = result.referenceDigits
+        ? `${letterMapText} / ${result.referenceDigits}`
+        : "-";
+      document.getElementById("letterScore").textContent = result.letterScore === null ? "-" : scoreText(result.letterScore);
+
+      const letterRows = result.letterResults.map(rowHtml)
+        .concat(result.letterPenalties.map(penaltyHtml));
+      document.getElementById("letterList").innerHTML = letterRows.length
+        ? letterRows.join("")
+        : emptyHtml("没有可计算的号码主体字母参考。");
+    }
+
+    document.getElementById("plateForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+      render(analyze(document.getElementById("plateInput").value));
+    });
+
+  </script>
+</body>
+</html>
