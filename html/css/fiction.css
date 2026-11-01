@@ -1,23 +1,14 @@
-/* Fiction feature and self-contained story reader. */
-.fiction-feature { scroll-margin-top: 100px; padding: 88px 32px; background: #f5f1e9; color: #292923; }
-.fiction-feature-inner { max-width: 1056px; margin: auto; display: grid; grid-template-columns: 1fr 0.8fr; gap: 88px; align-items: center; }
-.fiction-feature .fiction-kicker { font-size: 12px; letter-spacing: .22em; color: #777568; margin: 0 0 28px; }
-.fiction-feature h2 { font-family: "Songti SC", "Noto Serif CJK SC", "SimSun", serif; font-size: clamp(44px, 7vw, 72px); font-weight: 400; margin: 0 0 24px; }
-.fiction-feature .fiction-intro { max-width: 360px; line-height: 1.9; color: #747365; margin-bottom: 36px; }
-.fiction-feature .fiction-rule { border-top: 1px solid #d5d0c4; padding-top: 25px; }
-.fiction-feature h3 { font-family: "Songti SC", "Noto Serif CJK SC", "SimSun", serif; font-size: 30px; margin: 0 0 12px; font-weight: 400; }
-.fiction-feature .fiction-excerpt { line-height: 1.9; margin: 0 0 24px; color: #5b5b50; }
-.fiction-feature .fiction-read { display: inline-block; padding: 10px 0; border-bottom: 1px solid #858574; color: inherit; text-decoration: none; }
-.fiction-feature .fiction-image { display: block; }
-.fiction-feature .fiction-image img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
-.fiction-feature .fiction-image:focus-visible, .fiction-feature .fiction-read:focus-visible { outline: 2px solid #526451; outline-offset: 6px; }
-.novel-reader { --paper: #f5f1e9; --ink: #292923; --muted: #7b7b6e; margin: 0; background: var(--paper); color: var(--ink); font-family: "Songti SC", "Noto Serif CJK SC", "SimSun", serif; -webkit-font-smoothing: antialiased; }
+/* Individual story reader; palette follows the primary emotion. */
+.novel-reader { --paper: #151515; --ink: #dedbd6; --muted: #a6a19a; --line: #3e3c39; --accent: #c5bfb4; margin: 0; background: var(--paper); color: var(--ink); font-family: "Songti SC", "Noto Serif CJK SC", "SimSun", serif; -webkit-font-smoothing: antialiased; }
+.novel-reader[data-emotion="pleasure"] { --paper: #fbf0df; --ink: #4c3023; --muted: #85644e; --line: #d9bea0; --accent: #a35325; }
+.novel-reader[data-emotion="pain"] { --paper: #151515; --ink: #dedbd6; --muted: #a6a19a; --line: #3e3c39; --accent: #c5bfb4; }
+.novel-reader[data-emotion="fear"] { --paper: #0b1728; --ink: #d2dfed; --muted: #95abc4; --line: #2c4562; --accent: #a3c5eb; }
 .novel-reader * { box-sizing: border-box; }
 .novel-reader a { color: inherit; text-decoration: none; }
-.novel-reader a:focus-visible { outline: 2px solid #526451; outline-offset: 5px; }
+.novel-reader a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
 .novel-reader .skip-story { position: absolute; left: 20px; top: -80px; background: var(--paper); padding: 15px; z-index: 2; }
 .novel-reader .skip-story:focus { top: 20px; }
-.reader-nav { max-width: 1160px; margin: auto; padding: 28px 32px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd8cc; font-family: "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 12px; letter-spacing: .08em; }
+.reader-nav { max-width: 1160px; margin: auto; padding: 28px 32px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); font-family: "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 12px; letter-spacing: .08em; }
 .reader-brand { font-size: 20px; }
 .reader-brand span { font-size: 10px; margin-left: 12px; letter-spacing: .17em; color: var(--muted); }
 .story-heading { max-width: 680px; margin: auto; padding: 80px 28px 72px; }
@@ -26,27 +17,24 @@
 .story-heading h1 { font-size: clamp(72px, 13vw, 112px); font-weight: 400; letter-spacing: .14em; line-height: 1.25; margin: 36px 0 28px; }
 .story-heading h1 span { display: block; font-family: Georgia, serif; font-size: 12px; letter-spacing: .38em; color: var(--muted); margin-top: 10px; }
 .story-deck { font-size: 18px; line-height: 1.8; }
-.story-meta { display: flex; gap: 24px; margin-top: 32px; font-size: 12px; color: #6e6e60; font-family: "PingFang SC", "Microsoft YaHei", sans-serif; }
-.fiction-note { font-size: 11px; color: #89897a; margin-top: 14px; }
-.start-story { display: inline-flex; gap: 40px; border-bottom: 1px solid #b5b5a2; padding: 12px 0; margin-top: 32px; font-size: 13px; }
+.story-meta { display: flex; gap: 24px; margin-top: 32px; font-size: 12px; color: var(--muted); font-family: "PingFang SC", "Microsoft YaHei", sans-serif; }
+.fiction-note { font-size: 11px; color: var(--muted); margin-top: 14px; }
+.start-story { display: inline-flex; gap: 40px; border-bottom: 1px solid var(--line); padding: 12px 0; margin-top: 32px; font-size: 13px; }
 .story-prose { max-width: 680px; margin: auto; padding: 0 28px; font-size: 19px; line-height: 2; letter-spacing: .025em; overflow-wrap: break-word; scroll-margin-top: 24px; }
 .story-prose p { margin: 0 0 1.35em; }
 .story-prose strong { font-weight: 600; }
 .story-prose figure { margin: 48px 0 56px; }
-.story-prose img { width: 100%; height: auto; display: block; background: #e3ddd1; }
+.story-prose img { width: 100%; height: auto; display: block; background: var(--line); }
 .story-prose figcaption { font: 10px/1.5 Georgia, serif; color: var(--muted); text-align: right; letter-spacing: .15em; margin-top: 12px; }
-.story-prose blockquote { margin: 26px 0 32px; padding: 4px 0 4px 22px; border-left: 1px solid #a8ab96; color: #5a6052; font-size: 17px; }
+.story-prose blockquote { margin: 26px 0 32px; padding: 4px 0 4px 22px; border-left: 1px solid var(--line); color: var(--accent); font-size: 17px; }
 .story-prose blockquote p { margin-bottom: 0; }
-.story-break { width: 32px; height: 1px; border: 0; background: #a9aa96; margin: 64px auto; }
+.story-break { width: 32px; height: 1px; border: 0; background: var(--line); margin: 64px auto; }
 .story-ending { max-width: 624px; margin: 64px auto 0; padding: 32px 0 60px; text-align: center; }
-.ending-ring { display: inline-block; width: 24px; height: 24px; border: 1px solid #acaf9a; border-radius: 50%; box-shadow: 0 0 16px #fffff6; }
+.ending-ring { display: inline-block; width: 24px; height: 24px; border: 1px solid var(--line); border-radius: 50%; box-shadow: 0 0 16px #ffffff18; }
 .story-ending p { font-size: 16px; letter-spacing: .15em; }
 .story-ending .ending-signature { font-size: 12px; color: var(--muted); }
-.story-ending > div { display: flex; justify-content: space-between; border-top: 1px solid #d7d4c8; padding-top: 24px; margin: 48px 28px 0; font-size: 13px; }
+.story-ending > div { display: flex; justify-content: space-between; border-top: 1px solid var(--line); padding-top: 24px; margin: 48px 28px 0; font-size: 13px; }
 @media (max-width: 640px) {
-    .fiction-feature { padding: 60px 24px; }
-    .fiction-feature-inner { grid-template-columns: 1fr; gap: 36px; }
-    .fiction-feature .fiction-intro { max-width: none; }
     .reader-nav { padding: 22px 22px; }
     .reader-brand span { display: none; }
     .story-heading { padding: 52px 24px 48px; }

@@ -46,7 +46,7 @@ class Common {
             <a href="${baseUrl}index.html#home" class="text-sm uppercase tracking-wider text-gray-700 border-b border-transparent pb-1 transition hover:text-black hover:border-black" data-lang-key="nav-home">首页</a>
             <a href="${baseUrl}index.html#about" class="text-sm uppercase tracking-wider text-gray-700 border-b border-transparent pb-1 transition hover:text-black hover:border-black" data-lang-key="nav-about">关于</a>
             <a href="${baseUrl}index.html#tags" class="text-sm uppercase tracking-wider text-gray-700 border-b border-transparent pb-1 transition hover:text-black hover:border-black" data-lang-key="nav-tags">标签</a>
-            <a href="${baseUrl}index.html#fiction" class="text-sm uppercase tracking-wider text-gray-700 border-b border-transparent pb-1 transition hover:text-black hover:border-black" data-lang-key="nav-fiction">小说</a>
+            <a href="${baseUrl}novels/index.html" class="text-sm uppercase tracking-wider text-gray-700 border-b border-transparent pb-1 transition hover:text-black hover:border-black" data-lang-key="nav-fiction">小说</a>
             ${zhouyiLinks}
             <div class="relative">
                 <button id="moduleToggle" type="button" class="text-sm uppercase tracking-wider text-gray-700 border-b border-transparent pb-1 transition hover:text-black hover:border-black inline-flex items-center gap-2">
@@ -83,7 +83,7 @@ class Common {
         <a href="${baseUrl}index.html#home" class="text-2xl tracking-wide transition hover:text-black mobile-nav-link" data-lang-key="nav-home">首页</a>
         <a href="${baseUrl}index.html#about" class="text-2xl tracking-wide transition hover:text-black mobile-nav-link" data-lang-key="nav-about">关于</a>
         <a href="${baseUrl}index.html#tags" class="text-2xl tracking-wide transition hover:text-black mobile-nav-link" data-lang-key="nav-tags">标签</a>
-        <a href="${baseUrl}index.html#fiction" class="text-2xl tracking-wide transition hover:text-black mobile-nav-link" data-lang-key="nav-fiction">小说</a>
+        <a href="${baseUrl}novels/index.html" class="text-2xl tracking-wide transition hover:text-black mobile-nav-link" data-lang-key="nav-fiction">小说</a>
         ${zhouyiMobileLinks}
         <div class="text-xs uppercase tracking-widest text-gray-400">模块</div>
         <a href="${baseUrl}program/index.html" class="text-2xl tracking-wide transition hover:text-black mobile-nav-link">程序</a>
@@ -125,7 +125,7 @@ class Common {
 
     getBaseUrl() {
         var path = window.location.pathname;
-        var modules = ['/zhouyi/', '/program/', '/food/'];
+        var modules = ['/zhouyi/', '/program/', '/food/', '/novels/'];
         for (var i = 0; i < modules.length; i++) {
             var idx = path.indexOf(modules[i]);
             if (idx >= 0) {

@@ -1,0 +1,21 @@
+/* White, restrained catalog consistent with the main site. */
+.novel-catalog { max-width: 1056px; margin: 0 auto; padding: 160px 32px 100px; min-height: 80vh; }
+.catalog-heading h1 { font-size: 48px; font-weight: 300; margin: 0 0 24px; }
+.catalog-heading > p { color: #6b7280; line-height: 1.9; max-width: 600px; }
+.novel-catalog a:focus-visible { outline: 2px solid #555; outline-offset: 5px; }
+.catalog-list { margin-top: 48px; border-top: 1px solid #e5e7eb; }
+.catalog-story { display: grid; grid-template-columns: 180px 1fr; gap: 40px; padding: 40px 0; border-bottom: 1px solid #e5e7eb; }
+.catalog-cover img { width: 100%; height: auto; aspect-ratio: 3/4; object-fit: cover; border-radius: 5px; }
+.catalog-story-content { padding: 6px 0; }
+.catalog-meta { display: flex; gap: 16px; align-items: center; font-size: 12px; color: #6b7280; }
+.catalog-story h2 { font-size: 30px; font-weight: 300; margin: 20px 0 16px; }
+.catalog-story p { max-width: 520px; color: #6b7280; line-height: 1.9; font-size: 15px; }
+.catalog-read { display: inline-block; font-size: 13px; margin-top: 24px; padding-bottom: 4px; border-bottom: 1px solid #b8b8b8; }
+@media (max-width: 640px) {
+    .novel-catalog { padding: 124px 24px 60px; }
+    .catalog-heading h1 { font-size: 36px; }
+    .catalog-story { grid-template-columns: 100px minmax(0, 1fr); gap: 20px; padding: 28px 0; }
+    .catalog-story h2 { margin: 14px 0 10px; font-size: 26px; }
+    .catalog-story p { font-size: 14px; }
+    .catalog-meta { gap: 10px; font-size: 11px; flex-wrap: wrap; }
+}
