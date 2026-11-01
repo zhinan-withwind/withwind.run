@@ -115,11 +115,13 @@ class Navigation {
     updateLinksToExperience(lang) {
         const experienceLinks = document.querySelectorAll('a[href*="experience.html"]');
         experienceLinks.forEach(link => {
+            const target = new URL(link.href);
             if (lang === 'zh') {
-                link.href = 'experience.html';
+                target.searchParams.delete('lang');
             } else {
-                link.href = 'experience.html?lang=en';
+                target.searchParams.set('lang', 'en');
             }
+            link.href = target.href;
         });
     }
 

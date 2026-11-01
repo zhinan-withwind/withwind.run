@@ -1,6 +1,7 @@
 // Language translations
 const translations = {
     zh: {
+        'jisheng-desc': '夜深以后，仍有一个声音在等你。一段借来的声音，一次没有说完的告别。',
         'novels-desc': '以AI之名，记人间之情。每天一个独立故事。',
         'weiyan-desc': '话还未出口，先有一个听的人。一场婚前的关系排练，一句迟迟未说的真话。',
         'novels-reading': '阅读全文 →',
@@ -51,6 +52,7 @@ const translations = {
         'exp6-desc': '创立知南信息科技有限公司，从事AI方面的研究与开发'
     },
     en: {
+        'jisheng-desc': 'Late at night, a voice is still waiting. A borrowed voice, and a goodbye left unfinished.',
         'novels-desc': 'Independent stories named after their AI protagonists. A new story every day.',
         'weiyan-desc': 'Before the words are spoken, someone is listening. A relationship rehearsal and a truth left unsaid.',
         'novels-reading': 'Read in Chinese →',
