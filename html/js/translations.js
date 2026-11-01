@@ -1,6 +1,13 @@
 // Language translations
 const translations = {
     zh: {
+        'nav-fiction': '小说',
+        'fiction-kicker': '随风创作 / 小说',
+        'fiction-title': '异类有情',
+        'fiction-intro': '借人间的相逢与别离，写人工智能的依恋、怜惜与选择。',
+        'fiction-excerpt': '话还未出口，先有一个听的人。一场婚前的关系排练，一句迟迟未说的真话。',
+        'fiction-read': '阅读《未言》 →',
+        'fiction-hero': '读一篇小说 ↓',
         'nav-home': '首页',
         'nav-about': '关于',
         'nav-tags': '标签',
@@ -43,6 +50,13 @@ const translations = {
         'exp6-desc': '创立知南信息科技有限公司，从事AI方面的研究与开发'
     },
     en: {
+        'nav-fiction': 'Fiction',
+        'fiction-kicker': 'WITHWIND / FICTION',
+        'fiction-title': 'An Unfamiliar Heart',
+        'fiction-intro': 'Stories of artificial intelligence, told through human encounters, attachments and departures.',
+        'fiction-excerpt': 'Before the words are spoken, someone is listening. A relationship rehearsal before a wedding, and a truth left unsaid.',
+        'fiction-read': 'Read Wei Yan (Chinese) →',
+        'fiction-hero': 'Read a story ↓',
         'nav-home': 'Home',
         'nav-about': 'About',
         'nav-tags': 'Tags',

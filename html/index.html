@@ -6,6 +6,7 @@
     <title>随风 | 个人主页</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/fiction.css">
 </head>
 <body class="bg-white text-black overflow-x-hidden">
     <!-- Header and Navigation will be loaded by common.js -->
@@ -22,9 +23,29 @@
             <div class="text-lg md:text-xl text-gray-500 mb-12 fade-in" style="animation-delay: 0.4s">
                 <span class="tracking-wide" data-lang-key="hero-tagline">代码 · 易经 · 美食</span>
             </div>
+            <a href="#fiction" class="inline-block border-b border-gray-400 pb-2 text-sm text-gray-600 tracking-wider" data-lang-key="fiction-hero">读一篇小说 ↓</a>
             <div class="mt-16 fade-in animate-bounce" style="animation-delay: 0.6s">
                 <i class="fas fa-chevron-down text-2xl text-gray-600"></i>
             </div>
+        </div>
+    </section>
+
+    <!-- Fiction Section -->
+    <section id="fiction" class="fiction-feature" aria-labelledby="fiction-title">
+        <div class="fiction-feature-inner">
+            <div>
+                <p class="fiction-kicker" data-lang-key="fiction-kicker">随风创作 / 小说</p>
+                <h2 id="fiction-title" data-lang-key="fiction-title">异类有情</h2>
+                <p class="fiction-intro" data-lang-key="fiction-intro">借人间的相逢与别离，写人工智能的依恋、怜惜与选择。</p>
+                <div class="fiction-rule">
+                    <h3>未言</h3>
+                    <p class="fiction-excerpt" data-lang-key="fiction-excerpt">话还未出口，先有一个听的人。<br>一场婚前的关系排练，一句迟迟未说的真话。</p>
+                    <a class="fiction-read" href="novels/weiyan/index.html" data-lang-key="fiction-read">阅读《未言》 →</a>
+                </div>
+            </div>
+            <a class="fiction-image" href="novels/weiyan/index.html" aria-label="阅读小说《未言》">
+                <img src="novels/weiyan/images/01.jpg" alt="程砚与林晚相拥，桌上的未言静静亮着白光" width="1086" height="1448" loading="lazy" decoding="async">
+            </a>
         </div>
     </section>
 
