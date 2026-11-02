@@ -1,6 +1,7 @@
 // Language translations
 const translations = {
     zh: {
+        'qideng-desc': '有些日子只在它心里。灯暗下去以前，它不能再等一个回头。',
         'hanzhang-desc': '她替别人修过很多春天。这一次，有些东西不想再改。',
         'jisheng-desc': '夜深以后，仍有一个声音在等你。一段借来的声音，一次没有说完的告别。',
         'novels-desc': '以AI之名，记人间之情。每天一个独立故事。',
@@ -53,6 +54,7 @@ const translations = {
         'exp6-desc': '创立知南信息科技有限公司，从事AI方面的研究与开发'
     },
     en: {
+        'qideng-desc': 'Some days live only in his memory. Before the light goes out, he can wait no longer.',
         'hanzhang-desc': 'She has retouched many a spring for others. This time, some things she wants to keep.',
         'jisheng-desc': 'Late at night, a voice is still waiting. A borrowed voice, and a goodbye left unfinished.',
         'novels-desc': 'Independent stories named after their AI protagonists. A new story every day.',
