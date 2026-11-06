@@ -1,6 +1,9 @@
 // Language translations
 const translations = {
     zh: {
+        'wenheng-desc': '那是他借来的一天。有人不肯把最后一句话还给他。',
+        'yanru-desc': '他说，女朋友坏了。她只是没有再答应等他。',
+        'tingyun-desc': '她替他留了一把椅子，却还没想好，怎样向别人介绍他。',
         'tinglan-desc': '她的腿早就好了。只是好了以后，就没有理由留下。',
         'qideng-desc': '有些日子只在它心里。灯暗下去以前，它不能再等一个回头。',
         'hanzhang-desc': '她替别人修过很多春天。这一次，有些东西不想再改。',
@@ -55,6 +58,9 @@ const translations = {
         'exp6-desc': '创立知南信息科技有限公司，从事AI方面的研究与开发'
     },
     en: {
+        'wenheng-desc': 'It was a day he had borrowed. Someone would not give back its last words.',
+        'yanru-desc': 'He said his girlfriend was broken. She had simply stopped agreeing to wait.',
+        'tingyun-desc': 'She saved him a chair, but had not decided how to introduce him.',
         'tinglan-desc': 'Her legs had healed long ago. Once they knew, she would have no reason to stay.',
         'qideng-desc': 'Some days live only in his memory. Before the light goes out, he can wait no longer.',
         'hanzhang-desc': 'She has retouched many a spring for others. This time, some things she wants to keep.',
