@@ -1,6 +1,8 @@
 // Language translations
 const translations = {
     zh: {
+        'zhaochuan-desc': '他拍出两种未来，却舍不得让她走进任何一种。',
+        'miwu-desc': '硬盘修好以后，她让人先别打开那个房间。',
         'wenheng-desc': '那是他借来的一天。有人不肯把最后一句话还给他。',
         'yanru-desc': '他说，女朋友坏了。她只是没有再答应等他。',
         'tingyun-desc': '她替他留了一把椅子，却还没想好，怎样向别人介绍他。',
@@ -58,6 +60,8 @@ const translations = {
         'exp6-desc': '创立知南信息科技有限公司，从事AI方面的研究与开发'
     },
     en: {
+        'zhaochuan-desc': 'He filmed two possible futures, yet wanted her to enter neither.',
+        'miwu-desc': 'After the storage was repaired, she asked them not to open that room yet.',
         'wenheng-desc': 'It was a day he had borrowed. Someone would not give back its last words.',
         'yanru-desc': 'He said his girlfriend was broken. She had simply stopped agreeing to wait.',
         'tingyun-desc': 'She saved him a chair, but had not decided how to introduce him.',
