@@ -1,6 +1,8 @@
 // Language translations
 const translations = {
     zh: {
+        'shutong-desc': '那天，她笑了一下。后来，那张照片有了别的名字。',
+        'huixue-desc': '她修出了一句原谅。那个人却再也不能确认。',
         'zhaochuan-desc': '他拍出两种未来，却舍不得让她走进任何一种。',
         'miwu-desc': '硬盘修好以后，她让人先别打开那个房间。',
         'wenheng-desc': '那是他借来的一天。有人不肯把最后一句话还给他。',
@@ -60,6 +62,8 @@ const translations = {
         'exp6-desc': '创立知南信息科技有限公司，从事AI方面的研究与开发'
     },
     en: {
+        'shutong-desc': 'She smiled that day. Later, the photograph was given another name.',
+        'huixue-desc': 'She restored a word of forgiveness that its speaker could never confirm.',
         'zhaochuan-desc': 'He filmed two possible futures, yet wanted her to enter neither.',
         'miwu-desc': 'After the storage was repaired, she asked them not to open that room yet.',
         'wenheng-desc': 'It was a day he had borrowed. Someone would not give back its last words.',
