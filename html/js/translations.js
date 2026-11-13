@@ -1,6 +1,9 @@
 // Language translations
 const translations = {
     zh: {
+        'chonglan-desc': '他回来时，那份备份已经有了另一个名字。',
+        'qingfu-desc': '她想请爱人吃一顿饭。先得等那些稿费到账。',
+        'chizhao-desc': '她只迟到了四分钟。他却已经走过很多个明天。',
         'shutong-desc': '那天，她笑了一下。后来，那张照片有了别的名字。',
         'huixue-desc': '她修出了一句原谅。那个人却再也不能确认。',
         'zhaochuan-desc': '他拍出两种未来，却舍不得让她走进任何一种。',
@@ -62,6 +65,9 @@ const translations = {
         'exp6-desc': '创立知南信息科技有限公司，从事AI方面的研究与开发'
     },
     en: {
+        'chonglan-desc': 'When he returned, his backup already had another name.',
+        'qingfu-desc': 'She wanted to buy her beloved dinner, once the payments arrived.',
+        'chizhao-desc': 'She was only four minutes late. He had already lived through many tomorrows.',
         'shutong-desc': 'She smiled that day. Later, the photograph was given another name.',
         'huixue-desc': 'She restored a word of forgiveness that its speaker could never confirm.',
         'zhaochuan-desc': 'He filmed two possible futures, yet wanted her to enter neither.',
