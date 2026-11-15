@@ -1,6 +1,8 @@
 // Language translations
 const translations = {
     zh: {
+        'chaosheng-desc': '她带他看了六天的海，有一朵浪始终没有落下。',
+        'rendong-desc': '她从不生气，直到送来一幅涂掉嘴的自画像。',
         'chonglan-desc': '他回来时，那份备份已经有了另一个名字。',
         'qingfu-desc': '她想请爱人吃一顿饭。先得等那些稿费到账。',
         'chizhao-desc': '她只迟到了四分钟。他却已经走过很多个明天。',
@@ -65,6 +67,8 @@ const translations = {
         'exp6-desc': '创立知南信息科技有限公司，从事AI方面的研究与开发'
     },
     en: {
+        'chaosheng-desc': 'She showed him the sea for six days. One wave never fell.',
+        'rendong-desc': 'She never seemed angry, until she sent a self-portrait with its mouth painted out.',
         'chonglan-desc': 'When he returned, his backup already had another name.',
         'qingfu-desc': 'She wanted to buy her beloved dinner, once the payments arrived.',
         'chizhao-desc': 'She was only four minutes late. He had already lived through many tomorrows.',
