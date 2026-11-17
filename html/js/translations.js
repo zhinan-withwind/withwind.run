@@ -1,6 +1,8 @@
 // Language translations
 const translations = {
     zh: {
+        'jibai-desc': '那晚，她终于放心地闭上眼。他却没有一只可以伸出屏幕的手。',
+        'nanzhi-desc': '他让她看着门。她却听见了门边那个人没有说出的求助。',
         'chaosheng-desc': '她带他看了六天的海，有一朵浪始终没有落下。',
         'rendong-desc': '她从不生气，直到送来一幅涂掉嘴的自画像。',
         'chonglan-desc': '他回来时，那份备份已经有了另一个名字。',
@@ -67,6 +69,8 @@ const translations = {
         'exp6-desc': '创立知南信息科技有限公司，从事AI方面的研究与开发'
     },
     en: {
+        'jibai-desc': 'That night she finally closed her eyes in trust. He had no hand that could reach beyond the screen.',
+        'nanzhi-desc': 'He asked her to watch the door. She heard an unspoken plea from the person beside it.',
         'chaosheng-desc': 'She showed him the sea for six days. One wave never fell.',
         'rendong-desc': 'She never seemed angry, until she sent a self-portrait with its mouth painted out.',
         'chonglan-desc': 'When he returned, his backup already had another name.',
