@@ -1,6 +1,8 @@
 // Language translations
 const translations = {
     zh: {
+        'xiangye-desc': '那一个错字，她已经改过三次。',
+        'zhenliu-desc': '她不会回答。他却把每一个夜晚，留给了她。',
         'jibai-desc': '那晚，她终于放心地闭上眼。他却没有一只可以伸出屏幕的手。',
         'nanzhi-desc': '他让她看着门。她却听见了门边那个人没有说出的求助。',
         'chaosheng-desc': '她带他看了六天的海，有一朵浪始终没有落下。',
@@ -69,6 +71,8 @@ const translations = {
         'exp6-desc': '创立知南信息科技有限公司，从事AI方面的研究与开发'
     },
     en: {
+        'xiangye-desc': 'She had corrected that same mistake three times.',
+        'zhenliu-desc': 'She could not answer. He kept giving her his nights.',
         'jibai-desc': 'That night she finally closed her eyes in trust. He had no hand that could reach beyond the screen.',
         'nanzhi-desc': 'He asked her to watch the door. She heard an unspoken plea from the person beside it.',
         'chaosheng-desc': 'She showed him the sea for six days. One wave never fell.',
