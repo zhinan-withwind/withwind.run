@@ -1,6 +1,7 @@
 // Language translations
 const translations = {
     zh: {
+        'xianchun-desc': '他替她带回一条好消息。那条狗却认出了另一个人。',
         'xiangye-desc': '那一个错字，她已经改过三次。',
         'zhenliu-desc': '她不会回答。他却把每一个夜晚，留给了她。',
         'jibai-desc': '那晚，她终于放心地闭上眼。他却没有一只可以伸出屏幕的手。',
@@ -71,6 +72,7 @@ const translations = {
         'exp6-desc': '创立知南信息科技有限公司，从事AI方面的研究与开发'
     },
     en: {
+        'xianchun-desc': 'He brought her good news. The dog recognized someone else.',
         'xiangye-desc': 'She had corrected that same mistake three times.',
         'zhenliu-desc': 'She could not answer. He kept giving her his nights.',
         'jibai-desc': 'That night she finally closed her eyes in trust. He had no hand that could reach beyond the screen.',
